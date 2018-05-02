@@ -21,18 +21,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Resultados")
+@Table(name = "resultados")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Resultados.findAll", query = "SELECT r FROM Resultados r")
-    , @NamedQuery(name = "Resultados.findById", query = "SELECT r FROM Resultados r WHERE r.id = :id")
-    , @NamedQuery(name = "Resultados.findByGanados", query = "SELECT r FROM Resultados r WHERE r.ganados = :ganados")
-    , @NamedQuery(name = "Resultados.findByPerdidos", query = "SELECT r FROM Resultados r WHERE r.perdidos = :perdidos")
-    , @NamedQuery(name = "Resultados.findByEmpatados", query = "SELECT r FROM Resultados r WHERE r.empatados = :empatados")
-    , @NamedQuery(name = "Resultados.findByPuntos", query = "SELECT r FROM Resultados r WHERE r.puntos = :puntos")})
+    @NamedQuery(name = "Resultados.findAll", query = "SELECT r FROM Resultados r"),
+    @NamedQuery(name = "Resultados.findById", query = "SELECT r FROM Resultados r WHERE r.id = :id"),
+    @NamedQuery(name = "Resultados.findByGanados", query = "SELECT r FROM Resultados r WHERE r.ganados = :ganados"),
+    @NamedQuery(name = "Resultados.findByPerdidos", query = "SELECT r FROM Resultados r WHERE r.perdidos = :perdidos"),
+    @NamedQuery(name = "Resultados.findByEmpatados", query = "SELECT r FROM Resultados r WHERE r.empatados = :empatados"),
+    @NamedQuery(name = "Resultados.findByPuntos", query = "SELECT r FROM Resultados r WHERE r.puntos = :puntos")})
 public class Resultados implements Serializable {
 
     private static final long serialVersionUID = 1L;

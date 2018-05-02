@@ -22,21 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Equipo")
+@Table(name = "equipo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Equipo.findAll", query = "SELECT e FROM Equipo e")
-    , @NamedQuery(name = "Equipo.findById", query = "SELECT e FROM Equipo e WHERE e.id = :id")
-    , @NamedQuery(name = "Equipo.findByNombre", query = "SELECT e FROM Equipo e WHERE e.nombre = :nombre")
-    , @NamedQuery(name = "Equipo.findByGanados", query = "SELECT e FROM Equipo e WHERE e.ganados = :ganados")
-    , @NamedQuery(name = "Equipo.findByPerdidos", query = "SELECT e FROM Equipo e WHERE e.perdidos = :perdidos")
-    , @NamedQuery(name = "Equipo.findByEmpatados", query = "SELECT e FROM Equipo e WHERE e.empatados = :empatados")
-    , @NamedQuery(name = "Equipo.findByGolesFavor", query = "SELECT e FROM Equipo e WHERE e.golesFavor = :golesFavor")
-    , @NamedQuery(name = "Equipo.findByGolesContra", query = "SELECT e FROM Equipo e WHERE e.golesContra = :golesContra")
-    , @NamedQuery(name = "Equipo.findByPuntos", query = "SELECT e FROM Equipo e WHERE e.puntos = :puntos")})
+    @NamedQuery(name = "Equipo.findAll", query = "SELECT e FROM Equipo e"),
+    @NamedQuery(name = "Equipo.findById", query = "SELECT e FROM Equipo e WHERE e.id = :id"),
+    @NamedQuery(name = "Equipo.findByNombre", query = "SELECT e FROM Equipo e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Equipo.findByGanados", query = "SELECT e FROM Equipo e WHERE e.ganados = :ganados"),
+    @NamedQuery(name = "Equipo.findByPerdidos", query = "SELECT e FROM Equipo e WHERE e.perdidos = :perdidos"),
+    @NamedQuery(name = "Equipo.findByEmpatados", query = "SELECT e FROM Equipo e WHERE e.empatados = :empatados"),
+    @NamedQuery(name = "Equipo.findByGolesFavor", query = "SELECT e FROM Equipo e WHERE e.golesFavor = :golesFavor"),
+    @NamedQuery(name = "Equipo.findByGolesContra", query = "SELECT e FROM Equipo e WHERE e.golesContra = :golesContra"),
+    @NamedQuery(name = "Equipo.findByPuntos", query = "SELECT e FROM Equipo e WHERE e.puntos = :puntos")})
 public class Equipo implements Serializable {
 
     private static final long serialVersionUID = 1L;

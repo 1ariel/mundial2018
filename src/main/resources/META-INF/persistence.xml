@@ -15,7 +15,6 @@
       </properties>
     </persistence-unit>
   </persistence>
-  
   <persistence-unit name="com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mundial2018.Database.Entities.Grupo</class>
@@ -26,6 +25,14 @@
     <class>com.mundial2018.Database.Entities.Empleado</class>
     <class>com.mundial2018.Database.Entities.User</class>
     <class>com.mundial2018.Database.Entities.Apuesta</class>
+    <class>com.mundial2018.Database.Entities.Apuesta_1</class>
+    <class>com.mundial2018.Database.Entities.Resultados_1</class>
+    <class>com.mundial2018.Database.Entities.User_1</class>
+    <class>com.mundial2018.Database.Entities.Ronda_1</class>
+    <class>com.mundial2018.Database.Entities.Partido_1</class>
+    <class>com.mundial2018.Database.Entities.Equipo_1</class>
+    <class>com.mundial2018.Database.Entities.Grupo_1</class>
+    <class>com.mundial2018.Database.Entities.Empleado_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zeusco_mundial2018?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

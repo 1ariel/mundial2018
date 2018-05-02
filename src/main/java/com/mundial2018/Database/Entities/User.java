@@ -19,19 +19,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.userPK.id = :id")
-    , @NamedQuery(name = "User.findByUser", query = "SELECT u FROM User u WHERE u.user = :user")
-    , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
-     , @NamedQuery(name = "User.CheckLogin", query = "SELECT l FROM User l WHERE l.password = :password AND l.user = :user")
-    , @NamedQuery(name = "User.findByRol", query = "SELECT u FROM User u WHERE u.rol = :rol")
-    , @NamedQuery(name = "User.findByEmpleadoid", query = "SELECT u FROM User u WHERE u.userPK.empleadoid = :empleadoid")})
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.userPK.id = :id"),
+    @NamedQuery(name = "User.findByUser", query = "SELECT u FROM User u WHERE u.user = :user"),
+    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+    @NamedQuery(name = "User.CheckLogin", query = "SELECT l FROM User l WHERE l.password = :password AND l.user = :user"),
+    @NamedQuery(name = "User.findByRol", query = "SELECT u FROM User u WHERE u.rol = :rol"),
+    @NamedQuery(name = "User.findByEmpleadoid", query = "SELECT u FROM User u WHERE u.userPK.empleadoid = :empleadoid")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

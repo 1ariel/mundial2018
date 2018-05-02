@@ -29,20 +29,20 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Partido")
+@Table(name = "partido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Partido.findAll", query = "SELECT p FROM Partido p")
-    , @NamedQuery(name = "Partido.findById", query = "SELECT p FROM Partido p WHERE p.id = :id")
-    , @NamedQuery(name = "Partido.findByFecha", query = "SELECT p FROM Partido p WHERE p.fecha = :fecha")
-    , @NamedQuery(name = "Partido.findByLugar", query = "SELECT p FROM Partido p WHERE p.lugar = :lugar")
-    , @NamedQuery(name = "Partido.findByEquipo1", query = "SELECT p FROM Partido p WHERE p.equipo1 = :equipo1")
-    , @NamedQuery(name = "Partido.findByGolesEquipo1", query = "SELECT p FROM Partido p WHERE p.golesEquipo1 = :golesEquipo1")
-    , @NamedQuery(name = "Partido.findByEquipo2", query = "SELECT p FROM Partido p WHERE p.equipo2 = :equipo2")
-    , @NamedQuery(name = "Partido.findByGolesEquipo2", query = "SELECT p FROM Partido p WHERE p.golesEquipo2 = :golesEquipo2")})
+    @NamedQuery(name = "Partido.findAll", query = "SELECT p FROM Partido p"),
+    @NamedQuery(name = "Partido.findById", query = "SELECT p FROM Partido p WHERE p.id = :id"),
+    @NamedQuery(name = "Partido.findByFecha", query = "SELECT p FROM Partido p WHERE p.fecha = :fecha"),
+    @NamedQuery(name = "Partido.findByLugar", query = "SELECT p FROM Partido p WHERE p.lugar = :lugar"),
+    @NamedQuery(name = "Partido.findByEquipo1", query = "SELECT p FROM Partido p WHERE p.equipo1 = :equipo1"),
+    @NamedQuery(name = "Partido.findByGolesEquipo1", query = "SELECT p FROM Partido p WHERE p.golesEquipo1 = :golesEquipo1"),
+    @NamedQuery(name = "Partido.findByEquipo2", query = "SELECT p FROM Partido p WHERE p.equipo2 = :equipo2"),
+    @NamedQuery(name = "Partido.findByGolesEquipo2", query = "SELECT p FROM Partido p WHERE p.golesEquipo2 = :golesEquipo2")})
 public class Partido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,11 +69,11 @@ public class Partido implements Serializable {
     private Integer golesEquipo2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoid")
     private Collection<Equipo> equipoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoid")
+    private Collection<Apuesta> apuestaCollection;
     @JoinColumn(name = "Ronda_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Ronda rondaid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoid")
-    private Collection<Apuesta> apuestaCollection;
 
     public Partido() {
     }
@@ -147,14 +147,6 @@ public class Partido implements Serializable {
         this.equipoCollection = equipoCollection;
     }
 
-    public Ronda getRondaid() {
-        return rondaid;
-    }
-
-    public void setRondaid(Ronda rondaid) {
-        this.rondaid = rondaid;
-    }
-
     @XmlTransient
     public Collection<Apuesta> getApuestaCollection() {
         return apuestaCollection;
@@ -162,6 +154,14 @@ public class Partido implements Serializable {
 
     public void setApuestaCollection(Collection<Apuesta> apuestaCollection) {
         this.apuestaCollection = apuestaCollection;
+    }
+
+    public Ronda getRondaid() {
+        return rondaid;
+    }
+
+    public void setRondaid(Ronda rondaid) {
+        this.rondaid = rondaid;
     }
 
     @Override

@@ -24,16 +24,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Empleado")
+@Table(name = "empleado")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
-    , @NamedQuery(name = "Empleado.findById", query = "SELECT e FROM Empleado e WHERE e.id = :id")
-    , @NamedQuery(name = "Empleado.findByNombre", query = "SELECT e FROM Empleado e WHERE e.nombre = :nombre")
-    , @NamedQuery(name = "Empleado.findByEmail", query = "SELECT e FROM Empleado e WHERE e.email = :email")})
+    @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e"),
+    @NamedQuery(name = "Empleado.findById", query = "SELECT e FROM Empleado e WHERE e.id = :id"),
+    @NamedQuery(name = "Empleado.findByNombre", query = "SELECT e FROM Empleado e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Empleado.findByEmail", query = "SELECT e FROM Empleado e WHERE e.email = :email")})
 public class Empleado implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +49,12 @@ public class Empleado implements Serializable {
     @Size(max = 45)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Collection<User> userCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoid")
-    private Collection<Apuesta> apuestaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoid")
     private Collection<Resultados> resultadosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoid")
+    private Collection<Apuesta> apuestaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private Collection<User> userCollection;
 
     public Empleado() {
     }
@@ -88,12 +88,12 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public Collection<Resultados> getResultadosCollection() {
+        return resultadosCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setResultadosCollection(Collection<Resultados> resultadosCollection) {
+        this.resultadosCollection = resultadosCollection;
     }
 
     @XmlTransient
@@ -106,12 +106,12 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Resultados> getResultadosCollection() {
-        return resultadosCollection;
+    public Collection<User> getUserCollection() {
+        return userCollection;
     }
 
-    public void setResultadosCollection(Collection<Resultados> resultadosCollection) {
-        this.resultadosCollection = resultadosCollection;
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
     }
 
     @Override
