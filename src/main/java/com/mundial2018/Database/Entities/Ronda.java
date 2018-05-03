@@ -51,7 +51,7 @@ public class Ronda implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rondaid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rondaId")
     private Collection<Partido> partidoCollection;
 
     public Ronda() {

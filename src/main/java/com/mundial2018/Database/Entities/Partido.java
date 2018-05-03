@@ -57,23 +57,19 @@ public class Partido implements Serializable {
     @Size(max = 45)
     @Column(name = "lugar")
     private String lugar;
-    @Size(max = 45)
     @Column(name = "equipo1")
-    private String equipo1;
+    private Integer equipo1;
     @Column(name = "golesEquipo1")
     private Integer golesEquipo1;
-    @Size(max = 45)
     @Column(name = "equipo2")
-    private String equipo2;
+    private Integer equipo2;
     @Column(name = "golesEquipo2")
     private Integer golesEquipo2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoid")
-    private Collection<Equipo> equipoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoId")
     private Collection<Apuesta> apuestaCollection;
-    @JoinColumn(name = "Ronda_id", referencedColumnName = "id")
+    @JoinColumn(name = "ronda_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Ronda rondaid;
+    private Ronda rondaId;
 
     public Partido() {
     }
@@ -106,11 +102,11 @@ public class Partido implements Serializable {
         this.lugar = lugar;
     }
 
-    public String getEquipo1() {
+    public Integer getEquipo1() {
         return equipo1;
     }
 
-    public void setEquipo1(String equipo1) {
+    public void setEquipo1(Integer equipo1) {
         this.equipo1 = equipo1;
     }
 
@@ -122,11 +118,11 @@ public class Partido implements Serializable {
         this.golesEquipo1 = golesEquipo1;
     }
 
-    public String getEquipo2() {
+    public Integer getEquipo2() {
         return equipo2;
     }
 
-    public void setEquipo2(String equipo2) {
+    public void setEquipo2(Integer equipo2) {
         this.equipo2 = equipo2;
     }
 
@@ -139,15 +135,6 @@ public class Partido implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Equipo> getEquipoCollection() {
-        return equipoCollection;
-    }
-
-    public void setEquipoCollection(Collection<Equipo> equipoCollection) {
-        this.equipoCollection = equipoCollection;
-    }
-
-    @XmlTransient
     public Collection<Apuesta> getApuestaCollection() {
         return apuestaCollection;
     }
@@ -156,12 +143,12 @@ public class Partido implements Serializable {
         this.apuestaCollection = apuestaCollection;
     }
 
-    public Ronda getRondaid() {
-        return rondaid;
+    public Ronda getRondaId() {
+        return rondaId;
     }
 
-    public void setRondaid(Ronda rondaid) {
-        this.rondaid = rondaid;
+    public void setRondaId(Ronda rondaId) {
+        this.rondaId = rondaId;
     }
 
     @Override

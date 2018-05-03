@@ -33,6 +33,8 @@
     <class>com.mundial2018.Database.Entities.Equipo_1</class>
     <class>com.mundial2018.Database.Entities.Grupo_1</class>
     <class>com.mundial2018.Database.Entities.Empleado_1</class>
+    <class>com.mundial2018.Database.Entities.Resultado</class>
+    <class>com.mundial2018.Database.Entities.Login</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/zeusco_mundial2018?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>

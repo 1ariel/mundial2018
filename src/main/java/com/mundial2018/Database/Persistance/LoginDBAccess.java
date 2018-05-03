@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.mundial2018.Database.Persistance;
-import com.mundial2018.Database.Entities.User;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * @author WVQ
  */
 @Embeddable
-public class UserPK implements Serializable {
+public class LoginPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "id")
@@ -26,10 +26,10 @@ public class UserPK implements Serializable {
     @Column(name = "Empleado_id")
     private int empleadoid;
 
-    public UserPK() {
+    public LoginPK() {
     }
 
-    public UserPK(int id, int empleadoid) {
+    public LoginPK(int id, int empleadoid) {
         this.id = id;
         this.empleadoid = empleadoid;
     }
@@ -61,10 +61,10 @@ public class UserPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof UserPK)) {
+        if (!(object instanceof LoginPK)) {
             return false;
         }
-        UserPK other = (UserPK) object;
+        LoginPK other = (LoginPK) object;
         if (this.id != other.id) {
             return false;
         }
@@ -76,7 +76,7 @@ public class UserPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mundial2018.Database.Entities.UserPK[ id=" + id + ", empleadoid=" + empleadoid + " ]";
+        return "com.mundial2018.Database.Entities.LoginPK[ id=" + id + ", empleadoid=" + empleadoid + " ]";
     }
     
 }

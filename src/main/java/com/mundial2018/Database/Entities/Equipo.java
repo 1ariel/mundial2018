@@ -63,9 +63,6 @@ public class Equipo implements Serializable {
     @JoinColumn(name = "Grupo_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Grupo grupoid;
-    @JoinColumn(name = "Partido_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Partido partidoid;
 
     public Equipo() {
     }
@@ -144,14 +141,6 @@ public class Equipo implements Serializable {
 
     public void setGrupoid(Grupo grupoid) {
         this.grupoid = grupoid;
-    }
-
-    public Partido getPartidoid() {
-        return partidoid;
-    }
-
-    public void setPartidoid(Partido partidoid) {
-        this.partidoid = partidoid;
     }
 
     @Override
