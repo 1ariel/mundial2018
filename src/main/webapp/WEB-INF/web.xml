@@ -12,9 +12,8 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-        
-        
-        
+    
+ 
     <servlet>
         <servlet-name>SecurityFilter</servlet-name>
         <servlet-class>com.mundial2018.Servlets.Filters.SecurityFilter</servlet-class>

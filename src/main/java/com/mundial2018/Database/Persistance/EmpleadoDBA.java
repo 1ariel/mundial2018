@@ -7,6 +7,7 @@ package com.mundial2018.Database.Persistance;
 
 import com.mundial2018.Database.Entities.Empleado;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,5 +25,12 @@ public class EmpleadoDBA extends EntityManagerFactoria{
         return listEmp;
     }
     
+    public void agregarEmpleados(ArrayList<HashMap> listaEmpleados){
+    
+    
+    
+    
+    
+    }
     
 }
