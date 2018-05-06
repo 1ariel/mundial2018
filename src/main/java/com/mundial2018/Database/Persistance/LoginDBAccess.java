@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package com.mundial2018.Database.Persistance;
-import com.mundial2018.Database.Entities.User;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.EntityManager;
@@ -21,9 +20,9 @@ public class LoginDBAccess extends EntityManagerFactoria{
        Object x = em.find(LoginEntity.class, 1);
        */
        
-       List x = em.createNamedQuery("User.CheckLogin")
+       List x = em.createNamedQuery("Login.CheckLogin")
                .setParameter("password",Password)
-               .setParameter("user", username).getResultList();
+               .setParameter("username", username).getResultList();
        
        
         if (Objects.nonNull(x) && !x.isEmpty()) {

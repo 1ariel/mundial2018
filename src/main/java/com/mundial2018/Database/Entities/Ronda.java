@@ -27,16 +27,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Ronda")
+@Table(name = "ronda")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ronda.findAll", query = "SELECT r FROM Ronda r")
-    , @NamedQuery(name = "Ronda.findById", query = "SELECT r FROM Ronda r WHERE r.id = :id")
-    , @NamedQuery(name = "Ronda.findByNombre", query = "SELECT r FROM Ronda r WHERE r.nombre = :nombre")
-    , @NamedQuery(name = "Ronda.findByFecha", query = "SELECT r FROM Ronda r WHERE r.fecha = :fecha")})
+    @NamedQuery(name = "Ronda.findAll", query = "SELECT r FROM Ronda r"),
+    @NamedQuery(name = "Ronda.findById", query = "SELECT r FROM Ronda r WHERE r.id = :id"),
+    @NamedQuery(name = "Ronda.findByNombre", query = "SELECT r FROM Ronda r WHERE r.nombre = :nombre"),
+    @NamedQuery(name = "Ronda.findByFecha", query = "SELECT r FROM Ronda r WHERE r.fecha = :fecha")})
 public class Ronda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +51,7 @@ public class Ronda implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rondaid")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rondaId")
     private Collection<Partido> partidoCollection;
 
     public Ronda() {

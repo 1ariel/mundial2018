@@ -24,10 +24,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Empleado")
+@Table(name = "empleado")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
@@ -50,12 +50,12 @@ public class Empleado implements Serializable {
     @Size(max = 45)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
-    private Collection<User> userCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoId")
+    private Collection<Resultado> resultadoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoid")
     private Collection<Apuesta> apuestaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleadoid")
-    private Collection<Resultados> resultadosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "empleado")
+    private Collection<Login> loginCollection;
 
     public Empleado() {
     }
@@ -89,12 +89,12 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public Collection<Resultado> getResultadoCollection() {
+        return resultadoCollection;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setResultadoCollection(Collection<Resultado> resultadoCollection) {
+        this.resultadoCollection = resultadoCollection;
     }
 
     @XmlTransient
@@ -107,12 +107,12 @@ public class Empleado implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Resultados> getResultadosCollection() {
-        return resultadosCollection;
+    public Collection<Login> getLoginCollection() {
+        return loginCollection;
     }
 
-    public void setResultadosCollection(Collection<Resultados> resultadosCollection) {
-        this.resultadosCollection = resultadosCollection;
+    public void setLoginCollection(Collection<Login> loginCollection) {
+        this.loginCollection = loginCollection;
     }
 
     @Override

@@ -17,23 +17,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ariel
+ * @author WVQ
  */
 @Entity
-@Table(name = "Apuesta")
+@Table(name = "apuesta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Apuesta.findAll", query = "SELECT a FROM Apuesta a")
-    , @NamedQuery(name = "Apuesta.findById", query = "SELECT a FROM Apuesta a WHERE a.id = :id")
-    , @NamedQuery(name = "Apuesta.findByEquipo1", query = "SELECT a FROM Apuesta a WHERE a.equipo1 = :equipo1")
-    , @NamedQuery(name = "Apuesta.findByGolesEquipo1", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo1 = :golesEquipo1")
-    , @NamedQuery(name = "Apuesta.findByEquipo2", query = "SELECT a FROM Apuesta a WHERE a.equipo2 = :equipo2")
-    , @NamedQuery(name = "Apuesta.findByGolesEquipo2", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo2 = :golesEquipo2")})
+    @NamedQuery(name = "Apuesta.findAll", query = "SELECT a FROM Apuesta a"),
+    @NamedQuery(name = "Apuesta.findById", query = "SELECT a FROM Apuesta a WHERE a.id = :id"),
+    @NamedQuery(name = "Apuesta.findByEquipo1", query = "SELECT a FROM Apuesta a WHERE a.equipo1 = :equipo1"),
+    @NamedQuery(name = "Apuesta.findByGolesEquipo1", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo1 = :golesEquipo1"),
+    @NamedQuery(name = "Apuesta.findByEquipo2", query = "SELECT a FROM Apuesta a WHERE a.equipo2 = :equipo2"),
+    @NamedQuery(name = "Apuesta.findByGolesEquipo2", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo2 = :golesEquipo2")})
 public class Apuesta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,22 +41,20 @@ public class Apuesta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Size(max = 45)
     @Column(name = "equipo1")
-    private String equipo1;
+    private Integer equipo1;
     @Column(name = "golesEquipo1")
     private Integer golesEquipo1;
-    @Size(max = 45)
     @Column(name = "equipo2")
-    private String equipo2;
+    private Integer equipo2;
     @Column(name = "golesEquipo2")
     private Integer golesEquipo2;
     @JoinColumn(name = "Empleado_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Empleado empleadoid;
-    @JoinColumn(name = "Partido_id", referencedColumnName = "id")
+    @JoinColumn(name = "partido_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Partido partidoid;
+    private Partido partidoId;
 
     public Apuesta() {
     }
@@ -74,11 +71,11 @@ public class Apuesta implements Serializable {
         this.id = id;
     }
 
-    public String getEquipo1() {
+    public Integer getEquipo1() {
         return equipo1;
     }
 
-    public void setEquipo1(String equipo1) {
+    public void setEquipo1(Integer equipo1) {
         this.equipo1 = equipo1;
     }
 
@@ -90,11 +87,11 @@ public class Apuesta implements Serializable {
         this.golesEquipo1 = golesEquipo1;
     }
 
-    public String getEquipo2() {
+    public Integer getEquipo2() {
         return equipo2;
     }
 
-    public void setEquipo2(String equipo2) {
+    public void setEquipo2(Integer equipo2) {
         this.equipo2 = equipo2;
     }
 
@@ -114,12 +111,12 @@ public class Apuesta implements Serializable {
         this.empleadoid = empleadoid;
     }
 
-    public Partido getPartidoid() {
-        return partidoid;
+    public Partido getPartidoId() {
+        return partidoId;
     }
 
-    public void setPartidoid(Partido partidoid) {
-        this.partidoid = partidoid;
+    public void setPartidoId(Partido partidoId) {
+        this.partidoId = partidoId;
     }
 
     @Override
