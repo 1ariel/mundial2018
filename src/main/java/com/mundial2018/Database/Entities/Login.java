@@ -50,8 +50,7 @@ public class Login implements Serializable {
     @ManyToOne(optional = false)
     private Empleado empleado;
 
-    public Login() {
-    }
+    public Login() {}
 
     public Login(LoginPK loginPK) {
         this.loginPK = loginPK;
