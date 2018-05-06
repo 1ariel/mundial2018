@@ -25,9 +25,12 @@ public class EmpleadoDBA extends EntityManagerFactoria{
         return listEmp;
     }
     
-    public void agregarEmpleados(ArrayList<HashMap> listaEmpleados){
-    
-    
+    public void agregarListasEmpleados(HashMap listaEmpleados){
+      
+            Empleado aux = new Empleado();
+            aux.setEmail(listaEmpleados.get("email").toString());
+            aux.setNombre(listaEmpleados.get("nombre").toString());        
+                   
     
     
     

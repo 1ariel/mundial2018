@@ -36,4 +36,11 @@ public class LoginDBAccess extends EntityManagerFactoria{
     }
     
     
+    public void addLoginUser(User obj){
+    
+     //   getEMF().createEntityManager().
+    
+    }
+    
+    
 }
