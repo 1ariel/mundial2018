@@ -6,21 +6,177 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Mundial 2018 Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-         
+        <h:form id="formPartidos">
+            <p:tabView>
+                <p:tab title="Fase de grupos">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" rows="15" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>
+                                                <p:commandButton value="Apostar" oncomplete="PF('apuestaPartidoDialog').show();"/>
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                            
+                            <p:commandButton value="Apostar" oncomplete="PF('apuestaRondaDialog').show();">
+                                
+                            </p:commandButton>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+                
+                <p:tab title="Octavos de final">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+                
+                <p:tab title="Cuartos de final">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+                
+                <p:tab title="Semifinales">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="21" rows="2" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+                
+                <p:tab title="Tercer lugar">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+                
+                <p:tab title="Final">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
+                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                            <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
+                                <p:panelGrid style="margin: 25px;">
+                                    <p:row>
+                                        <p:column colspan="5">
+                                            <center>Estadio: #{partido.lugar}</center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{partido.golesEquipo1}</p:column>
+                                        <p:column><center> - </center></p:column>
+                                        <p:column>#{partido.golesEquipo2}</p:column>
+                                        <p:column>#{partido.equipo2}</p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:dataList>
+                        </p:panel>
+                    </p:dataList>
+                </p:tab>
+            </p:tabView>
+        </h:form>
         
+        <p:dialog header="Apostar" widgetVar="apuestaPartidoDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
+            <h:form id="formApuestaPartido">
+
+            </h:form> 
+        </p:dialog>
         
-        
-        <h:form id="EmpleadoMaintenanceNav">        
-              <h:commandButton value="Ir a mantenimiento de empleados" action="AddEmpleado/empleadoMaintenance.xhtml?faces-redirect=true"/>
-              <h:commandButton value="Cerrar sesión" action="#{loginBean.cerrarSesion()}"/>
-        </h:form>    
-        
+        <p:dialog header="Apostar" widgetVar="apuestaRondaDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
+            <h:form id="formApuestaRonda">
+
+            </h:form> 
+        </p:dialog>
         
     </h:body>
 </html>
