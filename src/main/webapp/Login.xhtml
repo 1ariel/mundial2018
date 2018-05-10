@@ -15,7 +15,10 @@ and open the template in the editor.
     </h:head>
     <h:body>
         
-        <h:form id="loginform">
+        
+    <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="10">
+       <h:form id="loginform">
             <h:outputText value="Username:"></h:outputText>
             <h:inputText id="loginid" value="#{loginBean.username}"></h:inputText>
             
@@ -23,7 +26,13 @@ and open the template in the editor.
               <h:inputSecret id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
             
               <h:commandButton value="Entrar" id="logearse" action="#{loginBean.logearse()}"/>
-        </h:form>            
+        </h:form>  
+            
+            
+            
+        </h:panelGrid>
+    </p:panel>
+               
         
         
     </h:body>
