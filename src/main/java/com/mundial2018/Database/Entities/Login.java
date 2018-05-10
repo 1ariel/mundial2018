@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
     @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.loginPK.id = :id"),
-    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.username = :username"),
+    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :username"),
     @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password"),
-    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.username = :username"),
+    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.user = :user"),
     @NamedQuery(name = "Login.findByRol", query = "SELECT l FROM Login l WHERE l.rol = :rol"),
     @NamedQuery(name = "Login.findByEmpleadoid", query = "SELECT l FROM Login l WHERE l.loginPK.empleadoid = :empleadoid")})
 public class Login implements Serializable {
@@ -38,8 +38,8 @@ public class Login implements Serializable {
     @EmbeddedId
     protected LoginPK loginPK;
     @Size(max = 45)
-    @Column(name = "username")
-    private String username;
+    @Column(name = "user")
+    private String user;
     @Size(max = 45)
     @Column(name = "password")
     private String password;
@@ -51,6 +51,7 @@ public class Login implements Serializable {
     private Empleado empleado;
 
     public Login() {
+        empleado = new Empleado();
     }
 
     public Login(LoginPK loginPK) {
@@ -70,11 +71,11 @@ public class Login implements Serializable {
     }
 
     public String getUsername() {
-        return username;
+        return user;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.user = username;
     }
 
     public String getPassword() {

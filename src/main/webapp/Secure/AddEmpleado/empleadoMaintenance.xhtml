@@ -33,14 +33,47 @@ and open the template in the editor.
         </h:form> 
 
         <h:form enctype="multipart/form-data">
-         <p:fileUpload fileUploadListener="#{empleadosController.subirArchivo}" mode="advanced" dragDropSupport="false"
-                update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
+            <p:fileUpload fileUploadListener="#{empleadosController.subirArchivo}" mode="advanced" dragDropSupport="false"
+                          update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
 
-         <p:growl id="messages" showDetail="true" />
-     </h:form>
+            <p:growl id="messages" showDetail="true" />
+        </h:form>
 
-        <h:form id="lolol">        
-            <h:commandButton value="lolo" action="#{empleadosController.lolol()}"/>
+        <h:form id="AgregacionManual">  
+
+            <p:panel id="toggleable" header="Agregar Empleados Manual" collapsed="true" toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+
+
+                <h:panelGrid columns="2" cellpadding="10">
+                    <h:outputLabel value="Nombre De empleado"/>
+                    <h:inputText  label="Nombre" value="#{empleadosController.login.empleado.nombre}"/>
+
+                    <h:outputLabel value="Código de empleado"/>
+                    <h:inputText  label="Código" value="#{empleadosController.login.password}"/> 
+
+                    <h:outputLabel value="Email"/>
+                    <h:inputText  label="Email" value="#{empleadosController.login.empleado.email}"></h:inputText> 
+
+                    <h:outputLabel value="Rol"/>
+                    <p:selectOneListbox id="basic"  value="#{empleadosController.login.rol}">
+                        <f:selectItem itemLabel="Empleado"  itemValue="empleado" />
+                        <f:selectItem itemLabel="Admin" itemValue="admin" />
+                    </p:selectOneListbox>
+
+                    <h:outputLabel value=""/>
+                    <h:commandButton value="Agregar" action="#{empleadosController.agregarManualEmpleado()}"/>
+                </h:panelGrid>
+
+                <f:facet name="options">
+                    <p:menu>
+                        <p:submenu label="Settings">
+                            <p:menuitem value="Toggle" url="#" icon="ui-icon-newwin" onclick="PF('panel').toggle()" />
+                        </p:submenu>
+                    </p:menu>
+                </f:facet>
+            </p:panel>
+
+
         </h:form>   
 
 

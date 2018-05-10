@@ -106,7 +106,7 @@ public class excelManipulation {
             Reader red = new InputStreamReader(in);
             
             Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    .withHeader("nombre","email","user","rol")
+                    .withHeader("nombre","email","user","rol","codigo")
                     .withFirstRecordAsHeader()
                     .parse(red);
             
@@ -116,6 +116,7 @@ public class excelManipulation {
                 String email = record.get("email");
                 String user = record.get("user");
                 String rol = record.get("rol");
+                String codigo = record.get("codigo");
                 
                 if (user == null || user.isEmpty()) {
                     user = email;
@@ -124,6 +125,8 @@ public class excelManipulation {
                 aux.put("email", email);
                 aux.put("user", user);
                 aux.put("rol", rol);
+                aux.put("codigo", codigo);
+
                 listaDeEmpleados.add(aux);
             }
             
