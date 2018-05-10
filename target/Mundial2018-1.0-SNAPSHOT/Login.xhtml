@@ -12,28 +12,36 @@ and open the template in the editor.
     <h:head>
         <title>Mundial 2018</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        
+        <style>
+       
+    </style>
     </h:head>
     <h:body>
+        <h:graphicImage library="default" name="images/FIFA_World_Cup_logo.png" style="width: 5%; position: relative;  left: 90%;" />
         
         
-    <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
-        <h:panelGrid columns="2" cellpadding="10">
-       <h:form id="loginform">
-            <h:outputText value="Username:"></h:outputText>
-            <h:inputText id="loginid" value="#{loginBean.username}"></h:inputText>
-            
-              <h:outputText value="Password:"></h:outputText>
-              <h:inputSecret id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
-            
-              <h:commandButton value="Entrar" id="logearse" action="#{loginBean.logearse()}"/>
-        </h:form>  
-            
-            
-            
-        </h:panelGrid>
-    </p:panel>
-               
-        
-        
+        <p:layoutUnit position="center" style=" margin: auto; width: 50%;">
+            <div class="ui-g-12  " >        
+            <p:panel id="basic" header="Login"  footer="Mundial 2018" style="margin-bottom:20px" >
+                <h:panelGrid columns="2" cellpadding="1">
+                    <h:form id="loginform">
+                        <h:outputText class="ui-g-12 ui-md-6 ui-lg-3" value="Username:"></h:outputText>
+                        <h:inputText class="ui-g-12 ui-md-6 ui-lg-3"  id="loginid" value="#{loginBean.username}"></h:inputText>
+
+                        <h:outputText class="ui-g-12 ui-md-6 ui-lg-3"  value="Password:"></h:outputText>
+                        <h:inputSecret class="ui-g-12 ui-md-6 ui-lg-3"  id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
+                            
+                        <div class="ui-g-12 ui-md-6 ui-lg-3" />
+                        <div class="ui-g-12 ui-md-6 ui-lg-3" />
+                        <div class="ui-g-12 ui-md-6 ui-lg-3" />
+                        <h:commandButton value="Entrar" id="logearse" action="#{loginBean.logearse()}"/>
+                    </h:form>  
+                </h:panelGrid>
+                
+            </p:panel>
+        </div>     
+</p:layoutUnit>
+
     </h:body>
 </html>
