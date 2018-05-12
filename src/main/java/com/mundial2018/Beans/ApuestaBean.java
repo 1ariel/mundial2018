@@ -5,10 +5,13 @@
  */
 package com.mundial2018.Beans;
 
+import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Database.Entities.Apuesta;
+import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Entities.Ronda;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -17,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.primefaces.PrimeFaces;
 
 /**
  *
@@ -27,12 +31,21 @@ import javax.persistence.Persistence;
 public class ApuestaBean {
     private Ronda ronda;
     private Apuesta apuesta;
+    private List<Apuesta> listaApuestas;
     private List<Ronda> listaRondas;
     private final RondaJpaController rjc;
+    private final EquipoJpaController ejc;
     
     public ApuestaBean() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
         rjc = new RondaJpaController(emf);
+        ejc = new EquipoJpaController(emf);
+    }
+    
+    @PostConstruct
+    public void init() {
+        apuesta = new Apuesta();
+        listaRondas = rjc.findRondaEntities();
     }
     
     public String formatearFecha(Date fecha) {
@@ -41,13 +54,35 @@ public class ApuestaBean {
         return formato.format(fecha);
     }
     
-    public void agregarApuesta(int rondaId) {
-        
+    public String buscarEquipo(Integer equipoId) {
+        return (String)ejc.findEquipo(equipoId).getNombre();
     }
-
-    @PostConstruct
-    public void init() {
+    
+    public void onTabChange() {
         listaRondas = rjc.findRondaEntities();
+    }
+    
+    public void asignarEquipos(Partido partido) {
+        apuesta.setPartidoId(partido);
+        apuesta.setEquipo1(ejc.findEquipo(partido.getEquipo1()).getNombre());
+        apuesta.setEquipo2(ejc.findEquipo(partido.getEquipo2()).getNombre());
+        PrimeFaces.current().executeScript("PF('apuestaPartidoDialog').show();");
+    }
+    
+    public void asignarEquiposPorRonda(Ronda ronda) {
+        int i = 0;
+        listaApuestas = new ArrayList<>();
+        List<Partido> partidos = (List<Partido>) ronda.getPartidoCollection();
+        
+        for(Partido partido : partidos) {
+            listaApuestas.add(new Apuesta());
+            listaApuestas.get(i).setPartidoId(partido);
+            listaApuestas.get(i).setEquipo1(ejc.findEquipo(partido.getEquipo1()).getNombre());
+            listaApuestas.get(i).setEquipo2(ejc.findEquipo(partido.getEquipo2()).getNombre());
+            i++;
+        }
+        
+        PrimeFaces.current().executeScript("PF('apuestaRondaDialog').show();");
     }
     
     /**
@@ -82,7 +117,7 @@ public class ApuestaBean {
      * @return the listaRondas
      */
     public List getListaRondas() {
-        return rjc.findRondaEntities();
+        return listaRondas;
     }
 
     /**
@@ -90,5 +125,19 @@ public class ApuestaBean {
      */
     public void setListaRondas(List listaRondas) {
         this.listaRondas = listaRondas;
+    }
+
+    /**
+     * @return the listaApuestas
+     */
+    public List<Apuesta> getListaApuestas() {
+        return listaApuestas;
+    }
+
+    /**
+     * @param listaApuestas the listaApuestas to set
+     */
+    public void setListaApuestas(List<Apuesta> listaApuestas) {
+        this.listaApuestas = listaApuestas;
     }
 }

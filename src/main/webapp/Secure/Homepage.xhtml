@@ -7,7 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Mundial 2018 Home</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -26,24 +27,26 @@ and open the template in the editor.
                                         </p:column>
                                     </p:row>
                                     <p:row>
-                                        <p:column>#{partido.equipo1}</p:column>
+                                        <p:column>#{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
                                         <p:column>#{partido.golesEquipo1}</p:column>
                                         <p:column><center> - </center></p:column>
                                         <p:column>#{partido.golesEquipo2}</p:column>
-                                        <p:column>#{partido.equipo2}</p:column>
+                                        <p:column>#{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="5">
                                             <center>
-                                                <p:commandButton value="Apostar" oncomplete="PF('apuestaPartidoDialog').show();"/>
+                                                <p:commandButton value="Apostar" update=":formApuestaPartido">
+                                                    <p:ajax listener="#{apuestaBean.asignarEquipos(partido)}"/>
+                                                </p:commandButton>
                                             </center>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
                             </p:dataList>
                             
-                            <p:commandButton value="Apostar" oncomplete="PF('apuestaRondaDialog').show();">
-                                
+                            <p:commandButton value="Apostar" update=":formApuestaRonda">
+                                <p:ajax listener="#{apuestaBean.asignarEquiposPorRonda(ronda)}"/>
                             </p:commandButton>
                         </p:panel>
                     </p:dataList>
@@ -168,13 +171,59 @@ and open the template in the editor.
         
         <p:dialog header="Apostar" widgetVar="apuestaPartidoDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:form id="formApuestaPartido">
-
+                <p:panelGrid style="margin: 25px;">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="#{apuestaBean.apuesta.equipo1}"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber value="#{apuestaBean.apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                        </p:column>
+                        <p:column><center> - </center></p:column>
+                        <p:column>
+                            <p:inputNumber value="#{apuestaBean.apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="#{apuestaBean.apuesta.equipo2}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="5">
+                            <center>
+                                <p:commandButton value="Crear apuesta" oncomplete="PF('apuestaPartidoDialog').hide();"/>
+                            </center>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
             </h:form> 
         </p:dialog>
         
         <p:dialog header="Apostar" widgetVar="apuestaRondaDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:form id="formApuestaRonda">
-
+                <p:dataList value="#{apuestaBean.listaApuestas}" var="apuesta" itemType="none">
+                    <p:panelGrid style="margin: 25px;">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="#{apuesta.equipo1}"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputNumber value="#{apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                            </p:column>
+                            <p:column><center> - </center></p:column>
+                            <p:column>
+                                <p:inputNumber value="#{apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="#{apuesta.equipo2}"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:dataList>
+                <p:column colspan="5">
+                    <center>
+                        <p:commandButton value="Crear apuesta" oncomplete="PF('apuestaRondaDialog').hide();"/>
+                    </center>
+                </p:column>
             </h:form> 
         </p:dialog>
         
