@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.LoginPK;
+import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -162,6 +163,22 @@ public class LoginJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public Login checkLogin(Login login) {
+        EntityManager em = getEntityManager();
+        Login nuevo = new Login();
+        
+        try {
+            Query query = em.createNamedQuery("Login.CheckLogin");
+            query.setParameter("username", login.getUsername());
+            query.setParameter("password", login.getPassword());
+            nuevo = (Login)query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        return nuevo;
     }
 
     public int getLoginCount() {
