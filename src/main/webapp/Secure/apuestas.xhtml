@@ -177,7 +177,7 @@ and open the template in the editor.
                             <p:outputLabel value="#{apuestaBean.apuesta.equipo1}"/>
                         </p:column>
                         <p:column>
-                            <p:inputNumber value="#{apuestaBean.apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                            <p:inputNumber value="#{apuestaBean.apuesta.golesEquipo1}" decimalPlaces="0" size="1"/>
                         </p:column>
                         <p:column><center> - </center></p:column>
                         <p:column>
@@ -207,7 +207,7 @@ and open the template in the editor.
                                 <p:outputLabel value="#{apuesta.equipo1}"/>
                             </p:column>
                             <p:column>
-                                <p:inputNumber value="#{apuesta.golesEquipo2}" decimalPlaces="0" size="1"/>
+                                <p:inputNumber value="#{apuesta.golesEquipo1}" decimalPlaces="0" size="1"/>
                             </p:column>
                             <p:column><center> - </center></p:column>
                             <p:column>
@@ -221,7 +221,7 @@ and open the template in the editor.
                 </p:dataList>
                 <p:column colspan="5">
                     <center>
-                        <p:commandButton value="Crear apuesta" oncomplete="PF('apuestaRondaDialog').hide();"/>
+                        <p:commandButton value="Crear apuesta" actionListener="#{apuestaBean.CrearApuestaPorGrupo}" oncomplete="PF('apuestaRondaDialog').hide();"/>
                     </center>
                 </p:column>
             </h:form> 
