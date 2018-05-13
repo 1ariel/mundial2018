@@ -20,6 +20,15 @@ and open the template in the editor.
     <h:body>
         <h:graphicImage library="default" name="images/FIFA_World_Cup_logo.png" style="width: 5%; position: relative;  left: 90%;" />
         
+        <h:form id="loginform">
+            <h:outputText value="Username:"></h:outputText>
+            <h:inputText id="loginid" value="#{loginBean.username}"></h:inputText>
+            
+              <h:outputText value="Password:"></h:outputText>
+              <h:inputSecret id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
+            
+              <h:commandButton value="Entrar" id="logearse" action="#{loginBean.iniciarSesion()}"/>
+        </h:form>            
         
         <p:layoutUnit position="center" style=" margin: auto; width: 50%;">
             <div class="ui-g-12  " >        

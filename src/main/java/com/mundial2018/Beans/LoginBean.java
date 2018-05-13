@@ -52,7 +52,11 @@ public class LoginBean implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
         Login nuevo = ljc.checkLogin(login);
-
+        
+        //test
+        this.setPassword("admin");
+        this.setUsername("admin");
+               //end test
         if (Objects.nonNull(nuevo.getLoginPK())) {
             login = nuevo;
             //login.setAutenticado(true);

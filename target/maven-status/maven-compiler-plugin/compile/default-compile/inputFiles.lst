@@ -21,6 +21,10 @@
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Database/Entities/Ronda.java
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Controller/EmpleadoJpaController.java
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Controller/empleadosController.java
+<<<<<<< Updated upstream
+=======
+/home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Beans/ApuestaBean.java
+>>>>>>> Stashed changes
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Controller/LoginJpaController.java
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Controller/exceptions/PreexistingEntityException.java
 /home/ariel/NetBeansProjects/Mundial2018/src/main/java/com/mundial2018/Controller/PartidoJpaController.java
