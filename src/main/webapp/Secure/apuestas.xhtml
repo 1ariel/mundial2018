@@ -190,7 +190,7 @@ and open the template in the editor.
                     <p:row>
                         <p:column colspan="5">
                             <center>
-                                <p:commandButton value="Crear apuesta" oncomplete="PF('apuestaPartidoDialog').hide();"/>
+                                <p:commandButton value="Crear apuesta" actionListener="#{apuestaBean.CrearApuestaIndividual}" oncomplete="PF('apuestaPartidoDialog').hide();"/>
                             </center>
                         </p:column>
                     </p:row>

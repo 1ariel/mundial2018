@@ -8,6 +8,7 @@ package com.mundial2018.Beans;
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Database.Entities.Apuesta;
+import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Entities.Ronda;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,8 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.primefaces.PrimeFaces;
@@ -45,6 +48,11 @@ public class ApuestaBean {
     @PostConstruct
     public void init() {
         apuesta = new Apuesta();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        Login login = (Login) ec.getSessionMap().get("login");
+        
+        apuesta.setEmpleadoid(login.getEmpleado());
         listaRondas = rjc.findRondaEntities();
     }
     
@@ -84,6 +92,13 @@ public class ApuestaBean {
         
         PrimeFaces.current().executeScript("PF('apuestaRondaDialog').show();");
     }
+    
+    public void CrearApuestaIndividual(){
+        String test ="";
+    
+    
+    }
+    
     
     /**
      * @return the ronda
