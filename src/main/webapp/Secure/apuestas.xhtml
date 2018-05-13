@@ -36,7 +36,7 @@ and open the template in the editor.
                                     <p:row>
                                         <p:column colspan="5">
                                             <center>
-                                                <p:commandButton value="Apostar" update=":formApuestaPartido" rendered="false">
+                                                <p:commandButton value="Apostar" update=":formApuestaPartido" >
                                                     <p:ajax listener="#{apuestaBean.asignarEquipos(partido)}"/>
                                                 </p:commandButton>
                                             </center>

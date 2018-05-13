@@ -25,12 +25,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "login")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
-    @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.loginPK.id = :id"),
-    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :username"),
-    @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password"),
-    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.user = :user"),
-    @NamedQuery(name = "Login.findByRol", query = "SELECT l FROM Login l WHERE l.rol = :rol"),
+    @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l") ,
+    @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.loginPK.id = :id")
+    ,
+    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :username")
+    ,
+    @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password")
+    ,
+    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.user = :user")
+    ,
+    @NamedQuery(name = "Login.findByRol", query = "SELECT l FROM Login l WHERE l.rol = :rol")
+    ,
     @NamedQuery(name = "Login.findByEmpleadoid", query = "SELECT l FROM Login l WHERE l.loginPK.empleadoid = :empleadoid")})
 public class Login implements Serializable {
 
@@ -38,7 +43,7 @@ public class Login implements Serializable {
     @EmbeddedId
     protected LoginPK loginPK;
     @Size(max = 45)
-    @Column(name = "user")
+    @Column(name = "username")
     private String user;
     @Size(max = 45)
     @Column(name = "password")
@@ -126,5 +131,5 @@ public class Login implements Serializable {
     public String toString() {
         return "com.mundial2018.Database.Entities.Login[ loginPK=" + loginPK + " ]";
     }
-    
+
 }

@@ -166,16 +166,20 @@ public class LoginJpaController implements Serializable {
     }
     
     public Login checkLogin(Login login) {
-        EntityManager em = getEntityManager();
+        EntityManager em = null;
         Login nuevo = new Login();
         
         try {
+            em = getEntityManager();
             Query query = em.createNamedQuery("Login.CheckLogin");
-            query.setParameter("username", login.getUsername());
+            query.setParameter("user", login.getUsername());
             query.setParameter("password", login.getPassword());
             nuevo = (Login)query.getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        finally{
+        em.close();
         }
             
         return nuevo;

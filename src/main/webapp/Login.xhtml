@@ -19,16 +19,7 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <h:graphicImage library="default" name="images/FIFA_World_Cup_logo.png" style="width: 5%; position: relative;  left: 90%;" />
-        
-        <h:form id="loginform">
-            <h:outputText value="Username:"></h:outputText>
-            <h:inputText id="loginid" value="#{loginBean.username}"></h:inputText>
-            
-              <h:outputText value="Password:"></h:outputText>
-              <h:inputSecret id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
-            
-              <h:commandButton value="Entrar" id="logearse" action="#{loginBean.iniciarSesion()}"/>
-        </h:form>            
+           
         
         <p:layoutUnit position="center" style=" margin: auto; width: 50%;">
             <div class="ui-g-12  " >        
@@ -36,15 +27,15 @@ and open the template in the editor.
                 <h:panelGrid columns="2" cellpadding="1">
                     <h:form id="loginform">
                         <h:outputText class="ui-g-12 ui-md-6 ui-lg-3" value="Username:"></h:outputText>
-                        <h:inputText class="ui-g-12 ui-md-6 ui-lg-3"  id="loginid" value="#{loginBean.username}"></h:inputText>
+                        <h:inputText class="ui-g-12 ui-md-6 ui-lg-3"  id="loginid" value="#{loginBean.login.username}"></h:inputText>
 
                         <h:outputText class="ui-g-12 ui-md-6 ui-lg-3"  value="Password:"></h:outputText>
-                        <h:inputSecret class="ui-g-12 ui-md-6 ui-lg-3"  id="loginpassword" value="#{loginBean.password}"></h:inputSecret>
+                        <h:inputSecret class="ui-g-12 ui-md-6 ui-lg-3"  id="loginpassword" value="#{loginBean.login.password}"></h:inputSecret>
                             
                         <div class="ui-g-12 ui-md-6 ui-lg-3" />
                         <div class="ui-g-12 ui-md-6 ui-lg-3" />
                         <div class="ui-g-12 ui-md-6 ui-lg-3" />
-                        <h:commandButton value="Entrar" id="logearse" action="#{loginBean.logearse()}"/>
+                        <h:commandButton value="Entrar" id="logearse" action="#{loginBean.iniciarSesion()}"/>
                     </h:form>  
                 </h:panelGrid>
                 
