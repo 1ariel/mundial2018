@@ -32,7 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Apuesta.findByEquipo1", query = "SELECT a FROM Apuesta a WHERE a.equipo1 = :equipo1"),
     @NamedQuery(name = "Apuesta.findByGolesEquipo1", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo1 = :golesEquipo1"),
     @NamedQuery(name = "Apuesta.findByEquipo2", query = "SELECT a FROM Apuesta a WHERE a.equipo2 = :equipo2"),
-    @NamedQuery(name = "Apuesta.findByGolesEquipo2", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo2 = :golesEquipo2")})
+    @NamedQuery(name = "Apuesta.findByGolesEquipo2", query = "SELECT a FROM Apuesta a WHERE a.golesEquipo2 = :golesEquipo2"),
+    @NamedQuery(name = "Apuesta.findByEmpleadoAndPartido", query = "SELECT a FROM Apuesta a WHERE a.empleadoid = :empleadoid and a.partidoId=:partidoId")
+
+})
 public class Apuesta implements Serializable {
 
     private static final long serialVersionUID = 1L;

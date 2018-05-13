@@ -180,6 +180,26 @@ public class ApuestaJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Apuesta findViaEmpleadoAndPartido(Empleado idEmpleado, Partido idPartido){
+     EntityManager em = getEntityManager();
+      try {
+        Apuesta aux =  (Apuesta) em.createNamedQuery("Apuesta.findByEmpleadoAndPartido")
+                   .setParameter("empleadoid", idEmpleado)
+                   .setParameter("partidoId", idPartido).getSingleResult();
+        
+        return aux;
+        
+        
+        }
+      catch(Exception e){
+      return null;
+      }
+      
+      finally {
+            em.close();
+    }
+    }
 
     public int getApuestaCount() {
         EntityManager em = getEntityManager();
