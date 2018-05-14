@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Mundial 2018 Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <h:body>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" template="/WEB-INF/templates/default.xhtml" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
         <h:form id="formPartidos">
             <p:tabView>
                 <p:tab title="Fase de grupos">
@@ -44,14 +36,14 @@ and open the template in the editor.
                                     </p:row>
                                 </p:panelGrid>
                             </p:dataList>
-                            
+
                             <p:commandButton value="Apostar" update=":formApuestaRonda" rendered="true">
                                 <p:ajax listener="#{apuestaBean.asignarEquiposPorRonda(ronda)}"/>
                             </p:commandButton>
                         </p:panel>
                     </p:dataList>
                 </p:tab>
-                
+
                 <p:tab title="Octavos de final">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
@@ -74,7 +66,7 @@ and open the template in the editor.
                         </p:panel>
                     </p:dataList>
                 </p:tab>
-                
+
                 <p:tab title="Cuartos de final">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
@@ -97,7 +89,7 @@ and open the template in the editor.
                         </p:panel>
                     </p:dataList>
                 </p:tab>
-                
+
                 <p:tab title="Semifinales">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="21" rows="2" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
@@ -120,7 +112,7 @@ and open the template in the editor.
                         </p:panel>
                     </p:dataList>
                 </p:tab>
-                
+
                 <p:tab title="Tercer lugar">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
@@ -143,7 +135,7 @@ and open the template in the editor.
                         </p:panel>
                     </p:dataList>
                 </p:tab>
-                
+
                 <p:tab title="Final">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
@@ -168,7 +160,7 @@ and open the template in the editor.
                 </p:tab>
             </p:tabView>
         </h:form>
-        
+
         <p:dialog header="Apostar" widgetVar="apuestaPartidoDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:form id="formApuestaPartido">
                 <p:panelGrid style="margin: 25px;">
@@ -197,7 +189,7 @@ and open the template in the editor.
                 </p:panelGrid>
             </h:form> 
         </p:dialog>
-        
+
         <p:dialog header="Apostar" widgetVar="apuestaRondaDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:form id="formApuestaRonda">
                 <p:dataList value="#{apuestaBean.listaApuestas}" var="apuesta" itemType="none">
@@ -226,6 +218,5 @@ and open the template in the editor.
                 </p:column>
             </h:form> 
         </p:dialog>
-        
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>

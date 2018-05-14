@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <ui:insert name="head"/>
+        <title>Copa Mundial FIFA Rusia 2018</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="shortcut icon" href="#{request.contextPath}/images/logo.png"/>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/default.css"/>
+    </h:head>
+    
+    <h:body>
+         <ui:insert name="header">
+                <header style="margin: 1em; background: beige;">
+                    <h:graphicImage library="default" name="images/logo.png" style="width: 6%; position: relative; left: 85%;"/>
+                </header>
+        </ui:insert>
+
+        <ui:insert name="menu">
+            <h:form id="formMenu">
+                <nav style="margin: 1em 0;">
+                    <p:menubar class="menu">
+                        <p:menuitem value="Inicio" outcome="/Secure/Homepage.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem value="Apuestas" url="/Secure/apuestas.xhtml"/>
+                        <p:menuitem value="Empleados" url="/Secure/AddEmpleado/empleadoMaintenance.xhtml"/>
+                        <p:menuitem value="Grupos" url="/Secure/grupos.xhtml"/>
+                        <p:menuitem value="Ayuda"/>
+                        
+                        <f:facet name="options">
+                            <p:commandButton value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
+                        </f:facet>
+                    </p:menubar>
+                </nav>
+            </h:form>
+        </ui:insert>
+
+        <ui:insert name="content">
+            <section>
+
+            </section>
+        </ui:insert>
+
+        <ui:insert name="footer">
+            <footer style="padding: 2em; background: beige;">
+                <span>
+                    <center>Footer</center>
+                </span>
+            </footer>
+        </ui:insert>
+    </h:body>
+</html>
