@@ -5,6 +5,7 @@
  */
 package com.mundial2018.Beans;
 
+import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
@@ -70,6 +71,11 @@ public class ApuestaBean {
         return formato.format(fecha);
     }
     
+    public String buscarBandera(Integer equipoId){
+    ImageHelper img = new ImageHelper();
+    return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+    
+    }
     public String buscarEquipo(Integer equipoId) {
         return (String) ejc.findEquipo(equipoId).getNombre();
     }
