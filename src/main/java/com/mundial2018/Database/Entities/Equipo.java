@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Equipo.findAll", query = "SELECT e FROM Equipo e"),
     @NamedQuery(name = "Equipo.findById", query = "SELECT e FROM Equipo e WHERE e.id = :id"),
     @NamedQuery(name = "Equipo.findByNombre", query = "SELECT e FROM Equipo e WHERE e.nombre = :nombre"),
+    @NamedQuery(name = "Equipo.findByJugados", query = "SELECT e FROM Equipo e WHERE e.jugados = :jugados"),
     @NamedQuery(name = "Equipo.findByGanados", query = "SELECT e FROM Equipo e WHERE e.ganados = :ganados"),
     @NamedQuery(name = "Equipo.findByPerdidos", query = "SELECT e FROM Equipo e WHERE e.perdidos = :perdidos"),
     @NamedQuery(name = "Equipo.findByEmpatados", query = "SELECT e FROM Equipo e WHERE e.empatados = :empatados"),
@@ -48,6 +50,12 @@ public class Equipo implements Serializable {
     @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @Lob
+    @Column(name = "bandera")
+    private String bandera;
+    @Column(name = "jugados")
+    private Integer jugados;
     @Column(name = "ganados")
     private Integer ganados;
     @Column(name = "perdidos")
@@ -85,6 +93,21 @@ public class Equipo implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(String bandera) {
+        this.bandera = bandera;
+    }
+    public Integer getJugados() {
+        return jugados;
+    }
+
+    public void setJugados(Integer jugados) {
+        this.ganados = jugados;
     }
 
     public Integer getGanados() {

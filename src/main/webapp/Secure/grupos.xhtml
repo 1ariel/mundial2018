@@ -2,11 +2,53 @@
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" template="/WEB-INF/templates/default.xhtml" 
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <h:form id="formGrupos">        
+        <h:form id="formGrupos">
+            
+            <p:tabView dynamic="true" value="#{grupoBean.listaGrupos}" var="grupo">
+                <p:tab title="Grupo #{grupo.nombre}">    
+                    <p:dataTable value="#{grupo.equipoCollection}" var="equipo">
+                        <f:facet name="header">
+                            <p:outputLabel value="Análisis del grupo"/>
+                        </f:facet>
 
+                        <p:column>
+                            <p:graphicImage value="#{equipo.bandera}" stream="true"/>
+                        </p:column>
+                        <p:column headerText="Equipo">
+                            <p:outputLabel value="#{equipo.nombre}"/>
+                        </p:column>
+                        <p:column headerText="PJ" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.jugados}"/>
+                        </p:column>
+                        <p:column headerText="G" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.ganados}"/>
+                        </p:column>
+                        <p:column headerText="E" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.empatados}"/>
+                        </p:column>
+                        <p:column headerText="P" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.perdidos}"/>
+                        </p:column>
+                        <p:column headerText="GF" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.golesFavor}"/>
+                        </p:column>
+                        <p:column headerText="GC" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.golesContra}"/>
+                        </p:column>
+                        <p:column headerText="+/-" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.golesFavor - equipo.golesContra}"/>
+                        </p:column>
+                        <p:column headerText="PTS" style="text-align: center;">
+                            <p:outputLabel value="#{equipo.puntos}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
         </h:form>
     </ui:define>
 </ui:composition>
