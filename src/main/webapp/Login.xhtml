@@ -17,7 +17,12 @@ and open the template in the editor.
 
         </style>
     </h:head>
+  
     <h:body>
+        <f:event listener="#{loginBean.filterCheck(event)}" type="preRenderView" />
+          <p:growl id="growl" showDetail="true" sticky="true" />  
+    
+    
         <h:graphicImage library="default" name="images/logo.png" style="width: 5%; position: relative;  left: 90%;" />
 
 

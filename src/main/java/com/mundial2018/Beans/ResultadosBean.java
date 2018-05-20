@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,7 +24,7 @@ import javax.persistence.Persistence;
  * @author ariel
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ResultadosBean implements Serializable {
 
     private List<Resultado> listResultados;
