@@ -11,10 +11,13 @@
         <title>Copa Mundial FIFA Rusia 2018</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="shortcut icon" href="#{request.contextPath}/images/logo.png"/>
-        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/styles/default.css"/>
+  
     </h:head>
     
     <h:body>
+            <f:event listener="#{errorMessages.filterCheck(event)}" type="preRenderView" />
+          <p:growl id="growl" showDetail="true" sticky="true" />  
+          
          <ui:insert name="header">
                 <header style="margin: 1em; background: beige;">
                     <h:graphicImage library="default" name="images/logo.png" style="width: 6%; position: relative; left: 85%;"/>

@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -44,6 +45,12 @@ public class LoginBean implements Serializable {
         EntityManagerFactory emf = aux.getEMF();
         ljc = new LoginJpaController(emf);
 
+        try {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+        } catch (Exception e) {
+        }
+
     }
 
     public String loguearse() {
@@ -56,12 +63,31 @@ public class LoginBean implements Serializable {
         }
     }
 
+    public void filterCheck(ComponentSystemEvent event) {
+        try {
+
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            String message = (String) ec.getSessionMap().get("message");
+
+            if (message != null) {
+
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+                ec.getSessionMap().remove("message");
+
+            }
+
+        } catch (Exception e) {
+            String ee = e.getMessage();
+        }
+
+    }
+
     public String iniciarSesion() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
 
-        login.setPassword("admin");
-        login.setUsername("admin");
+  
 
         Login nuevo = ljc.checkLogin(login);
 
@@ -73,6 +99,7 @@ public class LoginBean implements Serializable {
                 ec.getFlash().setKeepMessages(true);
                 fc.addMessage("msg", new FacesMessage("Bienvenido " + login.getEmpleado().getNombre()));
                 ec.getSessionMap().put("login", login);
+
             } else {
                 fc.addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "El usuario debe estar asociado a un Empleado", null));
             }
