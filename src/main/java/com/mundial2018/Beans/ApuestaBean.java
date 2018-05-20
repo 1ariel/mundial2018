@@ -15,6 +15,7 @@ import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Entities.Ronda;
+import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +58,9 @@ public class ApuestaBean {
     private final PartidoJpaController pjc;
 
     public ApuestaBean() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
+        EntityManagerFactoria aux = new EntityManagerFactoria();
+
+        EntityManagerFactory emf = aux.getEMF();
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
