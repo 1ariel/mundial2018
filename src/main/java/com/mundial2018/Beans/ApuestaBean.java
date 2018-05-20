@@ -5,19 +5,25 @@
  */
 package com.mundial2018.Beans;
 
+import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
+import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Entities.Ronda;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -27,6 +33,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -45,12 +54,14 @@ public class ApuestaBean {
     private final RondaJpaController rjc;
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
+    private final PartidoJpaController pjc;
     
     public ApuestaBean() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
+        pjc= new PartidoJpaController(emf);
     }
     
     @PostConstruct
@@ -66,10 +77,16 @@ public class ApuestaBean {
     
     public String formatearFecha(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM", new Locale("es", "ES"));
+       formato.setTimeZone(TimeZone.getTimeZone("UTC"));
         
         return formato.format(fecha);
     }
     
+    public String buscarBandera(Integer equipoId){
+    ImageHelper img = new ImageHelper();
+    return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+    
+    }
     public String buscarEquipo(Integer equipoId) {
         return (String) ejc.findEquipo(equipoId).getNombre();
     }
@@ -131,7 +148,12 @@ public class ApuestaBean {
         
         for (Apuesta apuestaAux : listaApuestas) {
             if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
+                
+           
                 CrearActualizarApuesta(apuestaAux);
+
+             
+                
             }
             
         }
@@ -147,19 +169,48 @@ public class ApuestaBean {
         
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
         
-        if (existeApuesta == null) {//exist do an update
-            ajc.create(apuestaSeleccionada);
-            
-        } else {//update
+        //verificar que la apuesta tenga una fecha posterior o igual al dia de hoy
+      //  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+ 
+    
+        
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-YYYY");        
+       formato.setTimeZone(TimeZone.getTimeZone("UTC"));
+       String FechaCorrecta = formato.format(apuestaSeleccionada.getPartidoId().getFecha().getTime());
+       String[] pp = FechaCorrecta.split("-");
+       
+       
+      // Date newDAte = new Date(Integer.parseInt(pp[3]), Integer.parseInt(pp[1]), Integer.parseInt(pp[0]));
 
-            existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
-            existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
-            try {
-                ajc.edit(existeApuesta);
-            } catch (Exception ex) {
-                Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+       DateTimeZone zoneUTC = DateTimeZone.UTC;
+       
+       DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
+      DateTime actualDateOnDB= dt.toDateTime(zoneUTC);
+    
+       
+        DateTime now = DateTime.now(zoneUTC);
+     
+   
+      boolean test = actualDateOnDB.isBeforeNow();
+
+                
+    
+        if (test) {  
+                if (existeApuesta == null) {//exist do an update
+                    ajc.create(apuestaSeleccionada);
+
+                } else {//update
+
+                    existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
+                    existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
+                    try {
+                        ajc.edit(existeApuesta);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
         }
+          }
+        
     }
 
     /**

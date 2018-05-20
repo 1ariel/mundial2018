@@ -7,6 +7,7 @@ package com.mundial2018.Beans;
 
 import com.mundial2018.Controller.LoginJpaController;
 import com.mundial2018.Database.Entities.Login;
+import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import com.mundial2018.Database.Persistance.LoginDBAccess;
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,9 +34,12 @@ public class LoginBean implements Serializable {
     private final LoginJpaController ljc;
     
     public LoginBean() {
-        login = new Login();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
+        login = new Login();  
+        EntityManagerFactoria aux = new EntityManagerFactoria();
+        
+        EntityManagerFactory emf =aux.getEMF();
         ljc = new LoginJpaController(emf);
+        
     }
     
     public String loguearse(){
@@ -51,12 +55,16 @@ public class LoginBean implements Serializable {
     public String iniciarSesion() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
+            
+        login.setPassword("admin");
+        login.setUsername("admin");
+
+        
+        
         Login nuevo = ljc.checkLogin(login);
         
-        //test
-        this.setPassword("admin");
-        this.setUsername("admin");
-               //end test
+    
+        
         if (Objects.nonNull(nuevo.getLoginPK())) {
             login = nuevo;
             //login.setAutenticado(true);
