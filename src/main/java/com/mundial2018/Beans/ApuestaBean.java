@@ -45,7 +45,7 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class ApuestaBean {
-    
+
     private Ronda ronda;
     private Apuesta apuesta;
     private List<Apuesta> listaApuestas;
@@ -55,15 +55,15 @@ public class ApuestaBean {
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
     private final PartidoJpaController pjc;
-    
+
     public ApuestaBean() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
-        pjc= new PartidoJpaController(emf);
+        pjc = new PartidoJpaController(emf);
     }
-    
+
     @PostConstruct
     public void init() {
         apuesta = new Apuesta();
@@ -74,27 +74,28 @@ public class ApuestaBean {
         // apuesta.setEmpleadoid(empleado);
         listaRondas = rjc.findRondaEntities();
     }
-    
+
     public String formatearFecha(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM", new Locale("es", "ES"));
-       formato.setTimeZone(TimeZone.getTimeZone("UTC"));
-        
+        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         return formato.format(fecha);
     }
-    
-    public String buscarBandera(Integer equipoId){
-    ImageHelper img = new ImageHelper();
-    return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
-    
+
+    public String buscarBandera(Integer equipoId) {
+        ImageHelper img = new ImageHelper();
+        return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+
     }
+
     public String buscarEquipo(Integer equipoId) {
         return (String) ejc.findEquipo(equipoId).getNombre();
     }
-    
+
     public void onTabChange() {
         listaRondas = rjc.findRondaEntities();
     }
-    
+
     public void asignarEquipos(Partido partido) {
         apuesta.setPartidoId(partido);
         apuesta.setEmpleadoid(empleado);
@@ -114,12 +115,12 @@ public class ApuestaBean {
 
         PrimeFaces.current().executeScript("PF('apuestaPartidoDialog').show();");
     }
-    
+
     public void asignarEquiposPorRonda(Ronda ronda) {
         int i = 0;
         listaApuestas = new ArrayList<>();
         List<Partido> partidos = (List<Partido>) ronda.getPartidoCollection();
-        
+
         for (Partido partido : partidos) {
             listaApuestas.add(new Apuesta());
             listaApuestas.get(i).setPartidoId(partido);
@@ -129,7 +130,7 @@ public class ApuestaBean {
             //find if the user already made a bet on it 
             Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, partido);
             if (existeApuesta != null) {
-                
+
                 listaApuestas.get(i).setGolesEquipo1(existeApuesta.getGolesEquipo1());
                 listaApuestas.get(i).setGolesEquipo2(existeApuesta.getGolesEquipo2());
             } else {
@@ -140,77 +141,62 @@ public class ApuestaBean {
 
             i++;
         }
-        
+
         PrimeFaces.current().executeScript("PF('apuestaRondaDialog').show();");
     }
-    
+
     public void CrearApuestaPorGrupo() {
-        
+
         for (Apuesta apuestaAux : listaApuestas) {
             if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
-                
-           
+
                 CrearActualizarApuesta(apuestaAux);
 
-             
-                
             }
-            
+
         }
-        
+
     }
-    
+
     public void CrearApuestaIndividual() {
         CrearActualizarApuesta(apuesta);
-        
+
     }
-    
+
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
-        
+
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
-        
-        //verificar que la apuesta tenga una fecha posterior o igual al dia de hoy
-      //  DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
- 
-    
-        
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-YYYY");        
-       formato.setTimeZone(TimeZone.getTimeZone("UTC"));
-       String FechaCorrecta = formato.format(apuestaSeleccionada.getPartidoId().getFecha().getTime());
-       String[] pp = FechaCorrecta.split("-");
-       
-       
-      // Date newDAte = new Date(Integer.parseInt(pp[3]), Integer.parseInt(pp[1]), Integer.parseInt(pp[0]));
 
-       DateTimeZone zoneUTC = DateTimeZone.UTC;
-       
-       DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
-      DateTime actualDateOnDB= dt.toDateTime(zoneUTC);
-    
-       
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-YYYY");
+        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String FechaCorrecta = formato.format(apuestaSeleccionada.getPartidoId().getFecha().getTime());
+        String[] pp = FechaCorrecta.split("-");
+
+        DateTimeZone zoneUTC = DateTimeZone.UTC;
+
+        DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
+        DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
+
         DateTime now = DateTime.now(zoneUTC);
-     
-   
-      boolean test = actualDateOnDB.isBeforeNow();
 
-                
-    
-        if (test) {  
-                if (existeApuesta == null) {//exist do an update
-                    ajc.create(apuestaSeleccionada);
+        boolean test = actualDateOnDB.isBeforeNow();
 
-                } else {//update
+        if (test) {
+            if (existeApuesta == null) {//exist do an update
+                ajc.create(apuestaSeleccionada);
 
-                    existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
-                    existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
-                    try {
-                        ajc.edit(existeApuesta);
-                    } catch (Exception ex) {
-                        Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            } else {//update
+
+                existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
+                existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
+                try {
+                    ajc.edit(existeApuesta);
+                } catch (Exception ex) {
+                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
-          }
-        
+
     }
 
     /**
