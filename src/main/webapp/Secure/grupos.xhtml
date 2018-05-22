@@ -9,9 +9,9 @@
     <ui:define name="content">
         <h:form id="formGrupos">
             
-            <p:tabView dynamic="true" value="#{grupoBean.listaGrupos}" var="grupo">
+            <p:tabView value="#{grupoBean.listaGrupos}" var="grupo">
                 <p:tab title="Grupo #{grupo.nombre}">    
-                    <p:dataTable value="#{grupo.equipoCollection}" var="equipo">
+                    <p:dataTable value="#{grupo.equipoList}" var="equipo">
                         <f:facet name="header">
                             <p:outputLabel value="Análisis del grupo"/>
                         </f:facet>
@@ -40,7 +40,7 @@
                         <p:column headerText="+/-" style="text-align: center;">
                             <p:outputLabel value="#{equipo.golesFavor - equipo.golesContra}"/>
                         </p:column>
-                        <p:column headerText="PTS" style="text-align: center;">
+                        <p:column headerText="PTS" style="text-align: center;" sortBy="#{equipo.puntos}">
                             <p:outputLabel value="#{equipo.puntos}"/>
                         </p:column>
                     </p:dataTable>
