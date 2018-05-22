@@ -7,11 +7,13 @@ package com.mundial2018.Beans;
 
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.GrupoJpaController;
+import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Grupo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -39,18 +41,37 @@ public class GrupoBean {
     private List<Grupo> listaGrupos;
     private final GrupoJpaController gjc;
     private final EquipoJpaController ejc;
+    private final PartidoJpaController pjc;
 
     public GrupoBean() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
         gjc = new GrupoJpaController(emf);
         ejc = new EquipoJpaController(emf);
+        pjc = new PartidoJpaController(emf);
     }
     
     @PostConstruct
     public void init() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         login = (Login) ec.getSessionMap().get("login");
-        listaGrupos = gjc.findGrupoEntities();
+        listaGrupos = ordenar(); 
+    }
+    
+    public List<Grupo> ordenar() {
+        List<Grupo> lista = gjc.findGrupoEntities();
+        
+        try {
+        
+            for(Grupo grupo: lista) {
+                //List<Equipo> listaEquipos = new ArrayList();
+                List<Equipo> listaEquipos = ejc.findEquiposOrdenados(grupo.getId());
+                grupo.setEquipoList(listaEquipos);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return lista;
     }
     
     public void calcularPuntos(Partido partido) {
@@ -118,21 +139,57 @@ public class GrupoBean {
             }
         }
     }
-    
+    // 0A 1B 2C 3D 4E 5F 6G 7H
     public void crearOctavosDeFinal () {
-        
+        List<String> listaRondaIds = Arrays.asList("16", "17", "18", "19");
+        List<Partido> partidos = pjc.findPartidoByRondaId(listaRondaIds);
+        // 1C - 2D      30 Junio
+        partidos.get(0).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(0).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1A - 2B      30 Junio
+        partidos.get(1).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(1).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1B - 2A      01 Julio
+        partidos.get(2).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(2).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1D - 2C      01 Julio
+        partidos.get(3).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(3).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1E - 2F      02 Julio
+        partidos.get(4).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(4).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1G - 2H      02 Julio
+        partidos.get(5).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(5).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1F - 2E      03 Julio
+        partidos.get(6).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(6).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        // 1H - 2G      03 Julio
+        partidos.get(7).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(7).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
     }
     
     public void crearCuartosDeFinal () {
-    
+        // W49 - W50    06 Julio
+        
+        // W53 - W54    06 Julio
+        
+        // W55 - W56    07 Julio
+        
+        // W51 - W52    07 Julio
     }
     
     public void crearSemifinales () {
-    
+        // W57 - W58    10 Julio
+        
+        // W59 - W60    11 Julio
     }
     
     public void crearFinal() {
-    
+        // L61 - L62    14 Julio
+        
+        // W61 - W62    15 Julio
+        
     }
     
     /**

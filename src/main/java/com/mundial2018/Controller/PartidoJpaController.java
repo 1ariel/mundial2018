@@ -216,6 +216,20 @@ public class PartidoJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Partido> findPartidoByRondaId(List<String> listaRondaIds) {
+        EntityManager em = getEntityManager();
+        List<Partido> partidos = new ArrayList<>();
+        try {
+            Query query = em.createQuery("select p from Partido p where p.rondaId in :listaRondaIds order by p.id asc");
+            query.setParameter("listaRondaIds", listaRondaIds);
+            partidos = (List<Partido>)query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        return partidos;
+    }
 
     public int getPartidoCount() {
         EntityManager em = getEntityManager();
