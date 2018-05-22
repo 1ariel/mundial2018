@@ -7,7 +7,6 @@ package com.mundial2018.Database.Entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +45,7 @@ public class Grupo implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupoid")
-    private List<Equipo> equipoList;
+    private Collection<Equipo> equipoCollection;
 
     public Grupo() {
     }
@@ -72,12 +71,12 @@ public class Grupo implements Serializable {
     }
 
     @XmlTransient
-    public List<Equipo> getEquipoList() {
-        return equipoList;
+    public Collection<Equipo> getEquipoCollection() {
+        return equipoCollection;
     }
 
-    public void setEquipoList(List<Equipo> equipoList) {
-        this.equipoList = equipoList;
+    public void setEquipoCollection(Collection<Equipo> equipoCollection) {
+        this.equipoCollection = equipoCollection;
     }
 
     @Override
