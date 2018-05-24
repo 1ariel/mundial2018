@@ -15,7 +15,6 @@ import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Grupo;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

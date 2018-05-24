@@ -13,6 +13,7 @@ import com.mundial2018.Database.Entities.Grupo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -54,16 +55,14 @@ public class GrupoBean {
     public void init() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         login = (Login) ec.getSessionMap().get("login");
-        listaGrupos = ordenar(); 
+        listaGrupos = ordenarEquiposPorPosicion(); 
     }
     
-    public List<Grupo> ordenar() {
+    public List<Grupo> ordenarEquiposPorPosicion() {
         List<Grupo> lista = gjc.findGrupoEntities();
         
         try {
-        
             for(Grupo grupo: lista) {
-                //List<Equipo> listaEquipos = new ArrayList();
                 List<Equipo> listaEquipos = ejc.findEquiposOrdenados(grupo.getId());
                 grupo.setEquipoList(listaEquipos);
             }
@@ -126,7 +125,6 @@ public class GrupoBean {
         formato.setTimeZone(TimeZone.getTimeZone("UTC"));
         String fecha = formato.format(fechaPartido);
         
-        
         if (Objects.nonNull(fecha) && (rol.equals("admin") || rol.equals("superuser"))) {
             if(fecha.equals("28-06-2018")) {
                 crearOctavosDeFinal();
@@ -143,8 +141,10 @@ public class GrupoBean {
     public void crearOctavosDeFinal () {
         List<String> listaRondaIds = Arrays.asList("16", "17", "18", "19");
         List<Partido> partidos = pjc.findPartidoByRondaId(listaRondaIds);
+        
+        Integer prueba = listaGrupos.get(0).getEquipoList().get(0).getId();
         // 1C - 2D      30 Junio
-        partidos.get(0).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        partidos.get(0).setEquipo1(prueba);
         partidos.get(0).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
         // 1A - 2B      30 Junio
         partidos.get(1).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
