@@ -13,9 +13,13 @@ and open the template in the editor.
         <title>Mundial 2018</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <style>
-
-        </style>
+          <style>
+        body{
+            background-image: url("#{resource['default/images/background.png']}");       
+                background-repeat: no-repeat;
+                background-size:100% 100%;
+        }
+    </style>
     </h:head>
   
     <h:body>
@@ -26,10 +30,11 @@ and open the template in the editor.
         <h:graphicImage library="default" name="images/logo.png" style="width: 5%; position: relative;  left: 90%;" />
 
 
-        <p:layoutUnit position="center" style=" margin: auto; width: 50%;">
-            <div class="ui-g-12  " >        
-                <p:panel id="basic" header="Login"  footer="Mundial 2018" style="margin-bottom:20px" >
-                    <h:panelGrid columns="2" cellpadding="1">
+        <p:layoutUnit position="center" id="layoutUnit" style="color: brown; margin: auto; width: 50%;">
+            <div class="ui-g-12  " style=" background-color: grey;" >
+                
+                <p:panel id="basic"  header="Login"  footer="Mundial 2018" style="  margin-bottom:20px" >
+                    <h:panelGrid style="background-color: transparent" columns="2" cellpadding="1">
                         <h:form id="loginform">
                             <h:outputText class="ui-g-12 ui-md-6 ui-lg-3" value="Username:"></h:outputText>
                             <h:inputText class="ui-g-12 ui-md-6 ui-lg-3"  id="loginid" value="#{loginBean.login.username}"></h:inputText>
@@ -47,8 +52,8 @@ and open the template in the editor.
                 </p:panel>
             </div>              
  <div class="ui-g-12  " >  
-     <p:outputLabel value="Tabla de posiciones, Primeras 10 posiciones" />
-     <p:dataTable rows="10" var="result"   value="#{resultadosBean.listResultados}">
+     <p:outputLabel style="color: aliceblue" value="Tabla de posiciones, Primeras 10 posiciones" />
+     <p:dataTable rows="10" var="result"  value="#{resultadosBean.listResultados}">
                 <p:column headerText="Nombre">
                     <h:outputText value="#{result.empleadoId.nombre}" />
                 </p:column>
