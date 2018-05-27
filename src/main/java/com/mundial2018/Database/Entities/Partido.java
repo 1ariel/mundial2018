@@ -61,10 +61,14 @@ public class Partido implements Serializable {
     private Integer equipo1;
     @Column(name = "golesEquipo1")
     private Integer golesEquipo1;
+    @Column(name = "penalesEquipo1")
+    private Integer penalesEquipo1;
     @Column(name = "equipo2")
     private Integer equipo2;
     @Column(name = "golesEquipo2")
     private Integer golesEquipo2;
+    @Column(name = "penalesEquipo2")
+    private Integer penalesEquipo2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoId")
     private Collection<Apuesta> apuestaCollection;
     @JoinColumn(name = "ronda_id", referencedColumnName = "id")
@@ -118,6 +122,14 @@ public class Partido implements Serializable {
         this.golesEquipo1 = golesEquipo1;
     }
 
+    public Integer getPenalesEquipo1() {
+        return penalesEquipo1;
+    }
+
+    public void setPenalesEquipo1(Integer penalesEquipo1) {
+        this.golesEquipo1 = penalesEquipo1;
+    }
+
     public Integer getEquipo2() {
         return equipo2;
     }
@@ -132,6 +144,14 @@ public class Partido implements Serializable {
 
     public void setGolesEquipo2(Integer golesEquipo2) {
         this.golesEquipo2 = golesEquipo2;
+    }
+
+    public Integer getPenalesEquipo2() {
+        return penalesEquipo2;
+    }
+
+    public void setPenalesEquipo2(Integer penalesEquipo2) {
+        this.penalesEquipo2 = penalesEquipo2;
     }
 
     @XmlTransient

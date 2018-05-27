@@ -8,12 +8,12 @@ package com.mundial2018.Beans;
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.GrupoJpaController;
 import com.mundial2018.Controller.PartidoJpaController;
+import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Grupo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -126,70 +126,161 @@ public class GrupoBean {
         String fecha = formato.format(fechaPartido);
         
         if (Objects.nonNull(fecha) && (rol.equals("admin") || rol.equals("superuser"))) {
+            List<Partido> partidos = null;
+            
             if(fecha.equals("28-06-2018")) {
-                crearOctavosDeFinal();
+                partidos = crearOctavosDeFinal();
             } else if (fecha.equals("03-07-2018")) {
-                crearCuartosDeFinal();
+                partidos = crearCuartosDeFinal();
             } else if (fecha.equals("07-07-2018")) {
-                crearSemifinales();
+                partidos = crearSemifinales();
             } else if (fecha.equals("11-07-2018")) {
-                crearFinal();
+                partidos = crearFinal();
+            }
+            
+            // Guardar partidos
+            for(Partido partido : partidos) {
+                try {
+                    pjc.edit(partido);
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
-    // 0A 1B 2C 3D 4E 5F 6G 7H
-    public void crearOctavosDeFinal () {
-        List<String> listaRondaIds = Arrays.asList("16", "17", "18", "19");
-        List<Partido> partidos = pjc.findPartidoByRondaId(listaRondaIds);
+    
+    public List<Partido> crearOctavosDeFinal () {
+        List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
+        List<Partido> octavos = pjc.findPartidoByRondaId(octavosRondaIds);
         
-        Integer prueba = listaGrupos.get(0).getEquipoList().get(0).getId();
         // 1C - 2D      30 Junio
-        partidos.get(0).setEquipo1(prueba);
-        partidos.get(0).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(0).setEquipo1(listaGrupos.get(2).getEquipoList().get(0).getId());
+        octavos.get(0).setEquipo2(listaGrupos.get(3).getEquipoList().get(1).getId());
         // 1A - 2B      30 Junio
-        partidos.get(1).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(1).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(1).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(1).setEquipo2(listaGrupos.get(1).getEquipoList().get(1).getId());
         // 1B - 2A      01 Julio
-        partidos.get(2).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(2).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(2).setEquipo1(listaGrupos.get(1).getEquipoList().get(0).getId());
+        octavos.get(2).setEquipo2(listaGrupos.get(0).getEquipoList().get(1).getId());
         // 1D - 2C      01 Julio
-        partidos.get(3).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(3).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(3).setEquipo1(listaGrupos.get(3).getEquipoList().get(0).getId());
+        octavos.get(3).setEquipo2(listaGrupos.get(2).getEquipoList().get(1).getId());
         // 1E - 2F      02 Julio
-        partidos.get(4).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(4).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(4).setEquipo1(listaGrupos.get(4).getEquipoList().get(0).getId());
+        octavos.get(4).setEquipo2(listaGrupos.get(5).getEquipoList().get(1).getId());
         // 1G - 2H      02 Julio
-        partidos.get(5).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(5).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(5).setEquipo1(listaGrupos.get(6).getEquipoList().get(0).getId());
+        octavos.get(5).setEquipo2(listaGrupos.get(7).getEquipoList().get(1).getId());
         // 1F - 2E      03 Julio
-        partidos.get(6).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(6).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(6).setEquipo1(listaGrupos.get(5).getEquipoList().get(0).getId());
+        octavos.get(6).setEquipo2(listaGrupos.get(4).getEquipoList().get(1).getId());
         // 1H - 2G      03 Julio
-        partidos.get(7).setEquipo1(listaGrupos.get(0).getEquipoList().get(0).getId());
-        partidos.get(7).setEquipo2(listaGrupos.get(0).getEquipoList().get(0).getId());
+        octavos.get(7).setEquipo1(listaGrupos.get(7).getEquipoList().get(0).getId());
+        octavos.get(7).setEquipo2(listaGrupos.get(6).getEquipoList().get(1).getId());
+
+        return octavos;
     }
     
-    public void crearCuartosDeFinal () {
-        // W49 - W50    06 Julio
+    public List<Partido> crearCuartosDeFinal () {
+        List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
+        List<Partido> octavos = pjc.findPartidoByRondaId(octavosRondaIds);
+        List<String> cuartosRondaIds = Arrays.asList("20", "21");
+        List<Partido> cuartos = pjc.findPartidoByRondaId(cuartosRondaIds);
         
-        // W53 - W54    06 Julio
+        // W49 (1A - 2B) - W50 (1C - 2D)    06 Julio
+        cuartos.get(0).setEquipo1(encontrarGanador(octavos.get(1)));
+        cuartos.get(0).setEquipo2(encontrarGanador(octavos.get(0)));
+        // W53 (1E - 2F) - W54 (1G - 2H)    06 Julio
+        cuartos.get(1).setEquipo1(encontrarGanador(octavos.get(4)));
+        cuartos.get(1).setEquipo2(encontrarGanador(octavos.get(5)));
+        // W55 (1F - 2E) - W56 (1H - 2G)    07 Julio
+        cuartos.get(2).setEquipo1(encontrarGanador(octavos.get(6)));
+        cuartos.get(2).setEquipo2(encontrarGanador(octavos.get(7)));
+        // W51 (1B - 2A) - W52 (1D - 2C)    07 Julio
+        cuartos.get(3).setEquipo1(encontrarGanador(octavos.get(2)));
+        cuartos.get(3).setEquipo2(encontrarGanador(octavos.get(3)));
         
-        // W55 - W56    07 Julio
-        
-        // W51 - W52    07 Julio
+        return cuartos;
     }
     
-    public void crearSemifinales () {
-        // W57 - W58    10 Julio
+    public List<Partido> crearSemifinales () {
+        List<String> cuartosRondaIds = Arrays.asList("20", "21");
+        List<Partido> cuartos = pjc.findPartidoByRondaId(cuartosRondaIds);
+        List<String> semifinalesRondaIds = Arrays.asList("22", "23");
+        List<Partido> semifinales = pjc.findPartidoByRondaId(semifinalesRondaIds);
         
-        // W59 - W60    11 Julio
+        // W57 (W49 - W50) - W58 (W53 - W54)    10 Julio
+        semifinales.get(0).setEquipo1(encontrarGanador(cuartos.get(0)));
+        semifinales.get(0).setEquipo2(encontrarGanador(cuartos.get(1)));
+        // W59 (W51 - W52) - W60 (W55 - W56)    11 Julio
+        semifinales.get(1).setEquipo1(encontrarGanador(cuartos.get(3)));
+        semifinales.get(1).setEquipo2(encontrarGanador(cuartos.get(2)));
+        
+        return semifinales;
     }
     
-    public void crearFinal() {
-        // L61 - L62    14 Julio
+    public List<Partido> crearFinal() {
+        List<String> semifinalesRondaIds = Arrays.asList("22", "23");
+        List<Partido> semifinales = pjc.findPartidoByRondaId(semifinalesRondaIds);
+        List<String> finalRondaIds = Arrays.asList("24", "25");
+        List<Partido> finales = pjc.findPartidoByRondaId(finalRondaIds);
         
-        // W61 - W62    15 Julio
+        // L61 (W57 - W58) - L62 (W59 - W60)    14 Julio
+        finales.get(0).setEquipo1(encontrarGanador(semifinales.get(0)));
+        finales.get(0).setEquipo2(encontrarGanador(semifinales.get(1)));
+        // W61 (W57 - W58) - W62 (W59 - 60)   15 Julio
+        finales.get(1).setEquipo1(encontrarPerdedor(semifinales.get(0)));
+        finales.get(1).setEquipo2(encontrarPerdedor(semifinales.get(1)));
         
+        return finales;
+    }
+    
+    public Integer encontrarGanador(Partido partido) {
+        Integer ganador = null;
+        
+        // Equipo 1 gana
+        if(partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
+            ganador = partido.getEquipo1();
+        // Equipo 2 gana
+        } else if (partido.getGolesEquipo1() < partido.getGolesEquipo2()) {
+            ganador = partido.getEquipo2();
+        // Empate
+        } else {
+            // Equipo 1 gana por penales
+            if(partido.getPenalesEquipo1() > partido.getPenalesEquipo2()) {
+                ganador = partido.getEquipo1();
+            // Equipo 2 gana por penales
+            } else {
+                ganador = partido.getEquipo2();
+            }
+        }
+        
+        return ganador;
+    }
+    
+    public Integer encontrarPerdedor(Partido partido) {
+        Integer perdedor = null;
+        
+        // Equipo 2 pierde
+        if(partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
+            perdedor = partido.getEquipo2();
+        // Equipo 1 pierde
+        } else if (partido.getGolesEquipo1() < partido.getGolesEquipo2()) {
+            perdedor = partido.getEquipo1();
+        // Empate
+        } else {
+            // Equipo 2 pierde por penales
+            if(partido.getPenalesEquipo1() > partido.getPenalesEquipo2()) {
+                perdedor = partido.getEquipo2();
+            // Equipo 1 pierde por penales
+            } else {
+                perdedor = partido.getEquipo1();
+            }
+        }
+        
+        return perdedor;
     }
     
     /**
