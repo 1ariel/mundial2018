@@ -28,15 +28,14 @@
             <h:form id="formMenu">
                 <nav style="margin: 1em 0;">
                     <p:menubar class="menu">
-                        <p:menuitem value="Inicio" outcome="/Secure/Homepage.xhtml" icon="ui-icon-home"/>
-                        <p:menuitem value="Apuestas" url="/Secure/apuestas.xhtml"/>
-                        <p:menuitem value="Empleados" url="/Secure/AddEmpleado/empleadoMaintenance.xhtml"/>
-                        <p:menuitem value="Grupos" url="/Secure/grupos.xhtml"/>
-                        <p:menuitem value="Reset Contraseña" url="/Secure/ResetPassword.xhtml"/>
-                        <p:menuitem value="Ayuda"/>
+                        <p:menuitem class="ui-g-1" style=" margin:10px; border: 2px solid grey; border-radius: 5px;" value="Inicio" outcome="/Secure/Homepage.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" value="Empleados" url="/Secure/AddEmpleado/empleadoMaintenance.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Grupos" url="/Secure/grupos.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Reset Contraseña" url="/Secure/ResetPassword.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Ayuda"/>
                         
                         <f:facet name="options">
-                            <p:commandButton value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
+                            <p:commandButton  style="border: 2px solid grey; border-radius: 5px;"  value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
                         </f:facet>
                     </p:menubar>
                 </nav>
@@ -50,9 +49,9 @@
         </ui:insert>
 
         <ui:insert class="ui-g-12"  name="footer">
-            <footer style="padding: 2em; background: beige;">
+            <footer style="relative: fixed; width:100%;  bottom:0%; padding: 2em;">
                 <span>
-                    <center>Footer</center>
+                    <center>Mundial 2018</center>
                 </span>
             </footer>
         </ui:insert>
