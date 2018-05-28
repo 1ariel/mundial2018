@@ -169,13 +169,15 @@ DROP TABLE IF EXISTS `partido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `partido` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fecha` date DEFAULT NULL,
-  `lugar` varchar(45) DEFAULT NULL,
-  `equipo1` int(11) DEFAULT NULL,
-  `golesEquipo1` int(11) DEFAULT NULL,
-  `equipo2` int(11) DEFAULT NULL,
-  `golesEquipo2` int(11) DEFAULT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `fecha` DATE NULL DEFAULT NULL,
+  `lugar` VARCHAR(45) NULL DEFAULT NULL,
+  `equipo1` INT NULL DEFAULT NULL,
+  `golesEquipo1` INT NULL DEFAULT NULL,
+  `penalesEquipo1` INT NULL,
+  `equipo2` INT NULL DEFAULT NULL,
+  `golesEquipo2` INT NULL DEFAULT NULL,
+  `penalesEquipo2` INT NULL,
   `ronda_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_partido_ronda1_idx` (`ronda_id`),
