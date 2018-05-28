@@ -104,10 +104,9 @@ CREATE TABLE `equipo` (
 
 LOCK TABLES `equipo` WRITE;
 /*!40000 ALTER TABLE `equipo` DISABLE KEYS */;
-INSERT INTO `equipo` VALUES (1,'Rusia',0,0,0,0,0,0,1),(2,'Arabia Saudí',0,0,0,0,0,0,1),(3,'Egipto',0,0,0,0,0,0,1),(4,'Uruguay',0,0,0,0,0,0,1),(5,'Portugal',0,0,0,0,0,0,2),(6,'España',0,0,0,0,0,0,2),(7,'Marruecos',0,0,0,0,0,0,2),(8,'RI de Irán',0,0,0,0,0,0,2),(9,'Francia',0,0,0,0,0,0,3),(10,'Australia',0,0,0,0,0,0,3),(11,'Perú',0,0,0,0,0,0,3),(12,'Dinamarca',0,0,0,0,0,0,3),(13,'Argentina',0,0,0,0,0,0,4),(14,'Islandia',0,0,0,0,0,0,4),(15,'Croacia',0,0,0,0,0,0,4),(16,'Nigeria',0,0,0,0,0,0,4),(17,'Brasil',0,0,0,0,0,0,5),(18,'Suiza',0,0,0,0,0,0,5),(19,'Costa Rica',0,0,0,0,0,0,5),(20,'Serbia',0,0,0,0,0,0,5),(21,'Alemania',0,0,0,0,0,0,6),(22,'México',0,0,0,0,0,0,6),(23,'Suecia',0,0,0,0,0,0,6),(24,'República de Corea',0,0,0,0,0,0,6),(25,'Bélgica',0,0,0,0,0,0,7),(26,'Panamá',0,0,0,0,0,0,7),(27,'Túnez',0,0,0,0,0,0,7),(28,'Inglaterra',0,0,0,0,0,0,7),(29,'Polonia',0,0,0,0,0,0,8),(30,'Senegal',0,0,0,0,0,0,8),(31,'Colombia',0,0,0,0,0,0,8),(32,'Japón',0,0,0,0,0,0,8);
+INSERT INTO `equipo` VALUES (1,'Rusia',NULL,0,0,0,0,0,0,1),(2,'Arabia Saudí',NULL,0,0,0,0,0,0,1),(3,'Egipto',NULL,0,0,0,0,0,0,1),(4,'Uruguay',NULL,0,0,0,0,0,0,1),(5,'Portugal',NULL,0,0,0,0,0,0,2),(6,'España',NULL,0,0,0,0,0,0,2),(7,'Marruecos',NULL,0,0,0,0,0,0,2),(8,'RI de Irán',NULL,0,0,0,0,0,0,2),(9,'Francia',NULL,0,0,0,0,0,0,3),(10,'Australia',NULL,0,0,0,0,0,0,3),(11,'Perú',NULL,0,0,0,0,0,0,3),(12,'Dinamarca',NULL,0,0,0,0,0,0,3),(13,'Argentina',NULL,0,0,0,0,0,0,4),(14,'Islandia',NULL,0,0,0,0,0,0,4),(15,'Croacia',NULL,0,0,0,0,0,0,4),(16,'Nigeria',NULL,0,0,0,0,0,0,4),(17,'Brasil',NULL,0,0,0,0,0,0,5),(18,'Suiza',NULL,0,0,0,0,0,0,5),(19,'Costa Rica',NULL,0,0,0,0,0,0,5),(20,'Serbia',NULL,0,0,0,0,0,0,5),(21,'Alemania',NULL,0,0,0,0,0,0,6),(22,'México',NULL,0,0,0,0,0,0,6),(23,'Suecia',NULL,0,0,0,0,0,0,6),(24,'República de Corea',NULL,0,0,0,0,0,0,6),(25,'Bélgica',NULL,0,0,0,0,0,0,7),(26,'Panamá',NULL,0,0,0,0,0,0,7),(27,'Túnez',NULL,0,0,0,0,0,0,7),(28,'Inglaterra',NULL,0,0,0,0,0,0,7),(29,'Polonia',NULL,0,0,0,0,0,0,8),(30,'Senegal',NULL,0,0,0,0,0,0,8),(31,'Colombia',NULL,0,0,0,0,0,0,8),(32,'Japón',NULL,0,0,0,0,0,0,8);
 /*!40000 ALTER TABLE `equipo` ENABLE KEYS */;
 UNLOCK TABLES;
-
 --
 -- Table structure for table `grupo`
 --
