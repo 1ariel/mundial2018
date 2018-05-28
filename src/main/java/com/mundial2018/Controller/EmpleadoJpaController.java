@@ -13,10 +13,10 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Resultado;
-import java.util.ArrayList;
-import java.util.Collection;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
+import java.util.ArrayList;
+import java.util.Collection;
 import com.mundial2018.Database.Entities.Login;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -38,9 +38,6 @@ public class EmpleadoJpaController implements Serializable {
     }
 
     public void create(Empleado empleado) {
-        if (empleado.getResultadoCollection() == null) {
-            empleado.setResultadoCollection(new ArrayList<Resultado>());
-        }
         if (empleado.getApuestaCollection() == null) {
             empleado.setApuestaCollection(new ArrayList<Apuesta>());
         }
@@ -51,12 +48,11 @@ public class EmpleadoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Resultado> attachedResultadoCollection = new ArrayList<Resultado>();
-            for (Resultado resultadoCollectionResultadoToAttach : empleado.getResultadoCollection()) {
-                resultadoCollectionResultadoToAttach = em.getReference(resultadoCollectionResultadoToAttach.getClass(), resultadoCollectionResultadoToAttach.getId());
-                attachedResultadoCollection.add(resultadoCollectionResultadoToAttach);
+            Resultado resultado = empleado.getResultado();
+            if (resultado != null) {
+                resultado = em.getReference(resultado.getClass(), resultado.getId());
+                empleado.setResultado(resultado);
             }
-            empleado.setResultadoCollection(attachedResultadoCollection);
             Collection<Apuesta> attachedApuestaCollection = new ArrayList<Apuesta>();
             for (Apuesta apuestaCollectionApuestaToAttach : empleado.getApuestaCollection()) {
                 apuestaCollectionApuestaToAttach = em.getReference(apuestaCollectionApuestaToAttach.getClass(), apuestaCollectionApuestaToAttach.getId());
@@ -70,14 +66,14 @@ public class EmpleadoJpaController implements Serializable {
             }
             empleado.setLoginCollection(attachedLoginCollection);
             em.persist(empleado);
-            for (Resultado resultadoCollectionResultado : empleado.getResultadoCollection()) {
-                Empleado oldEmpleadoIdOfResultadoCollectionResultado = resultadoCollectionResultado.getEmpleadoId();
-                resultadoCollectionResultado.setEmpleadoId(empleado);
-                resultadoCollectionResultado = em.merge(resultadoCollectionResultado);
-                if (oldEmpleadoIdOfResultadoCollectionResultado != null) {
-                    oldEmpleadoIdOfResultadoCollectionResultado.getResultadoCollection().remove(resultadoCollectionResultado);
-                    oldEmpleadoIdOfResultadoCollectionResultado = em.merge(oldEmpleadoIdOfResultadoCollectionResultado);
+            if (resultado != null) {
+                Empleado oldEmpleadoIdOfResultado = resultado.getEmpleadoId();
+                if (oldEmpleadoIdOfResultado != null) {
+                    oldEmpleadoIdOfResultado.setResultado(null);
+                    oldEmpleadoIdOfResultado = em.merge(oldEmpleadoIdOfResultado);
                 }
+                resultado.setEmpleadoId(empleado);
+                resultado = em.merge(resultado);
             }
             for (Apuesta apuestaCollectionApuesta : empleado.getApuestaCollection()) {
                 Empleado oldEmpleadoidOfApuestaCollectionApuesta = apuestaCollectionApuesta.getEmpleadoid();
@@ -111,20 +107,18 @@ public class EmpleadoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Empleado persistentEmpleado = em.find(Empleado.class, empleado.getId());
-            Collection<Resultado> resultadoCollectionOld = persistentEmpleado.getResultadoCollection();
-            Collection<Resultado> resultadoCollectionNew = empleado.getResultadoCollection();
+            Resultado resultadoOld = persistentEmpleado.getResultado();
+            Resultado resultadoNew = empleado.getResultado();
             Collection<Apuesta> apuestaCollectionOld = persistentEmpleado.getApuestaCollection();
             Collection<Apuesta> apuestaCollectionNew = empleado.getApuestaCollection();
             Collection<Login> loginCollectionOld = persistentEmpleado.getLoginCollection();
             Collection<Login> loginCollectionNew = empleado.getLoginCollection();
             List<String> illegalOrphanMessages = null;
-            for (Resultado resultadoCollectionOldResultado : resultadoCollectionOld) {
-                if (!resultadoCollectionNew.contains(resultadoCollectionOldResultado)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Resultado " + resultadoCollectionOldResultado + " since its empleadoId field is not nullable.");
+            if (resultadoOld != null && !resultadoOld.equals(resultadoNew)) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
                 }
+                illegalOrphanMessages.add("You must retain Resultado " + resultadoOld + " since its empleadoId field is not nullable.");
             }
             for (Apuesta apuestaCollectionOldApuesta : apuestaCollectionOld) {
                 if (!apuestaCollectionNew.contains(apuestaCollectionOldApuesta)) {
@@ -145,13 +139,10 @@ public class EmpleadoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Resultado> attachedResultadoCollectionNew = new ArrayList<Resultado>();
-            for (Resultado resultadoCollectionNewResultadoToAttach : resultadoCollectionNew) {
-                resultadoCollectionNewResultadoToAttach = em.getReference(resultadoCollectionNewResultadoToAttach.getClass(), resultadoCollectionNewResultadoToAttach.getId());
-                attachedResultadoCollectionNew.add(resultadoCollectionNewResultadoToAttach);
+            if (resultadoNew != null) {
+                resultadoNew = em.getReference(resultadoNew.getClass(), resultadoNew.getId());
+                empleado.setResultado(resultadoNew);
             }
-            resultadoCollectionNew = attachedResultadoCollectionNew;
-            empleado.setResultadoCollection(resultadoCollectionNew);
             Collection<Apuesta> attachedApuestaCollectionNew = new ArrayList<Apuesta>();
             for (Apuesta apuestaCollectionNewApuestaToAttach : apuestaCollectionNew) {
                 apuestaCollectionNewApuestaToAttach = em.getReference(apuestaCollectionNewApuestaToAttach.getClass(), apuestaCollectionNewApuestaToAttach.getId());
@@ -167,16 +158,14 @@ public class EmpleadoJpaController implements Serializable {
             loginCollectionNew = attachedLoginCollectionNew;
             empleado.setLoginCollection(loginCollectionNew);
             empleado = em.merge(empleado);
-            for (Resultado resultadoCollectionNewResultado : resultadoCollectionNew) {
-                if (!resultadoCollectionOld.contains(resultadoCollectionNewResultado)) {
-                    Empleado oldEmpleadoIdOfResultadoCollectionNewResultado = resultadoCollectionNewResultado.getEmpleadoId();
-                    resultadoCollectionNewResultado.setEmpleadoId(empleado);
-                    resultadoCollectionNewResultado = em.merge(resultadoCollectionNewResultado);
-                    if (oldEmpleadoIdOfResultadoCollectionNewResultado != null && !oldEmpleadoIdOfResultadoCollectionNewResultado.equals(empleado)) {
-                        oldEmpleadoIdOfResultadoCollectionNewResultado.getResultadoCollection().remove(resultadoCollectionNewResultado);
-                        oldEmpleadoIdOfResultadoCollectionNewResultado = em.merge(oldEmpleadoIdOfResultadoCollectionNewResultado);
-                    }
+            if (resultadoNew != null && !resultadoNew.equals(resultadoOld)) {
+                Empleado oldEmpleadoIdOfResultado = resultadoNew.getEmpleadoId();
+                if (oldEmpleadoIdOfResultado != null) {
+                    oldEmpleadoIdOfResultado.setResultado(null);
+                    oldEmpleadoIdOfResultado = em.merge(oldEmpleadoIdOfResultado);
                 }
+                resultadoNew.setEmpleadoId(empleado);
+                resultadoNew = em.merge(resultadoNew);
             }
             for (Apuesta apuestaCollectionNewApuesta : apuestaCollectionNew) {
                 if (!apuestaCollectionOld.contains(apuestaCollectionNewApuesta)) {
@@ -230,12 +219,12 @@ public class EmpleadoJpaController implements Serializable {
                 throw new NonexistentEntityException("The empleado with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Resultado> resultadoCollectionOrphanCheck = empleado.getResultadoCollection();
-            for (Resultado resultadoCollectionOrphanCheckResultado : resultadoCollectionOrphanCheck) {
+            Resultado resultadoOrphanCheck = empleado.getResultado();
+            if (resultadoOrphanCheck != null) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Resultado " + resultadoCollectionOrphanCheckResultado + " in its resultadoCollection field has a non-nullable empleadoId field.");
+                illegalOrphanMessages.add("This Empleado (" + empleado + ") cannot be destroyed since the Resultado " + resultadoOrphanCheck + " in its resultado field has a non-nullable empleadoId field.");
             }
             Collection<Apuesta> apuestaCollectionOrphanCheck = empleado.getApuestaCollection();
             for (Apuesta apuestaCollectionOrphanCheckApuesta : apuestaCollectionOrphanCheck) {
