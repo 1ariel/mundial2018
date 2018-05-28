@@ -5,6 +5,7 @@
  */
 package com.mundial2018.Controller;
 
+import com.mundial2018.Controller.exceptions.IllegalOrphanException;
 import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -13,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Resultado;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +34,21 @@ public class ResultadoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Resultado resultado) {
+    public void create(Resultado resultado) throws IllegalOrphanException {
+        List<String> illegalOrphanMessages = null;
+        Empleado empleadoIdOrphanCheck = resultado.getEmpleadoId();
+        if (empleadoIdOrphanCheck != null) {
+            Resultado oldResultadoOfEmpleadoId = empleadoIdOrphanCheck.getResultado();
+            if (oldResultadoOfEmpleadoId != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Empleado " + empleadoIdOrphanCheck + " already has an item of type Resultado whose empleadoId column cannot be null. Please make another selection for the empleadoId field.");
+            }
+        }
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -44,7 +60,7 @@ public class ResultadoJpaController implements Serializable {
             }
             em.persist(resultado);
             if (empleadoId != null) {
-                empleadoId.getResultadoCollection().add(resultado);
+                empleadoId.setResultado(resultado);
                 empleadoId = em.merge(empleadoId);
             }
             em.getTransaction().commit();
@@ -55,7 +71,7 @@ public class ResultadoJpaController implements Serializable {
         }
     }
 
-    public void edit(Resultado resultado) throws NonexistentEntityException, Exception {
+    public void edit(Resultado resultado) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -63,17 +79,30 @@ public class ResultadoJpaController implements Serializable {
             Resultado persistentResultado = em.find(Resultado.class, resultado.getId());
             Empleado empleadoIdOld = persistentResultado.getEmpleadoId();
             Empleado empleadoIdNew = resultado.getEmpleadoId();
+            List<String> illegalOrphanMessages = null;
+            if (empleadoIdNew != null && !empleadoIdNew.equals(empleadoIdOld)) {
+                Resultado oldResultadoOfEmpleadoId = empleadoIdNew.getResultado();
+                if (oldResultadoOfEmpleadoId != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Empleado " + empleadoIdNew + " already has an item of type Resultado whose empleadoId column cannot be null. Please make another selection for the empleadoId field.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (empleadoIdNew != null) {
                 empleadoIdNew = em.getReference(empleadoIdNew.getClass(), empleadoIdNew.getId());
                 resultado.setEmpleadoId(empleadoIdNew);
             }
             resultado = em.merge(resultado);
             if (empleadoIdOld != null && !empleadoIdOld.equals(empleadoIdNew)) {
-                empleadoIdOld.getResultadoCollection().remove(resultado);
+                empleadoIdOld.setResultado(null);
                 empleadoIdOld = em.merge(empleadoIdOld);
             }
             if (empleadoIdNew != null && !empleadoIdNew.equals(empleadoIdOld)) {
-                empleadoIdNew.getResultadoCollection().add(resultado);
+                empleadoIdNew.setResultado(resultado);
                 empleadoIdNew = em.merge(empleadoIdNew);
             }
             em.getTransaction().commit();
@@ -107,7 +136,7 @@ public class ResultadoJpaController implements Serializable {
             }
             Empleado empleadoId = resultado.getEmpleadoId();
             if (empleadoId != null) {
-                empleadoId.getResultadoCollection().remove(resultado);
+                empleadoId.setResultado(null);
                 empleadoId = em.merge(empleadoId);
             }
             em.remove(resultado);

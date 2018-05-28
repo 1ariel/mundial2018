@@ -11,6 +11,7 @@ import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
+import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
@@ -52,17 +53,14 @@ public class ApuestaBean {
     private final RondaJpaController rjc;
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
-    private final PartidoJpaController pjc;
     private final ResultadoJpaController rejc;
     
     public ApuestaBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
-
         EntityManagerFactory emf = aux.getEMF();
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
-        pjc = new PartidoJpaController(emf);
         rejc = new ResultadoJpaController(emf);
     }
 
@@ -72,7 +70,6 @@ public class ApuestaBean {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         login = (Login) ec.getSessionMap().get("login");
         empleado = login.getEmpleado();
-        // apuesta.setEmpleadoid(empleado);
         listaRondas = rjc.findRondaEntities();
     }
 
@@ -113,7 +110,6 @@ public class ApuestaBean {
             apuesta.setGolesEquipo2(0);
         }
         //end find
-
         PrimeFaces.current().executeScript("PF('apuestaPartidoDialog').show();");
     }
 
@@ -131,7 +127,6 @@ public class ApuestaBean {
             //find if the user already made a bet on it 
             Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, partido);
             if (existeApuesta != null) {
-
                 listaApuestas.get(i).setGolesEquipo1(existeApuesta.getGolesEquipo1());
                 listaApuestas.get(i).setGolesEquipo2(existeApuesta.getGolesEquipo2());
             } else {
@@ -147,47 +142,35 @@ public class ApuestaBean {
     }
 
     public void CrearApuestaPorGrupo() {
-
         for (Apuesta apuestaAux : listaApuestas) {
             if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
-
                 CrearActualizarApuesta(apuestaAux);
-
             }
-
         }
-
     }
 
     public void CrearApuestaIndividual() {
         CrearActualizarApuesta(apuesta);
-
     }
 
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
-
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
-
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-YYYY");
         formato.setTimeZone(TimeZone.getTimeZone("UTC"));
         String FechaCorrecta = formato.format(apuestaSeleccionada.getPartidoId().getFecha().getTime());
         String[] pp = FechaCorrecta.split("-");
 
         DateTimeZone zoneUTC = DateTimeZone.UTC;
-
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
-
         DateTime now = DateTime.now(zoneUTC);
-
         boolean test = actualDateOnDB.isBeforeNow();
 
         if (test) {
             if (existeApuesta == null) {//exist do an update
                 ajc.create(apuestaSeleccionada);
-
-            } else {//update
-
+            } else {
+                //update
                 existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
                 existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
                 try {
@@ -197,7 +180,6 @@ public class ApuestaBean {
                 }
             }
         }
-
     }
 
     public void calcularPuntosDeEmpleado(List<Partido> partidos) {
@@ -205,31 +187,37 @@ public class ApuestaBean {
             List<Apuesta> apuestas = ajc.findApuestasById(partido.getId());
             
             for(Apuesta apuestaActual : apuestas) {
-                // Adivinar marcador exacto
-                if(apuestaActual.getGolesEquipo1().equals(partido.getGolesEquipo1()) && 
-                    apuestaActual.getGolesEquipo2().equals(partido.getGolesEquipo2())) {
-                    //apuestaActual.getEmpleadoid().getResultado().setPartidosExactos(+1);
-                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+3);
+                try {
+                    // Adivinar marcador exacto
+                    if(apuestaActual.getGolesEquipo1().equals(partido.getGolesEquipo1()) &&
+                        apuestaActual.getGolesEquipo2().equals(partido.getGolesEquipo2())) {
+                        apuestaActual.getEmpleadoid().getResultado().setPartidosExactos(+1);
+                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+3);
+                    }
+                    // Adivinar que el equipo 1 gana
+                    if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() &&
+                            partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
+                        apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
+                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                        // Adivinar que el equipo 2 gana
+                    } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() &&
+                            partido.getGolesEquipo1() < partido.getGolesEquipo2()){
+                        apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
+                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                    }
+                    // Adivinar empate
+                    if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) &&
+                            partido.getGolesEquipo1().equals(partido.getGolesEquipo2())) {
+                        apuestaActual.getEmpleadoid().getResultado().setPartidosEmpatados(+1);
+                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                    }
+                    
+                    rejc.edit(apuestaActual.getEmpleadoid().getResultado());
+                } catch (NonexistentEntityException ex) {
+                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                // Adivinar que el equipo 1 gana
-                if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() && 
-                    partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
-                    //apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
-                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                // Adivinar que el equipo 2 gana
-                } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() && 
-                    partido.getGolesEquipo1() < partido.getGolesEquipo2()){
-                    //apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
-                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                }
-                // Adivinar empate
-                if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) && 
-                    partido.getGolesEquipo1().equals(partido.getGolesEquipo2())) {
-                    //apuestaActual.getEmpleadoid().getResultado().setPartidosEmpatados(+1);
-                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                }
-                
-                //rejc.edit(apuestaActual.getEmpleadoid().getResultado());
             }
         }
     }

@@ -13,9 +13,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,9 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Resultado.findByPartidosExactos", query = "SELECT r FROM Resultado r WHERE r.partidosExactos = :partidosExactos"),
     @NamedQuery(name = "Resultado.findByPartidosGanados", query = "SELECT r FROM Resultado r WHERE r.partidosGanados = :partidosGanados"),
     @NamedQuery(name = "Resultado.findByPartidosEmpatados", query = "SELECT r FROM Resultado r WHERE r.partidosEmpatados = :partidosEmpatados"),
-    @NamedQuery(name = "Resultado.findAllByPuntosSort", query = "SELECT r FROM Resultado r  order by r.puntos desc"),
-    
-  
     @NamedQuery(name = "Resultado.findByPuntos", query = "SELECT r FROM Resultado r WHERE r.puntos = :puntos")})
 public class Resultado implements Serializable {
 
@@ -53,7 +50,7 @@ public class Resultado implements Serializable {
     @Column(name = "puntos")
     private Integer puntos;
     @JoinColumn(name = "empleado_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false)
     private Empleado empleadoId;
 
     public Resultado() {
