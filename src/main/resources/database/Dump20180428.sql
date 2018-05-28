@@ -203,15 +203,20 @@ DROP TABLE IF EXISTS `resultado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resultado` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `partidosExactos` int(11) DEFAULT NULL,
-  `partidosGanados` int(11) DEFAULT NULL,
-  `partidosEmpatados` int(11) DEFAULT NULL,
-  `puntos` int(11) DEFAULT NULL,
-  `empleado_id` int(11) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `partidosExactos` INT NULL,
+  `partidosGanados` INT NULL,
+  `partidosEmpatados` INT NULL,
+  `puntos` INT NULL,
+  `empleado_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_resultado_empleado1_idx` (`empleado_id`),
-  CONSTRAINT `fk_resultado_empleado1` FOREIGN KEY (`empleado_id`) REFERENCES `empleado` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  INDEX `fk_resultado_empleado1_idx` (`empleado_id` ASC),
+  UNIQUE INDEX `empleado_id_UNIQUE` (`empleado_id` ASC),
+  CONSTRAINT `fk_resultado_empleado1`
+    FOREIGN KEY (`empleado_id`)
+    REFERENCES `zeusco_mundial2018`.`empleado` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
