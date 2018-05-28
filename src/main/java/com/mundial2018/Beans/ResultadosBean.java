@@ -6,18 +6,18 @@
 package com.mundial2018.Beans;
 
 import com.mundial2018.Controller.ResultadoJpaController;
+import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Resultado;
 import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -46,6 +46,25 @@ public class ResultadosBean implements Serializable {
         
     }
 
+    public Resultado getResultForUser(){
+ 
+        try{
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        Login login = (Login) ec.getSessionMap().get("login");
+        
+        Resultado resu = new Resultado();
+       
+        
+        }
+        catch(Exception e){
+        return null;
+        }
+        
+    
+    return null;
+    }
+    
     public List<Resultado> getListResultados() {
         return listResultados;
     }

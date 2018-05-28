@@ -117,10 +117,10 @@ public class EmpleadoMaintenanceFilter implements Filter {
     try {
             HttpSession session = ((HttpServletRequest) request).getSession();
 
-            Login login = (Login) session.getAttribute("login");
-
-            if (login.getRol()!="admin") {
-                        HttpServletResponse httpResponse = (HttpServletResponse) response;                
+             Login login = (Login) session.getAttribute("login");
+      
+            if (!login.getRol().matches("admin")) {
+                HttpServletResponse httpResponse = (HttpServletResponse) response;                
                 httpResponse.sendRedirect("../Homepage.xhtml");
                   session.setAttribute("message", "No puede acceder a esta opcion.");
                 return;            

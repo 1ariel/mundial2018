@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -30,7 +30,7 @@ import org.primefaces.model.UploadedFile;
  * @author ariel
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class empleadosController implements Serializable {
 
     private UploadedFile file;
@@ -140,7 +140,7 @@ public class empleadosController implements Serializable {
         if (
                 Objects.nonNull(login.getRol()) &&
                 Objects.nonNull(login.getPassword()) &&
-                Objects.nonNull(login.getUsername()) &&
+            
                 Objects.nonNull(login.getEmpleado().getNombre()) 
                 ) {
             LoginJpaController LoginDBA = new LoginJpaController(facto.getEMF());
@@ -152,6 +152,7 @@ public class empleadosController implements Serializable {
                EmpleadoDBA.create(aux);
 
                 login.setEmpleado(aux);
+                login.setUsername(aux.getNombre());
                 LoginDBA.create(login);
             } catch (Exception ex) {
            
