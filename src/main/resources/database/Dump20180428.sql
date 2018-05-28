@@ -84,6 +84,7 @@ DROP TABLE IF EXISTS `equipo`;
 CREATE TABLE `equipo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
+  `jugados` int(11) DEFAULT NULL,
   `ganados` int(11) DEFAULT NULL,
   `perdidos` int(11) DEFAULT NULL,
   `empatados` int(11) DEFAULT NULL,

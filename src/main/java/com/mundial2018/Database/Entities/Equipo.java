@@ -50,10 +50,6 @@ public class Equipo implements Serializable {
     @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "bandera")
-    private String bandera;
     @Column(name = "jugados")
     private Integer jugados;
     @Column(name = "ganados")
@@ -94,14 +90,7 @@ public class Equipo implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getBandera() {
-        return bandera;
-    }
-
-    public void setBandera(String bandera) {
-        this.bandera = bandera;
-    }
+    
     public Integer getJugados() {
         return jugados;
     }
