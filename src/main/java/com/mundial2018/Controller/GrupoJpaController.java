@@ -15,7 +15,6 @@ import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Grupo;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,26 +35,26 @@ public class GrupoJpaController implements Serializable {
     }
 
     public void create(Grupo grupo) {
-        if (grupo.getEquipoCollection() == null) {
-            grupo.setEquipoCollection(new ArrayList<Equipo>());
+        if (grupo.getEquipoList() == null) {
+            grupo.setEquipoList(new ArrayList<Equipo>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Equipo> attachedEquipoCollection = new ArrayList<Equipo>();
-            for (Equipo equipoCollectionEquipoToAttach : grupo.getEquipoCollection()) {
+            List<Equipo> attachedEquipoCollection = new ArrayList<Equipo>();
+            for (Equipo equipoCollectionEquipoToAttach : grupo.getEquipoList()) {
                 equipoCollectionEquipoToAttach = em.getReference(equipoCollectionEquipoToAttach.getClass(), equipoCollectionEquipoToAttach.getId());
                 attachedEquipoCollection.add(equipoCollectionEquipoToAttach);
             }
-            grupo.setEquipoCollection(attachedEquipoCollection);
+            grupo.setEquipoList(attachedEquipoCollection);
             em.persist(grupo);
-            for (Equipo equipoCollectionEquipo : grupo.getEquipoCollection()) {
+            for (Equipo equipoCollectionEquipo : grupo.getEquipoList()) {
                 Grupo oldGrupoidOfEquipoCollectionEquipo = equipoCollectionEquipo.getGrupoid();
                 equipoCollectionEquipo.setGrupoid(grupo);
                 equipoCollectionEquipo = em.merge(equipoCollectionEquipo);
                 if (oldGrupoidOfEquipoCollectionEquipo != null) {
-                    oldGrupoidOfEquipoCollectionEquipo.getEquipoCollection().remove(equipoCollectionEquipo);
+                    oldGrupoidOfEquipoCollectionEquipo.getEquipoList().remove(equipoCollectionEquipo);
                     oldGrupoidOfEquipoCollectionEquipo = em.merge(oldGrupoidOfEquipoCollectionEquipo);
                 }
             }
@@ -73,8 +72,8 @@ public class GrupoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Grupo persistentGrupo = em.find(Grupo.class, grupo.getId());
-            Collection<Equipo> equipoCollectionOld = persistentGrupo.getEquipoCollection();
-            Collection<Equipo> equipoCollectionNew = grupo.getEquipoCollection();
+            List<Equipo> equipoCollectionOld = persistentGrupo.getEquipoList();
+            List<Equipo> equipoCollectionNew = grupo.getEquipoList();
             List<String> illegalOrphanMessages = null;
             for (Equipo equipoCollectionOldEquipo : equipoCollectionOld) {
                 if (!equipoCollectionNew.contains(equipoCollectionOldEquipo)) {
@@ -87,13 +86,13 @@ public class GrupoJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Equipo> attachedEquipoCollectionNew = new ArrayList<Equipo>();
+            List<Equipo> attachedEquipoCollectionNew = new ArrayList<Equipo>();
             for (Equipo equipoCollectionNewEquipoToAttach : equipoCollectionNew) {
                 equipoCollectionNewEquipoToAttach = em.getReference(equipoCollectionNewEquipoToAttach.getClass(), equipoCollectionNewEquipoToAttach.getId());
                 attachedEquipoCollectionNew.add(equipoCollectionNewEquipoToAttach);
             }
             equipoCollectionNew = attachedEquipoCollectionNew;
-            grupo.setEquipoCollection(equipoCollectionNew);
+            grupo.setEquipoList(equipoCollectionNew);
             grupo = em.merge(grupo);
             for (Equipo equipoCollectionNewEquipo : equipoCollectionNew) {
                 if (!equipoCollectionOld.contains(equipoCollectionNewEquipo)) {
@@ -101,7 +100,7 @@ public class GrupoJpaController implements Serializable {
                     equipoCollectionNewEquipo.setGrupoid(grupo);
                     equipoCollectionNewEquipo = em.merge(equipoCollectionNewEquipo);
                     if (oldGrupoidOfEquipoCollectionNewEquipo != null && !oldGrupoidOfEquipoCollectionNewEquipo.equals(grupo)) {
-                        oldGrupoidOfEquipoCollectionNewEquipo.getEquipoCollection().remove(equipoCollectionNewEquipo);
+                        oldGrupoidOfEquipoCollectionNewEquipo.getEquipoList().remove(equipoCollectionNewEquipo);
                         oldGrupoidOfEquipoCollectionNewEquipo = em.merge(oldGrupoidOfEquipoCollectionNewEquipo);
                     }
                 }
@@ -136,7 +135,7 @@ public class GrupoJpaController implements Serializable {
                 throw new NonexistentEntityException("The grupo with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Equipo> equipoCollectionOrphanCheck = grupo.getEquipoCollection();
+            List<Equipo> equipoCollectionOrphanCheck = grupo.getEquipoList();
             for (Equipo equipoCollectionOrphanCheckEquipo : equipoCollectionOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();

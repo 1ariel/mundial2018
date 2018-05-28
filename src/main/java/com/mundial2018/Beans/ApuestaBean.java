@@ -9,6 +9,7 @@ import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.PartidoJpaController;
+import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
@@ -46,17 +47,19 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class ApuestaBean {
-
+    private Login login;
     private Ronda ronda;
     private Apuesta apuesta;
+    private Empleado empleado;
     private List<Apuesta> listaApuestas;
     private List<Ronda> listaRondas;
-    private Empleado empleado;
+    private List<Partido> listaPartidos;
     private final RondaJpaController rjc;
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
     private final PartidoJpaController pjc;
-
+    private final ResultadoJpaController rejc;
+    
     public ApuestaBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
 
@@ -65,14 +68,14 @@ public class ApuestaBean {
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
         pjc = new PartidoJpaController(emf);
+        rejc = new ResultadoJpaController(emf);
     }
 
     @PostConstruct
     public void init() {
         apuesta = new Apuesta();
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext ec = fc.getExternalContext();
-        Login login = (Login) ec.getSessionMap().get("login");
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        login = (Login) ec.getSessionMap().get("login");
         empleado = login.getEmpleado();
         // apuesta.setEmpleadoid(empleado);
         listaRondas = rjc.findRondaEntities();
@@ -202,6 +205,40 @@ public class ApuestaBean {
 
     }
 
+    public void calcularPuntosDeEmpleado(List<Partido> partidos) {
+        for(Partido partido: partidos) {
+            List<Apuesta> apuestas = ajc.findApuestasById(partido.getId());
+            
+            for(Apuesta apuestaActual : apuestas) {
+                // Adivinar marcador exacto
+                if(apuestaActual.getGolesEquipo1().equals(partido.getGolesEquipo1()) && 
+                    apuestaActual.getGolesEquipo2().equals(partido.getGolesEquipo2())) {
+                    //apuestaActual.getEmpleadoid().getResultado().setPartidosExactos(+1);
+                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+3);
+                }
+                // Adivinar que el equipo 1 gana
+                if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() && 
+                    partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
+                    //apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
+                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                // Adivinar que el equipo 2 gana
+                } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() && 
+                    partido.getGolesEquipo1() < partido.getGolesEquipo2()){
+                    //apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
+                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                }
+                // Adivinar empate
+                if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) && 
+                    partido.getGolesEquipo1().equals(partido.getGolesEquipo2())) {
+                    //apuestaActual.getEmpleadoid().getResultado().setPartidosEmpatados(+1);
+                    //apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
+                }
+                
+                //rejc.edit(apuestaActual.getEmpleadoid().getResultado());
+            }
+        }
+    }
+    
     /**
      * @return the ronda
      */
@@ -256,5 +293,33 @@ public class ApuestaBean {
      */
     public void setListaApuestas(List<Apuesta> listaApuestas) {
         this.listaApuestas = listaApuestas;
+    }
+
+    /**
+     * @return the login
+     */
+    public Login getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the listaPartidos
+     */
+    public List<Partido> getListaPartidos() {
+        return listaPartidos;
+    }
+
+    /**
+     * @param listaPartidos the listaPartidos to set
+     */
+    public void setListaPartidos(List<Partido> listaPartidos) {
+        this.listaPartidos = listaPartidos;
     }
 }

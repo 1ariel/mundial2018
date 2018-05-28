@@ -13,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Grupo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -44,7 +45,7 @@ public class EquipoJpaController implements Serializable {
             }
             em.persist(equipo);
             if (grupoid != null) {
-                grupoid.getEquipoCollection().add(equipo);
+                grupoid.getEquipoList().add(equipo);
                 grupoid = em.merge(grupoid);
             }
             em.getTransaction().commit();
@@ -69,11 +70,11 @@ public class EquipoJpaController implements Serializable {
             }
             equipo = em.merge(equipo);
             if (grupoidOld != null && !grupoidOld.equals(grupoidNew)) {
-                grupoidOld.getEquipoCollection().remove(equipo);
+                grupoidOld.getEquipoList().remove(equipo);
                 grupoidOld = em.merge(grupoidOld);
             }
             if (grupoidNew != null && !grupoidNew.equals(grupoidOld)) {
-                grupoidNew.getEquipoCollection().add(equipo);
+                grupoidNew.getEquipoList().add(equipo);
                 grupoidNew = em.merge(grupoidNew);
             }
             em.getTransaction().commit();
@@ -107,7 +108,7 @@ public class EquipoJpaController implements Serializable {
             }
             Grupo grupoid = equipo.getGrupoid();
             if (grupoid != null) {
-                grupoid.getEquipoCollection().remove(equipo);
+                grupoid.getEquipoList().remove(equipo);
                 grupoid = em.merge(grupoid);
             }
             em.remove(equipo);
@@ -142,6 +143,21 @@ public class EquipoJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Equipo> findEquiposOrdenados(Integer grupoId) {
+        EntityManager em = getEntityManager();
+        List<Equipo> equipos = new ArrayList<>();
+        
+        try {
+            Query query = em.createQuery("select e from Equipo e where e.grupoid.id = :grupoId order by e.puntos desc, e.golesFavor desc, e.golesContra desc");
+            query.setParameter("grupoId", grupoId);
+            equipos = (List<Equipo>)query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return equipos;
+    }
 
     public Equipo findEquipo(Integer id) {
         EntityManager em = getEntityManager();
@@ -164,5 +180,4 @@ public class EquipoJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

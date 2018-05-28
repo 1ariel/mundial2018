@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Partido;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -181,24 +182,34 @@ public class ApuestaJpaController implements Serializable {
         }
     }
     
+    public List<Apuesta> findApuestasById(Integer partidoId) {
+        EntityManager em = getEntityManager();
+        List<Apuesta> apuestas = new ArrayList<>();
+        
+        try {
+            Query query = em.createQuery("select a from Apuesta a where a.partidoId.id = :partidoId");
+            query.setParameter("partidoId", partidoId);
+            apuestas = (List<Apuesta>)query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return apuestas;
+    }
+    
     public Apuesta findViaEmpleadoAndPartido(Empleado idEmpleado, Partido idPartido){
-     EntityManager em = getEntityManager();
-      try {
-        Apuesta aux =  (Apuesta) em.createNamedQuery("Apuesta.findByEmpleadoAndPartido")
+        EntityManager em = getEntityManager();
+        try {
+            Apuesta aux = (Apuesta) em.createNamedQuery("Apuesta.findByEmpleadoAndPartido")
                    .setParameter("empleadoid", idEmpleado)
                    .setParameter("partidoId", idPartido).getSingleResult();
-        
-        return aux;
-        
-        
+            
+            return aux;
+        } catch(Exception e){
+            return null;
+        } finally {
+              em.close();
         }
-      catch(Exception e){
-      return null;
-      }
-      
-      finally {
-            em.close();
-    }
     }
 
     public int getApuestaCount() {
