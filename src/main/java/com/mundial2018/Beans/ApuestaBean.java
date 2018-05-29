@@ -155,23 +155,16 @@ public class ApuestaBean {
 
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
-       
-        /*SimpleDateFormat formato = new SimpleDateFormat("dd-MM-YYYY");
-        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String FechaCorrecta = formato.format(apuestaSeleccionada.getPartidoId().getFecha().getTime());
-     */
+      
         DateTimeZone zoneUTC = DateTimeZone.UTC;
-       // DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
-            DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
-
+        
+        DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
         
         DateTime dateTime = new DateTime(DateTime.now());
-            
-      
-        
-        
         boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
+        
+        
         if (test) {
             if (existeApuesta == null) {//exist do an update
                 ajc.create(apuestaSeleccionada);

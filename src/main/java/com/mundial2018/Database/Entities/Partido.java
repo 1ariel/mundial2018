@@ -127,7 +127,7 @@ public class Partido implements Serializable {
     }
 
     public void setPenalesEquipo1(Integer penalesEquipo1) {
-        this.golesEquipo1 = penalesEquipo1;
+        this.penalesEquipo1 = penalesEquipo1;
     }
 
     public Integer getEquipo2() {
