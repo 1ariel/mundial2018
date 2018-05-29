@@ -216,7 +216,7 @@ CREATE TABLE `resultado` (
     FOREIGN KEY (`empleado_id`)
     REFERENCES `zeusco_mundial2018`.`empleado` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
