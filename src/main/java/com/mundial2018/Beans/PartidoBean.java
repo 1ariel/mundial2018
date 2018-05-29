@@ -22,8 +22,10 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -69,8 +71,14 @@ public class PartidoBean implements Serializable {
     }
 
        public String buscarBandera(Integer equipoId) {
+           try{
         ImageHelper img = new ImageHelper();
         return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+           }
+          catch(Exception e){
+           return "banderas/logo.png";
+          }
+        
     }
        
        
@@ -86,7 +94,9 @@ public class PartidoBean implements Serializable {
            this.partido = new Partido();
            
            listaRondas = rjc.findRondaEntities();
-             PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
+             PrimeFaces.current().executeScript("PF('fasegrupo').update();");
+                FacesContext fc = FacesContext.getCurrentInstance();
+               fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente " ));
        }
        
        public Boolean isPartidoActive(Partido p){
@@ -109,17 +119,18 @@ public class PartidoBean implements Serializable {
       PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
        }
        
-       public String getEquipoNameName(int equipoID){
+       public String getEquipoName(int equipoID){
        String nombre;
        try{
        nombre = ejc.findEquipo(equipoID).getNombre();
        }
        catch(Exception e){
-       nombre = "No encontrado, id"+equipoID;
+       nombre = " ";
        }
        return nombre;
        
        }
+    
        
     
     public List<Ronda> getListaRondas() {
