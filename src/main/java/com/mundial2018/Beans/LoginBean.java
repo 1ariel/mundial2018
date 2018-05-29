@@ -150,6 +150,16 @@ public class LoginBean implements Serializable {
 
     }
 
+    public Boolean isThisAdmin(){
+        if (this.login.getRol().equalsIgnoreCase("admin")) 
+            return true;
+            
+        
+        else 
+            return false;
+    
+    }
+    
     public String getUsername() {
         return username;
     }
