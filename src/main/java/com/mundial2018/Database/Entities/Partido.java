@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Partido.findByEquipo1", query = "SELECT p FROM Partido p WHERE p.equipo1 = :equipo1"),
     @NamedQuery(name = "Partido.findByGolesEquipo1", query = "SELECT p FROM Partido p WHERE p.golesEquipo1 = :golesEquipo1"),
     @NamedQuery(name = "Partido.findByEquipo2", query = "SELECT p FROM Partido p WHERE p.equipo2 = :equipo2"),
-    @NamedQuery(name = "Partido.findByGolesEquipo2", query = "SELECT p FROM Partido p WHERE p.golesEquipo2 = :golesEquipo2")})
+    @NamedQuery(name = "Partido.findByGolesEquipo2", query = "SELECT p FROM Partido p WHERE p.golesEquipo2 = :golesEquipo2"),
+    @NamedQuery(name = "Partido.findByEditado", query = "SELECT p FROM Partido p WHERE p.editado = :editado")})
 public class Partido implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -69,6 +70,8 @@ public class Partido implements Serializable {
     private Integer golesEquipo2;
     @Column(name = "penalesEquipo2")
     private Integer penalesEquipo2;
+    @Column(name = "editado")
+    private Integer editado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoId")
     private Collection<Apuesta> apuestaCollection;
     @JoinColumn(name = "ronda_id", referencedColumnName = "id")
@@ -153,6 +156,14 @@ public class Partido implements Serializable {
     public void setPenalesEquipo2(Integer penalesEquipo2) {
         this.penalesEquipo2 = penalesEquipo2;
     }
+    
+    public Integer getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Integer editado) {
+        this.editado = editado;
+    }
 
     @XmlTransient
     public Collection<Apuesta> getApuestaCollection() {
@@ -194,6 +205,5 @@ public class Partido implements Serializable {
     @Override
     public String toString() {
         return "com.mundial2018.Database.Entities.Partido[ id=" + id + " ]";
-    }
-    
+    }  
 }

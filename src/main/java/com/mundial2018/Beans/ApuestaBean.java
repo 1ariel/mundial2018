@@ -8,7 +8,6 @@ package com.mundial2018.Beans;
 import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
-import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Controller.exceptions.NonexistentEntityException;

@@ -6,17 +6,17 @@
 package com.mundial2018.Database.Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,22 +24,23 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author WVQ
  */
 @Entity
-@Table(name = "resultado")
+@Table(name = "resultado_hist")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Resultado.findAll", query = "SELECT r FROM Resultado r"),
-    @NamedQuery(name = "Resultado.findById", query = "SELECT r FROM Resultado r WHERE r.id = :id"),
-    @NamedQuery(name = "Resultado.findByPartidosExactos", query = "SELECT r FROM Resultado r WHERE r.partidosExactos = :partidosExactos"),
-    @NamedQuery(name = "Resultado.findByPartidosGanados", query = "SELECT r FROM Resultado r WHERE r.partidosGanados = :partidosGanados"),
-    @NamedQuery(name = "Resultado.findByPartidosEmpatados", query = "SELECT r FROM Resultado r WHERE r.partidosEmpatados = :partidosEmpatados"),
-    @NamedQuery(name = "Resultado.findAllByPuntosSort", query = "SELECT r FROM Resultado r  order by r.puntos desc"),
-    @NamedQuery(name = "Resultado.findByPuntos", query = "SELECT r FROM Resultado r WHERE r.puntos = :puntos")})
-public class Resultado implements Serializable {
+    @NamedQuery(name = "ResultadoHist.findAll", query = "SELECT r FROM ResultadoHist r"),
+    @NamedQuery(name = "ResultadoHist.findById", query = "SELECT r FROM ResultadoHist r WHERE r.id = :id"),
+    @NamedQuery(name = "ResultadoHist.findByPartidosExactos", query = "SELECT r FROM ResultadoHist r WHERE r.partidosExactos = :partidosExactos"),
+    @NamedQuery(name = "ResultadoHist.findByPartidosGanados", query = "SELECT r FROM ResultadoHist r WHERE r.partidosGanados = :partidosGanados"),
+    @NamedQuery(name = "ResultadoHist.findByPartidosEmpatados", query = "SELECT r FROM ResultadoHist r WHERE r.partidosEmpatados = :partidosEmpatados"),
+    @NamedQuery(name = "ResultadoHist.findByPuntos", query = "SELECT r FROM ResultadoHist r WHERE r.puntos = :puntos"),
+    @NamedQuery(name = "ResultadoHist.findByEmpleadoId", query = "SELECT r FROM ResultadoHist r WHERE r.empleadoId = :empleadoId"),
+    @NamedQuery(name = "ResultadoHist.findByFechaModificacion", query = "SELECT r FROM ResultadoHist r WHERE r.fechaModificacion = :fechaModificacion")})
+public class ResultadoHist implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
     @Column(name = "partidosExactos")
@@ -50,14 +51,16 @@ public class Resultado implements Serializable {
     private Integer partidosEmpatados;
     @Column(name = "puntos")
     private Integer puntos;
-    @JoinColumn(name = "empleado_id", referencedColumnName = "id")
-    @OneToOne(optional = false)
-    private Empleado empleadoId;
+    @Column(name = "empleado_id")
+    private Integer empleadoId;
+    @Column(name = "fechaModificacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaModificacion;
 
-    public Resultado() {
+    public ResultadoHist() {
     }
 
-    public Resultado(Integer id) {
+    public ResultadoHist(Integer id) {
         this.id = id;
     }
 
@@ -101,12 +104,20 @@ public class Resultado implements Serializable {
         this.puntos = puntos;
     }
 
-    public Empleado getEmpleadoId() {
+    public Integer getEmpleadoId() {
         return empleadoId;
     }
 
-    public void setEmpleadoId(Empleado empleadoId) {
+    public void setEmpleadoId(Integer empleadoId) {
         this.empleadoId = empleadoId;
+    }
+
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
 
     @Override
@@ -119,10 +130,10 @@ public class Resultado implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Resultado)) {
+        if (!(object instanceof ResultadoHist)) {
             return false;
         }
-        Resultado other = (Resultado) object;
+        ResultadoHist other = (ResultadoHist) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -131,7 +142,7 @@ public class Resultado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mundial2018.Database.Entities.Resultado[ id=" + id + " ]";
+        return "com.mundial2018.Database.Entities.ResultadoHist[ id=" + id + " ]";
     }
     
 }
