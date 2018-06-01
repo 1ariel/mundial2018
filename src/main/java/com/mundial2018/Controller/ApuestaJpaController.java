@@ -59,9 +59,17 @@ public class ApuestaJpaController implements Serializable {
                 partidoId = em.merge(partidoId);
             }
             em.getTransaction().commit();
-        } finally {
+     
+     
+        } 
+          catch(Exception e){
+               String pp = e.getMessage();
+               
+               }
+        
+        finally {
             if (em != null) {
-                em.close();
+                 em.close();
             }
         }
     }

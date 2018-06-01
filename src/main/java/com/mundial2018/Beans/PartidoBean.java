@@ -83,9 +83,12 @@ public class PartidoBean implements Serializable {
        
        
        public void assignacionDeGoles(){
-           String pe = "";
-          try {       
+                 try {    
+              
               pjc.edit(partido);
+            
+              
+              
           } catch (NonexistentEntityException ex) {
               Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
           } catch (Exception ex) {

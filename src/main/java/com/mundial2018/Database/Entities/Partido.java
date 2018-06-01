@@ -46,6 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Partido.findByEditado", query = "SELECT p FROM Partido p WHERE p.editado = :editado")})
 public class Partido implements Serializable {
 
+    @Column(name = "editado")
+    private Boolean editado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,8 +73,6 @@ public class Partido implements Serializable {
     private Integer golesEquipo2;
     @Column(name = "penalesEquipo2")
     private Integer penalesEquipo2;
-    @Column(name = "editado")
-    private Integer editado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partidoId")
     private Collection<Apuesta> apuestaCollection;
     @JoinColumn(name = "ronda_id", referencedColumnName = "id")
@@ -157,13 +158,6 @@ public class Partido implements Serializable {
         this.penalesEquipo2 = penalesEquipo2;
     }
     
-    public Integer getEditado() {
-        return editado;
-    }
-
-    public void setEditado(Integer editado) {
-        this.editado = editado;
-    }
 
     @XmlTransient
     public Collection<Apuesta> getApuestaCollection() {
@@ -206,4 +200,12 @@ public class Partido implements Serializable {
     public String toString() {
         return "com.mundial2018.Database.Entities.Partido[ id=" + id + " ]";
     }  
+
+    public Boolean getEditado() {
+        return editado;
+    }
+
+    public void setEditado(Boolean editado) {
+        this.editado = editado;
+    }
 }
