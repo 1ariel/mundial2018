@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,111 +39,111 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class PartidoBean implements Serializable {
-      private final RondaJpaController rjc;
-        private final EquipoJpaController ejc;
-       private final PartidoJpaController pjc; 
-        
-      private List<Ronda> listaRondas;
-      
-      private Partido partido;
-      
-      
-      public PartidoBean(){
-              EntityManagerFactoria aux = new EntityManagerFactoria();
-        EntityManagerFactory emf = aux.getEMF();
-                  partido= new Partido();
 
-          rjc = new RondaJpaController(emf);
-           ejc = new EquipoJpaController(emf);
-           pjc = new PartidoJpaController(emf);
-      }
-      
-       @PostConstruct
-    public void init() {
-    
-           listaRondas = rjc.findRondaEntities();
-      
-          
-           
+    private final RondaJpaController rjc;
+    private final EquipoJpaController ejc;
+    private final PartidoJpaController pjc;
+
+    private List<Ronda> listaRondas;
+
+    private Partido partido;
+
+    public PartidoBean() {
+        EntityManagerFactoria aux = new EntityManagerFactoria();
+        EntityManagerFactory emf = aux.getEMF();
+        partido = new Partido();
+
+        rjc = new RondaJpaController(emf);
+        ejc = new EquipoJpaController(emf);
+        pjc = new PartidoJpaController(emf);
     }
 
-     public String formatearFecha(Date fecha) {
+    @PostConstruct
+    public void init() {
+
+        listaRondas = rjc.findRondaEntities();
+
+    }
+
+    public String formatearFecha(Date fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("EEEE d 'de' MMMM", new Locale("es", "ES"));
         formato.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         return formato.format(fecha);
     }
 
-       public String buscarBandera(Integer equipoId) {
-           try{
-        ImageHelper img = new ImageHelper();
-        return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
-           }
-          catch(Exception e){
-           return "banderas/logo.png";
-          }
-        
+    public String buscarBandera(Integer equipoId) {
+        try {
+            ImageHelper img = new ImageHelper();
+            return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+        } catch (Exception e) {
+            return "banderas/logo.png";
+        }
+
     }
-       
-       
-       public void assignacionDeGoles(){
-                 try {    
-              partido.setEditado(true);
-              
-              
-              pjc.edit(partido);
-            
-              
-              
-          } catch (NonexistentEntityException ex) {
-              Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
-          } catch (Exception ex) {
-              Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
-          }
-           this.partido = new Partido();
-           
-           listaRondas = rjc.findRondaEntities();
-             PrimeFaces.current().executeScript("PF('fasegrupo').update();");
-                FacesContext fc = FacesContext.getCurrentInstance();
-               fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente " ));
-       }
-       
-       public Boolean isPartidoActive(Partido p){
-       
-        DateTimeZone zoneUTC = DateTimeZone.UTC;        
+
+    public void assignacionDeGoles() {
+        try {
+            //william aqui es el metodo para de la difurcacion
+
+            if (partido.getEditado()) {
+                //Editado
+
+            } else {
+                //NO editado
+                partido.setEditado(true);
+                pjc.edit(partido);
+            }
+
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.partido = new Partido();
+
+        listaRondas = rjc.findRondaEntities();
+        PrimeFaces.current().executeScript("PF('fasegrupo').update();");
+        FacesContext fc = FacesContext.getCurrentInstance();
+        fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente "));
+    }
+
+    public Boolean isPartidoActive(Partido p) {
+
+        DateTimeZone zoneUTC = DateTimeZone.UTC;
         DateTime dt = new DateTime(new Date(p.getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
-        
+
         DateTime dateTime = new DateTime(DateTime.now());
         boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
-        
+
         return test;
-       
-       
-       }
-       
-       public void findPartido(Partido p){       
-      partido= pjc.findPartido(p.getId());
-      //lets set penales as 0 if is not modify
-      
-      
-      PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
-       }
-       
-       public String getEquipoName(int equipoID){
-       String nombre;
-       try{
-       nombre = ejc.findEquipo(equipoID).getNombre();
-       }
-       catch(Exception e){
-       nombre = " ";
-       }
-       return nombre;
-       
-       }
-    
-       
-    
+
+    }
+
+    public void findPartido(Partido p) {
+        partido = pjc.findPartido(p.getId());
+        //lets set penales as 0 if is not modify
+        if (Objects.isNull(partido.getPenalesEquipo1())) {
+            partido.setPenalesEquipo1(0);
+        }
+        if (Objects.isNull(partido.getPenalesEquipo2())) {
+            partido.setPenalesEquipo2(0);
+        }
+        PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
+    }
+
+    public String getEquipoName(int equipoID) {
+        String nombre;
+        try {
+            nombre = ejc.findEquipo(equipoID).getNombre();
+        } catch (Exception e) {
+            nombre = " ";
+        }
+        return nombre;
+
+    }
+
     public List<Ronda> getListaRondas() {
         return listaRondas;
     }
@@ -158,10 +159,5 @@ public class PartidoBean implements Serializable {
     public void setPartido(Partido partido) {
         this.partido = partido;
     }
-    
-    
-    
-    
-    
-    
+
 }
