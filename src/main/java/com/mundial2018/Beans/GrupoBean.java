@@ -13,6 +13,7 @@ import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Grupo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
+import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,7 +29,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -45,7 +45,8 @@ public class GrupoBean {
     private final PartidoJpaController pjc;
 
     public GrupoBean() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mundial2018_Mundial2018_war_1.0-SNAPSHOTPU");
+        EntityManagerFactoria aux = new EntityManagerFactoria();
+        EntityManagerFactory emf = aux.getEMF();
         gjc = new GrupoJpaController(emf);
         ejc = new EquipoJpaController(emf);
         pjc = new PartidoJpaController(emf);
