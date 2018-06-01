@@ -120,7 +120,7 @@ public class LoginBean implements Serializable {
         ec.invalidateSession();
         login = new Login();
 
-        return "../Login.xhtml";
+        return "/Login.xhtml?faces-redirect=true";
     }
 
     public void resetearPassword() {
