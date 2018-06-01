@@ -61,6 +61,9 @@ public class PartidoBean implements Serializable {
     public void init() {
     
            listaRondas = rjc.findRondaEntities();
+      
+          
+           
     }
 
      public String formatearFecha(Date fecha) {
@@ -84,6 +87,8 @@ public class PartidoBean implements Serializable {
        
        public void assignacionDeGoles(){
                  try {    
+              partido.setEditado(true);
+              
               
               pjc.edit(partido);
             
@@ -118,6 +123,8 @@ public class PartidoBean implements Serializable {
        
        public void findPartido(Partido p){       
       partido= pjc.findPartido(p.getId());
+      //lets set penales as 0 if is not modify
+      
       
       PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
        }
