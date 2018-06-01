@@ -119,6 +119,14 @@ public class GrupoBean {
         }
     }
     
+    public void recalcularPuntos() {
+        String rol = login.getRol();
+        
+        if (rol.equals("admin") || rol.equals("superuser")) {
+            
+        }
+    }
+    
     public void crearFaseDeEliminatorias(Date fechaPartido) {
         String rol = login.getRol();
         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));

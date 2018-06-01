@@ -220,6 +220,8 @@ public class ApuestaBean {
         }
     }
     
+    public void recalcularPuntosDeEmpleado() {}
+    
     /**
      * @return the ronda
      */
