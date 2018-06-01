@@ -77,9 +77,9 @@ DROP TABLE IF EXISTS `zeusco_mundial2018`.`apuesta` ;
 
 CREATE TABLE IF NOT EXISTS `zeusco_mundial2018`.`apuesta` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `equipo1` INT NULL DEFAULT NULL,
+  `equipo1` VARCHAR(45) NULL DEFAULT NULL,
   `golesEquipo1` INT NULL DEFAULT NULL,
-  `equipo2` INT NULL DEFAULT NULL,
+  `equipo2` VARCHAR(45) NULL DEFAULT NULL,
   `golesEquipo2` INT NULL DEFAULT NULL,
   `Empleado_id` INT NOT NULL,
   `partido_id` INT NOT NULL,
