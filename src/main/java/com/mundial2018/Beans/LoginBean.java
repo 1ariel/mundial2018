@@ -141,6 +141,8 @@ public class LoginBean implements Serializable {
 
         try {
             ljc.edit(loginAux);
+             fc.addMessage(null, new FacesMessage("Contraseña cambiada"));
+
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
