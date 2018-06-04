@@ -9,6 +9,7 @@ import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Controller.exceptions.PreexistingEntityException;
 import com.mundial2018.Database.Entities.EquipoHist;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -126,6 +127,23 @@ public class EquipoHistJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public EquipoHist findEquipoHist(Date fechaPartido, Integer equipoId) {
+        EntityManager em = getEntityManager();
+        EquipoHist resultadoHist = new EquipoHist();
+        
+        try {
+            Query query = em.createQuery("select e from EquipoHist e where e.equipoId = 1 and cast(e.fechaModificacion as date) <= :fechaPartido - interval 1 day order by e.fechaModificacion desc limit 1");
+            query.setParameter("equipoId", equipoId);
+            query.setParameter("fechaPartido", fechaPartido);
+            query.setParameter(2, fechaPartido);
+            resultadoHist = (EquipoHist)query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        return resultadoHist;
     }
 
     public int getEquipoHistCount() {

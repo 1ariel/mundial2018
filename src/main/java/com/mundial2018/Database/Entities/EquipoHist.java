@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EquipoHist.findByGolesFavor", query = "SELECT e FROM EquipoHist e WHERE e.golesFavor = :golesFavor"),
     @NamedQuery(name = "EquipoHist.findByGolesContra", query = "SELECT e FROM EquipoHist e WHERE e.golesContra = :golesContra"),
     @NamedQuery(name = "EquipoHist.findByPuntos", query = "SELECT e FROM EquipoHist e WHERE e.puntos = :puntos"),
+    @NamedQuery(name = "EquipoHist.findByEquipoId", query = "SELECT e FROM EquipoHist e WHERE e.equipoId = :equipoId"),
     @NamedQuery(name = "EquipoHist.findByGrupoId", query = "SELECT e FROM EquipoHist e WHERE e.grupoId = :grupoId"),
     @NamedQuery(name = "EquipoHist.findByFechaModificacion", query = "SELECT e FROM EquipoHist e WHERE e.fechaModificacion = :fechaModificacion")})
 public class EquipoHist implements Serializable {
@@ -60,6 +61,8 @@ public class EquipoHist implements Serializable {
     private Integer golesContra;
     @Column(name = "puntos")
     private Integer puntos;
+    @Column(name = "equipo_id")
+    private Integer equipoId;
     @Column(name = "grupo_id")
     private Integer grupoId;
     @Column(name = "fechaModificacion")
@@ -135,6 +138,14 @@ public class EquipoHist implements Serializable {
 
     public void setPuntos(Integer puntos) {
         this.puntos = puntos;
+    }
+
+    public Integer getEquipoId() {
+        return equipoId;
+    }
+
+    public void setEquipoId(Integer equipoId) {
+        this.equipoId = equipoId;
     }
 
     public Integer getGrupoId() {

@@ -5,11 +5,13 @@
  */
 package com.mundial2018.Beans;
 
+import com.mundial2018.Controller.EquipoHistJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
 import com.mundial2018.Controller.GrupoJpaController;
 import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Equipo;
+import com.mundial2018.Database.Entities.EquipoHist;
 import com.mundial2018.Database.Entities.Grupo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
@@ -40,16 +42,18 @@ import javax.persistence.EntityManagerFactory;
 public class GrupoBean {
     private Login login;
     private List<Grupo> listaGrupos;
-    private final GrupoJpaController gjc;
-    private final EquipoJpaController ejc;
-    private final PartidoJpaController pjc;
+    private final GrupoJpaController grupojc;
+    private final EquipoJpaController equipojc;
+    private final EquipoHistJpaController equipoHistjc;
+    private final PartidoJpaController partidojc;
 
     public GrupoBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
         EntityManagerFactory emf = aux.getEMF();
-        gjc = new GrupoJpaController(emf);
-        ejc = new EquipoJpaController(emf);
-        pjc = new PartidoJpaController(emf);
+        grupojc = new GrupoJpaController(emf);
+        equipojc = new EquipoJpaController(emf);
+        equipoHistjc = new EquipoHistJpaController(emf);
+        partidojc = new PartidoJpaController(emf);
     }
     
     @PostConstruct
@@ -60,11 +64,11 @@ public class GrupoBean {
     }
     
     public List<Grupo> ordenarEquiposPorPosicion() {
-        List<Grupo> lista = gjc.findGrupoEntities();
+        List<Grupo> lista = grupojc.findGrupoEntities();
         
         try {
             for(Grupo grupo: lista) {
-                List<Equipo> listaEquipos = ejc.findEquiposOrdenados(grupo.getId());
+                List<Equipo> listaEquipos = equipojc.findEquiposOrdenados(grupo.getId());
                 grupo.setEquipoList(listaEquipos);
             }
         } catch(Exception e) {
@@ -74,57 +78,75 @@ public class GrupoBean {
         return lista;
     }
     
-    public void calcularPuntos(Partido partido) {
+    public void recalcularPuntos(Partido partido) {
         String rol = login.getRol();
+        List<Equipo> equipos = equipojc.findEquipoEntities();
         
         if (rol.equals("admin") || rol.equals("superuser")) {
-            int golesEquipo1 = partido.getGolesEquipo1();
-            int golesEquipo2 = partido.getGolesEquipo2();
-            Equipo equipo1 = ejc.findEquipo(partido.getEquipo1());
-            Equipo equipo2 = ejc.findEquipo(partido.getEquipo2());
-
-            // Partidos jugados
-            equipo1.setJugados(+1);
-            equipo2.setJugados(+1);
-            // Goles a favor
-            equipo1.setGolesFavor(+golesEquipo1);
-            equipo2.setGolesFavor(+golesEquipo2);
-            // Goles en contra
-            equipo1.setGolesContra(+golesEquipo2);
-            equipo2.setGolesContra(+golesEquipo1);
-
-            // Equipo 1 gana
-            if(golesEquipo1 > golesEquipo2) {
-                equipo1.setGanados(+1);
-                equipo2.setPerdidos(+1);
-                equipo1.setPuntos(+3);
-            // Equipo 2 gana
-            } else if(golesEquipo1 < golesEquipo2) {
-                equipo1.setPerdidos(+1);
-                equipo2.setGanados(+1);
-                equipo2.setPuntos(+3);
-            // Empate
-            } else {
-                equipo1.setEmpatados(+1);
-                equipo2.setEmpatados(+1);
-                equipo1.setPuntos(+1);
-                equipo2.setPuntos(+1);
-            }
-
-            try {
-                ejc.edit(equipo1);
-                ejc.edit(equipo2);
-            } catch (Exception ex) {
-                Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+            for(Equipo equipo : equipos) {
+                try {
+                    EquipoHist equipoHist = equipoHistjc.findEquipoHist(partido.getFecha(), equipo.getId());
+                    // Reasignar valores anteriores a Equipo
+                    equipo.setJugados(equipoHist.getJugados());
+                    equipo.setGanados(equipoHist.getGanados());
+                    equipo.setPerdidos(equipoHist.getPerdidos());
+                    equipo.setGolesFavor(equipoHist.getGolesFavor());
+                    equipo.setGolesContra(equipoHist.getGolesContra());
+                    equipo.setPuntos(equipoHist.getPuntos());
+                    
+                    equipojc.edit(equipo);
+                } catch (Exception ex) {
+                    Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
     
-    public void recalcularPuntos() {
+    public void calcularPuntos(List<Partido> partidos) {
         String rol = login.getRol();
         
         if (rol.equals("admin") || rol.equals("superuser")) {
-            
+            for(Partido partido : partidos) {
+                int golesEquipo1 = partido.getGolesEquipo1();
+                int golesEquipo2 = partido.getGolesEquipo2();
+                Equipo equipo1 = equipojc.findEquipo(partido.getEquipo1());
+                Equipo equipo2 = equipojc.findEquipo(partido.getEquipo2());
+
+                // Partidos jugados
+                equipo1.setJugados(+1);
+                equipo2.setJugados(+1);
+                // Goles a favor
+                equipo1.setGolesFavor(+golesEquipo1);
+                equipo2.setGolesFavor(+golesEquipo2);
+                // Goles en contra
+                equipo1.setGolesContra(+golesEquipo2);
+                equipo2.setGolesContra(+golesEquipo1);
+
+                // Equipo 1 gana
+                if(golesEquipo1 > golesEquipo2) {
+                    equipo1.setGanados(+1);
+                    equipo2.setPerdidos(+1);
+                    equipo1.setPuntos(+3);
+                // Equipo 2 gana
+                } else if(golesEquipo1 < golesEquipo2) {
+                    equipo1.setPerdidos(+1);
+                    equipo2.setGanados(+1);
+                    equipo2.setPuntos(+3);
+                // Empate
+                } else {
+                    equipo1.setEmpatados(+1);
+                    equipo2.setEmpatados(+1);
+                    equipo1.setPuntos(+1);
+                    equipo2.setPuntos(+1);
+                }
+
+                try {
+                    equipojc.edit(equipo1);
+                    equipojc.edit(equipo2);
+                } catch (Exception ex) {
+                    Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
     
@@ -150,7 +172,7 @@ public class GrupoBean {
             // Guardar partidos
             for(Partido partido : partidos) {
                 try {
-                    pjc.edit(partido);
+                    partidojc.edit(partido);
                 } catch (NonexistentEntityException ex) {
                     Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (Exception ex) {
@@ -162,7 +184,7 @@ public class GrupoBean {
     
     public List<Partido> crearOctavosDeFinal () {
         List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
-        List<Partido> octavos = pjc.findPartidoByRondaId(octavosRondaIds);
+        List<Partido> octavos = partidojc.findPartidoByRondaId(octavosRondaIds);
         
         // 1C - 2D      30 Junio
         octavos.get(0).setEquipo1(listaGrupos.get(2).getEquipoList().get(0).getId());
@@ -194,9 +216,9 @@ public class GrupoBean {
     
     public List<Partido> crearCuartosDeFinal () {
         List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
-        List<Partido> octavos = pjc.findPartidoByRondaId(octavosRondaIds);
+        List<Partido> octavos = partidojc.findPartidoByRondaId(octavosRondaIds);
         List<String> cuartosRondaIds = Arrays.asList("20", "21");
-        List<Partido> cuartos = pjc.findPartidoByRondaId(cuartosRondaIds);
+        List<Partido> cuartos = partidojc.findPartidoByRondaId(cuartosRondaIds);
         
         // W49 (1A - 2B) - W50 (1C - 2D)    06 Julio
         cuartos.get(0).setEquipo1(encontrarGanador(octavos.get(1)));
@@ -216,9 +238,9 @@ public class GrupoBean {
     
     public List<Partido> crearSemifinales () {
         List<String> cuartosRondaIds = Arrays.asList("20", "21");
-        List<Partido> cuartos = pjc.findPartidoByRondaId(cuartosRondaIds);
+        List<Partido> cuartos = partidojc.findPartidoByRondaId(cuartosRondaIds);
         List<String> semifinalesRondaIds = Arrays.asList("22", "23");
-        List<Partido> semifinales = pjc.findPartidoByRondaId(semifinalesRondaIds);
+        List<Partido> semifinales = partidojc.findPartidoByRondaId(semifinalesRondaIds);
         
         // W57 (W49 - W50) - W58 (W53 - W54)    10 Julio
         semifinales.get(0).setEquipo1(encontrarGanador(cuartos.get(0)));
@@ -232,9 +254,9 @@ public class GrupoBean {
     
     public List<Partido> crearFinal() {
         List<String> semifinalesRondaIds = Arrays.asList("22", "23");
-        List<Partido> semifinales = pjc.findPartidoByRondaId(semifinalesRondaIds);
+        List<Partido> semifinales = partidojc.findPartidoByRondaId(semifinalesRondaIds);
         List<String> finalRondaIds = Arrays.asList("24", "25");
-        List<Partido> finales = pjc.findPartidoByRondaId(finalRondaIds);
+        List<Partido> finales = partidojc.findPartidoByRondaId(finalRondaIds);
         
         // L61 (W57 - W58) - L62 (W59 - W60)    14 Julio
         finales.get(0).setEquipo1(encontrarGanador(semifinales.get(0)));

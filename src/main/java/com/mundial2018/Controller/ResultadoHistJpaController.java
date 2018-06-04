@@ -9,6 +9,7 @@ import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Controller.exceptions.PreexistingEntityException;
 import com.mundial2018.Database.Entities.ResultadoHist;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,7 +41,7 @@ public class ResultadoHistJpaController implements Serializable {
             em.persist(resultadoHist);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            if (findResultadoHist(resultadoHist.getId()) != null) {
+            if (ResultadoHistJpaController.this.findResultadoHist(resultadoHist.getId()) != null) {
                 throw new PreexistingEntityException("ResultadoHist " + resultadoHist + " already exists.", ex);
             }
             throw ex;
@@ -62,7 +63,7 @@ public class ResultadoHistJpaController implements Serializable {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
                 Integer id = resultadoHist.getId();
-                if (findResultadoHist(id) == null) {
+                if (ResultadoHistJpaController.this.findResultadoHist(id) == null) {
                     throw new NonexistentEntityException("The resultadoHist with id " + id + " no longer exists.");
                 }
             }
@@ -126,6 +127,23 @@ public class ResultadoHistJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+    
+    public ResultadoHist findResultadoHist(Date fechaPartido, Integer empleadoId) {
+        EntityManager em = getEntityManager();
+        ResultadoHist resultadoHist = new ResultadoHist();
+        
+        try {
+            Query query = em.createQuery("select r from ResultadoHist r where r.empleadoId = :empleadoId and cast(r.fechaModificacion as date) <= :fechaPartido - interval 1 day order by r.fechaModificacion desc limit 1");
+            query.setParameter("empleadoId", empleadoId);
+            query.setParameter("fechaPartido", fechaPartido);
+            query.setParameter(2, fechaPartido);
+            resultadoHist = (ResultadoHist)query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        return resultadoHist;
     }
 
     public int getResultadoHistCount() {

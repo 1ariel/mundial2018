@@ -60,6 +60,13 @@ public class Resultado implements Serializable {
     public Resultado(Integer id) {
         this.id = id;
     }
+    
+    public Resultado (Integer pExactos, Integer pGanados, Integer pEmpatados, Integer pPuntos) {
+        partidosExactos = pExactos;
+        partidosGanados = pGanados;
+        partidosEmpatados = pEmpatados;
+        puntos = pPuntos;
+    }
 
     public Integer getId() {
         return id;
