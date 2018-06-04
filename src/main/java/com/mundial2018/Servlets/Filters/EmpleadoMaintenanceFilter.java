@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ariel
  */
-@WebFilter(filterName = "EmpleadoMaintenanceFilter", urlPatterns = {"/Secure/AddEmpleado/*"})
+@WebFilter(filterName = "EmpleadoMaintenanceFilter", urlPatterns = {"/Secure/Admin/*"})
 public class EmpleadoMaintenanceFilter implements Filter {
     
     private static final boolean debug = true;
