@@ -111,6 +111,8 @@ public class empleadosController implements Serializable {
            log.setUsername(mappeo.get("email").toString());
            log.setPassword(mappeo.get("codigo").toString());
            log.setEmpleado(emp);
+           loginJpaController.create(log);
+           
             } catch (Exception e) {
                  Logger.getLogger("Hubo un error al subir un empleado a la base de datos");
                 
