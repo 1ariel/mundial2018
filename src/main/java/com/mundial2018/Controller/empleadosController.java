@@ -23,8 +23,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
+
 /**
  *
  * @author ariel
@@ -37,7 +39,7 @@ public class empleadosController implements Serializable {
     private EntityManagerFactoria facto;
     //private Empleado empleado;
     private Login login;
-    
+
     /**
      * Creates a new instance of empleados
      */
@@ -45,8 +47,7 @@ public class empleadosController implements Serializable {
         facto = new EntityManagerFactoria();
         //empleado = new Empleado();
         login = new Login();
-        
-        
+
     }
     List<Empleado> emp = new ArrayList<Empleado>();
 
@@ -76,58 +77,53 @@ public class empleadosController implements Serializable {
 
     }
 
- 
- /*Crea en la base de datos empleados basados en los archivos que se subieron en el excel.     
-    */
+    /*Crea en la base de datos empleados basados en los archivos que se subieron en el excel.     
+     */
     public void subirArchivo(FileUploadEvent event) {
         if (event != null) {
-             file = event.getFile();
+            file = event.getFile();
 
             excelManipulation auxExcel = new excelManipulation();
 
             try {
-       
-            
-           EmpleadoJpaController empController = new EmpleadoJpaController(facto.getEMF());
-           LoginJpaController loginJpaController= new LoginJpaController(facto.getEMF());
-           
-           ArrayList<HashMap> mapDeEmpleados=   auxExcel.getAllRowsFromCVSfile(file.getInputstream());
-           
-           for(HashMap mappeo: mapDeEmpleados){
-               try {
-                   
-              
-           Empleado emp = new Empleado();
-           emp.setEmail(mappeo.get("email").toString());
-           emp.setNombre(mappeo.get("nombre").toString());
-           
-           
-           empController.create(emp);
-           
-           int test  =emp.getId();
-           
-           Login log = new Login();           
-           log.setRol(mappeo.get("rol").toString());
-           log.setUsername(mappeo.get("email").toString());
-           log.setPassword(mappeo.get("codigo").toString());
-           log.setEmpleado(emp);
-           loginJpaController.create(log);
-           
-            } catch (Exception e) {
-                 Logger.getLogger("Hubo un error al subir un empleado a la base de datos");
-                
-               }
-           
-           }
- 
-                
-           
-           
+
+                EmpleadoJpaController empController = new EmpleadoJpaController(facto.getEMF());
+                LoginJpaController loginJpaController = new LoginJpaController(facto.getEMF());
+
+                ArrayList<HashMap> mapDeEmpleados = auxExcel.getAllRowsFromCVSfile(file.getInputstream());
+
+                for (HashMap mappeo : mapDeEmpleados) {
+                    try {
+
+                        Empleado emp = new Empleado();
+                        emp.setEmail(mappeo.get("email").toString());
+                        emp.setNombre(mappeo.get("nombre").toString());
+
+                        empController.create(emp);
+
+                        int test = emp.getId();
+
+                        Login log = new Login();
+                        log.setRol(mappeo.get("rol").toString());
+                        log.setUsername(mappeo.get("email").toString());
+                        log.setPassword(mappeo.get("codigo").toString());
+                        log.setEmpleado(emp);
+                        loginJpaController.create(log);
+
+                    } catch (Exception e) {
+                        Logger.getLogger("Hubo un error al subir un empleado a la base de datos");
+
+                    }
+
+                }
+
             } catch (IOException ex) {
-                FacesMessage message = new FacesMessage("Error", file.getFileName()+ " No es un archivo valido de excel.");
+                FacesMessage message = new FacesMessage("Error", file.getFileName() + " No es un archivo valido de excel.");
                 Logger.getLogger(empleadosController.class.getName()).log(Level.SEVERE, null, ex);
                 return;
             }
+
+            PrimeFaces.current().executeScript("PF('listEmployees').update();");
 
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -137,55 +133,37 @@ public class empleadosController implements Serializable {
     public UploadedFile getFile() {
         return file;
     }
-    
-    public void agregarManualEmpleado(){
-        if (
-                Objects.nonNull(login.getRol()) &&
-                Objects.nonNull(login.getPassword()) &&
-            
-                Objects.nonNull(login.getEmpleado().getNombre()) 
-                ) {
+
+    public void agregarManualEmpleado() {
+        if (Objects.nonNull(login.getRol())
+                && Objects.nonNull(login.getPassword())
+                && Objects.nonNull(login.getEmpleado().getNombre())) {
             LoginJpaController LoginDBA = new LoginJpaController(facto.getEMF());
             EmpleadoJpaController EmpleadoDBA = new EmpleadoJpaController(facto.getEMF());
 
             try {
                 //todo validacion si el empleado ya existe.
                 Empleado aux = login.getEmpleado();
-               EmpleadoDBA.create(aux);
+                EmpleadoDBA.create(aux);
 
                 login.setEmpleado(aux);
                 login.setUsername(aux.getNombre());
                 LoginDBA.create(login);
+              
             } catch (Exception ex) {
-           
+
                 Logger.getLogger(empleadosController.class.getName()).log(Level.SEVERE, null, ex);
             }
-         
+
         }
-    
-    
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-    
-/*
+
+    /*
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -193,7 +171,6 @@ public class empleadosController implements Serializable {
     public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }*/
-
     public Login getLogin() {
         return login;
     }
@@ -201,7 +178,5 @@ public class empleadosController implements Serializable {
     public void setLogin(Login login) {
         this.login = login;
     }
-    
-    
-    
+
 }

@@ -14,7 +14,7 @@
 
         <h:form id="listEmployees" > 
 
-            <p:dataList value="#{empleadosController.allEmpleados}" var="emp" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+            <p:dataList id="employerIDData" value="#{empleadosController.allEmpleados}" var="emp" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
                 <f:facet name="header">
                     Empleados
                 </f:facet>                
@@ -27,7 +27,7 @@
 
         <h:form enctype="multipart/form-data">
             <p:fileUpload fileUploadListener="#{empleadosController.subirArchivo}" mode="advanced" dragDropSupport="false"
-                          update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
+                          update="messages listEmployees" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
 
             <p:growl id="messages" showDetail="true" />
         </h:form>
@@ -37,30 +37,31 @@
             <p:panel id="toggleable" header="Agregar Empleados Manual" collapsed="true" toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
 
 
-                <h:panelGrid columns="2" cellpadding="10">
-                    <h:outputLabel value="Nombre De empleado"/>
-                    <h:inputText  label="Nombre" value="#{empleadosController.login.empleado.nombre}"/>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nombre De empleado"/>
+                    <p:inputText  label="Nombre" value="#{empleadosController.login.empleado.nombre}"/>
 
-                    <h:outputLabel value="Código de empleado"/>
-                    <h:inputText  label="Código" value="#{empleadosController.login.password}"/> 
+                    <p:outputLabel value="Código de empleado"/>
+                    <p:inputText  label="Código" value="#{empleadosController.login.password}"/> 
 
-                    <h:outputLabel value="Email"/>
-                    <h:inputText  label="Email" value="#{empleadosController.login.empleado.email}"></h:inputText> 
+                    <p:outputLabel value="Email"/>
+                    <p:inputText  label="Email" value="#{empleadosController.login.empleado.email}"></p:inputText> 
 
-                    <h:outputLabel value="Rol"/>
+                    <p:outputLabel value="Rol"/>
                     <p:selectOneListbox id="basic"  value="#{empleadosController.login.rol}">
                         <f:selectItem itemLabel="Empleado"  itemValue="empleado" />
                         <f:selectItem itemLabel="Admin" itemValue="admin" />
                     </p:selectOneListbox>
 
-                    <h:outputLabel value=""/>
-                    <h:commandButton value="Agregar" action="#{empleadosController.agregarManualEmpleado()}"/>
-                </h:panelGrid>
+                    <p:outputLabel value=""/>
+                    
+                    <p:commandButton value="Agregar"  update="listEmployees" action="#{empleadosController.agregarManualEmpleado()}"/>
+                </p:panelGrid>
 
                 <f:facet name="options">
                     <p:menu>
                         <p:submenu label="Settings">
-                            <p:menuitem value="Toggle" url="#" icon="ui-icon-newwin" onclick="PF('panel').toggle()" />
+                            <p:menuitem value="Toggle" update="listEmployees" url="#" icon="ui-icon-newwin" onclick="PF('panel').toggle()" />
                         </p:submenu>
                     </p:menu>
                 </f:facet>

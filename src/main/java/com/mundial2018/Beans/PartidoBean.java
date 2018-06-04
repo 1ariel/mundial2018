@@ -58,7 +58,9 @@ public class PartidoBean implements Serializable {
     private final ResultadoJpaController resultadojc;
     private final ResultadoHistJpaController resultadoHistjc;
     private List<Ronda> listaRondas;
-
+    
+    private Login login;
+    private List<Apuesta> listaApuestas;
     private Partido partido;
     private GrupoBean grupoBean;
 
@@ -159,14 +161,22 @@ public class PartidoBean implements Serializable {
     
     public void calcularPuntosDeEmpleado(List<Partido> partidos) {
         for(Partido partidoActual: partidos) {
+            
             List<Apuesta> apuestas = apuestajc.findApuestasById(partidoActual.getId());
             
+            
             for(Apuesta apuestaActual : apuestas) {
-                Resultado resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
+             Resultado resultado;
                 
-                if(!Objects.nonNull(resultado)) {
+             
+                    if(Objects.isNull(apuestaActual.getEmpleadoid().getResultado())) {
                     resultado = new Resultado(0, 0, 0, 0);
                 }
+                    else{
+                        resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
+                    }
+                
+            
                 
                 resultado.setEmpleadoId(apuestaActual.getEmpleadoid());
                 
