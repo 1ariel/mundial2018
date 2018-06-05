@@ -107,44 +107,47 @@ public class GrupoBean {
         
         if (rol.equals("admin") || rol.equals("superuser")) {
             for(Partido partido : partidos) {
-                int golesEquipo1 = partido.getGolesEquipo1();
-                int golesEquipo2 = partido.getGolesEquipo2();
-                Equipo equipo1 = equipojc.findEquipo(partido.getEquipo1());
-                Equipo equipo2 = equipojc.findEquipo(partido.getEquipo2());
+                // Calcular sólo si los partidos pertenecen a la fase de grupos
+                if(partido.getRondaId().getId() < 16) {
+                    int golesEquipo1 = partido.getGolesEquipo1();
+                    int golesEquipo2 = partido.getGolesEquipo2();
+                    Equipo equipo1 = equipojc.findEquipo(partido.getEquipo1());
+                    Equipo equipo2 = equipojc.findEquipo(partido.getEquipo2());
 
-                // Partidos jugados
+                    // Partidos jugados
                 equipo1.setJugados(+1);
                 equipo2.setJugados(+1);
-                // Goles a favor
+                    // Goles a favor
                 equipo1.setGolesFavor(+golesEquipo1);
                 equipo2.setGolesFavor(+golesEquipo2);
-                // Goles en contra
+                    // Goles en contra
                 equipo1.setGolesContra(+golesEquipo2);
                 equipo2.setGolesContra(+golesEquipo1);
 
-                // Equipo 1 gana
-                if(golesEquipo1 > golesEquipo2) {
+                    // Equipo 1 gana
+                    if(golesEquipo1 > golesEquipo2) {
                     equipo1.setGanados(+1);
                     equipo2.setPerdidos(+1);
                     equipo1.setPuntos(+3);
-                // Equipo 2 gana
-                } else if(golesEquipo1 < golesEquipo2) {
+                    // Equipo 2 gana
+                    } else if(golesEquipo1 < golesEquipo2) {
                     equipo1.setPerdidos(+1);
                     equipo2.setGanados(+1);
                     equipo2.setPuntos(+3);
-                // Empate
-                } else {
+                    // Empate
+                    } else {
                     equipo1.setEmpatados(+1);
                     equipo2.setEmpatados(+1);
                     equipo1.setPuntos(+1);
                     equipo2.setPuntos(+1);
-                }
+                    }
 
-                try {
-                    equipojc.edit(equipo1);
-                    equipojc.edit(equipo2);
-                } catch (Exception ex) {
-                    Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                    try {
+                        equipojc.edit(equipo1);
+                        equipojc.edit(equipo2);
+                    } catch (Exception ex) {
+                        Logger.getLogger(GrupoBean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }

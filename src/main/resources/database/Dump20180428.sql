@@ -193,7 +193,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `zeusco_mundial2018`.`equipo_hist` ;
 
 CREATE TABLE IF NOT EXISTS `zeusco_mundial2018`.`equipo_hist` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `jugados` INT NULL,
   `ganados` INT NULL,
   `perdidos` INT NULL,
@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `zeusco_mundial2018`.`equipo_hist` (
   `golesFavor` INT NULL,
   `golesContra` INT NULL,
   `puntos` INT NULL,
+  `equipo_id` INT NULL,
   `grupo_id` INT NULL,
   `fechaModificacion` DATETIME NULL,
   PRIMARY KEY (`id`))
@@ -213,7 +214,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `zeusco_mundial2018`.`resultado_hist` ;
 
 CREATE TABLE IF NOT EXISTS `zeusco_mundial2018`.`resultado_hist` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `partidosExactos` INT NULL,
   `partidosGanados` INT NULL,
   `partidosEmpatados` INT NULL,
@@ -232,7 +233,7 @@ DROP TRIGGER IF EXISTS `zeusco_mundial2018`.`equipo_AFTER_UPDATE` $$
 USE `zeusco_mundial2018`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `zeusco_mundial2018`.`equipo_AFTER_UPDATE` AFTER UPDATE ON `equipo` FOR EACH ROW
 BEGIN
-    insert into `zeusco_mundial2018`.`equipo_hist` (`id`,`jugados`,`ganados`,`perdidos`,`empatados`,`golesFavor`,`golesContra`,`puntos`,`grupo_id`,`fechaModificacion`) values (OLD.id, OLD.jugados, OLD.ganados, OLD.perdidos, OLD.empatados, OLD.golesFavor, OLD.golesContra, OLD.puntos, OLD.Grupo_id, now());
+    insert into `zeusco_mundial2018`.`equipo_hist` (`id`,`jugados`,`ganados`,`perdidos`,`empatados`,`golesFavor`,`golesContra`,`puntos`,`equipo_id`,`grupo_id`,`fechaModificacion`) values (null, OLD.jugados, OLD.ganados, OLD.perdidos, OLD.empatados, OLD.golesFavor, OLD.golesContra, OLD.puntos, OLD.id, OLD.grupo_id, now());
 END$$
 
 
@@ -241,7 +242,25 @@ DROP TRIGGER IF EXISTS `zeusco_mundial2018`.`resultado_AFTER_UPDATE` $$
 USE `zeusco_mundial2018`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `zeusco_mundial2018`.`resultado_AFTER_UPDATE` AFTER UPDATE ON `resultado` FOR EACH ROW
 BEGIN
-    insert into `zeusco_mundial2018`.`resultado_hist` (`id`,`partidosExactos`,`partidosGanados`,`partidosEmpatados`,`puntos`,`empleado_id`,`fechaModificacion`) values (OLD.id, OLD.partidosExactos, OLD.partidosGanados, OLD.partidosEmpatados, OLD.puntos, OLD.empleado_id, now());
+    insert into `zeusco_mundial2018`.`resultado_hist` (`id`,`partidosExactos`,`partidosGanados`,`partidosEmpatados`,`puntos`,`empleado_id`,`fechaModificacion`) values (null, OLD.partidosExactos, OLD.partidosGanados, OLD.partidosEmpatados, OLD.puntos, OLD.empleado_id, now());
+END$$
+
+
+USE `zeusco_mundial2018`$$
+DROP TRIGGER IF EXISTS `zeusco_mundial2018`.`equipo_AFTER_INSERT` $$
+USE `zeusco_mundial2018`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `zeusco_mundial2018`.`equipo_AFTER_INSERT` AFTER INSERT ON `equipo` FOR EACH ROW
+BEGIN
+    insert into `zeusco_mundial2018`.`equipo_hist` (`id`,`jugados`,`ganados`,`perdidos`,`empatados`,`golesFavor`,`golesContra`,`puntos`,`equipo_id`,`grupo_id`,`fechaModificacion`) values (null, 0, 0, 0, 0, 0, 0, 0, NEW.id, NEW.grupo_id, now() - interval 1 day);
+END$$
+
+
+USE `zeusco_mundial2018`$$
+DROP TRIGGER IF EXISTS `zeusco_mundial2018`.`resultado_AFTER_INSERT` $$
+USE `zeusco_mundial2018`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `zeusco_mundial2018`.`resultado_AFTER_INSERT` AFTER INSERT ON `resultado` FOR EACH ROW
+BEGIN
+	insert into `zeusco_mundial2018`.`resultado_hist` (`id`,`partidosExactos`,`partidosGanados`,`partidosEmpatados`,`puntos`,`empleado_id`,`fechaModificacion`) values (null, 0, 0, 0, 0, new.empleado_id, now() - interval 1 day);
 END$$
 
 

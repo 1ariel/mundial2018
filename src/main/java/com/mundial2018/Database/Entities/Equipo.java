@@ -96,7 +96,7 @@ public class Equipo implements Serializable {
     }
 
     public void setJugados(Integer jugados) {
-        this.ganados = jugados;
+        this.jugados = jugados;
     }
 
     public Integer getGanados() {
