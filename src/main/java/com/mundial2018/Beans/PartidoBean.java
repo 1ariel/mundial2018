@@ -50,30 +50,38 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class PartidoBean implements Serializable {
-
-    private final RondaJpaController rjc;
-    private final EquipoJpaController ejc;
-    private final PartidoJpaController pjc;
-
+    private final RondaJpaController rondajc;
+    private final EquipoJpaController equipojc;
+    private final EmpleadoJpaController empleadojc;
+    private final PartidoJpaController partidojc;
+    private final ApuestaJpaController apuestajc;
+    private final ResultadoJpaController resultadojc;
+    private final ResultadoHistJpaController resultadoHistjc;
     private List<Ronda> listaRondas;
 
     private Partido partido;
+    private GrupoBean grupoBean;
 
     public PartidoBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
         EntityManagerFactory emf = aux.getEMF();
         partido = new Partido();
-
-        rjc = new RondaJpaController(emf);
-        ejc = new EquipoJpaController(emf);
-        pjc = new PartidoJpaController(emf);
+        rondajc = new RondaJpaController(emf);
+        equipojc = new EquipoJpaController(emf);
+        empleadojc = new EmpleadoJpaController(emf);
+        partidojc = new PartidoJpaController(emf);
+        apuestajc = new ApuestaJpaController(emf);
+        resultadojc = new ResultadoJpaController(emf);
+        resultadoHistjc = new ResultadoHistJpaController(emf);
     }
 
     @PostConstruct
     public void init() {
-
-        listaRondas = rjc.findRondaEntities();
-
+        listaRondas = rondajc.findRondaEntities();
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        login = (Login) ec.getSessionMap().get("login");
+        grupoBean = (GrupoBean)fc.getApplication().getELResolver().getValue(fc.getELContext(), null, "grupoBean");
     }
 
     public String formatearFecha(Date fecha) {
@@ -86,7 +94,7 @@ public class PartidoBean implements Serializable {
     public String buscarBandera(Integer equipoId) {
         try {
             ImageHelper img = new ImageHelper();
-            return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+            return img.findLocationOfFlag(equipojc.findEquipo(equipoId).getNombre());
         } catch (Exception e) {
             return "banderas/logo.png";
         }
@@ -95,30 +103,111 @@ public class PartidoBean implements Serializable {
 
     public void assignacionDeGoles() {
         try {
-            //william aqui es el metodo para de la difurcacion
-
-            if (partido.getEditado()) {
-                //Editado
-
+            List<Partido> partidos = new ArrayList<>();
+            partidos.add(partido);
+            
+            if(partido.getEditado()) {
+                recalcularPuntosDeEmpleado(partido);
+                grupoBean.recalcularPuntos(partido);
+                // Obtener la lista de partidos que se necesitan recalcular
+                partidos = partidojc.findPartidosByDateRange(partido.getFecha());
+                calcularPuntosDeEmpleado(partidos);
+                grupoBean.calcularPuntos(partidos);
             } else {
-                //NO editado
-                partido.setEditado(true);
-                pjc.edit(partido);
+                calcularPuntosDeEmpleado(partidos);
+                grupoBean.calcularPuntos(partidos);
             }
 
+            partidojc.edit(partido);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.partido = new Partido();
-
-        listaRondas = rjc.findRondaEntities();
+        
+        partido = new Partido();
+        listaRondas = rondajc.findRondaEntities();
         PrimeFaces.current().executeScript("PF('fasegrupo').update();");
         FacesContext fc = FacesContext.getCurrentInstance();
-        fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente "));
+        fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente"));
     }
 
+    public void recalcularPuntosDeEmpleado(Partido partido) {
+        List<Empleado> empleados = empleadojc.findEmpleadoEntities();
+        
+        for(Empleado empleado : empleados) {
+            try {
+                ResultadoHist resultadoHist = resultadoHistjc.findResultadoHist(partido.getFecha(), empleado.getId());
+                // Reasignar valores anteriores a Resultado
+                Resultado resultado = new Resultado();
+                resultado.setId(empleado.getResultado().getId());
+                resultado.setPartidosExactos(resultadoHist.getPartidosExactos());
+                resultado.setPartidosGanados(resultadoHist.getPartidosGanados());
+                resultado.setPartidosEmpatados(resultadoHist.getPartidosEmpatados());
+                resultado.setPuntos(resultadoHist.getPuntos());
+                resultado.setEmpleadoId(empleado);
+                empleado.setResultado(resultado);
+                
+                resultadojc.edit(resultado);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void calcularPuntosDeEmpleado(List<Partido> partidos) {
+        for(Partido partidoActual: partidos) {
+            List<Apuesta> apuestas = apuestajc.findApuestasById(partidoActual.getId());
+            
+            for(Apuesta apuestaActual : apuestas) {
+                Resultado resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
+                
+                if(!Objects.nonNull(resultado)) {
+                    resultado = new Resultado(0, 0, 0, 0);
+                }
+                
+                resultado.setEmpleadoId(apuestaActual.getEmpleadoid());
+                
+                try {
+                    // Adivinar marcador exacto
+                    if(apuestaActual.getGolesEquipo1().equals(partidoActual.getGolesEquipo1()) &&
+                        apuestaActual.getGolesEquipo2().equals(partidoActual.getGolesEquipo2())) {
+                        resultado.setPartidosExactos(+1);
+                        resultado.setPuntos(+3);
+                    }
+                    // Adivinar que el equipo 1 gana
+                    if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() &&
+                            partidoActual.getGolesEquipo1() > partidoActual.getGolesEquipo2()) {
+                        resultado.setPartidosGanados(+1);
+                        resultado.setPuntos(+1);
+                        // Adivinar que el equipo 2 gana
+                    } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() &&
+                            partidoActual.getGolesEquipo1() < partidoActual.getGolesEquipo2()){
+                        resultado.setPartidosGanados(+1);
+                        resultado.setPuntos(+1);
+                    }
+                    // Adivinar empate
+                    if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) &&
+                            partidoActual.getGolesEquipo1().equals(partidoActual.getGolesEquipo2())) {
+                        resultado.setPartidosEmpatados(+1);
+                        resultado.setPuntos(+1);
+                    }
+                    
+                    // Actualizar o insertar resultado
+                    if(partidoActual.getEditado()) {
+                        resultadojc.edit(resultado);
+                    } else {
+                        resultadojc.create(resultado);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
     public Boolean isPartidoActive(Partido p) {
 
         DateTimeZone zoneUTC = DateTimeZone.UTC;
@@ -133,21 +222,14 @@ public class PartidoBean implements Serializable {
     }
 
     public void findPartido(Partido p) {
-        partido = pjc.findPartido(p.getId());
-        //lets set penales as 0 if is not modify
-        if (Objects.isNull(partido.getPenalesEquipo1())) {
-            partido.setPenalesEquipo1(0);
-        }
-        if (Objects.isNull(partido.getPenalesEquipo2())) {
-            partido.setPenalesEquipo2(0);
-        }
+        partido = partidojc.findPartido(p.getId());
         PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').show();");
     }
 
     public String getEquipoName(int equipoID) {
         String nombre;
         try {
-            nombre = ejc.findEquipo(equipoID).getNombre();
+            nombre = equipojc.findEquipo(equipoID).getNombre();
         } catch (Exception e) {
             nombre = " ";
         }
@@ -169,6 +251,48 @@ public class PartidoBean implements Serializable {
 
     public void setPartido(Partido partido) {
         this.partido = partido;
+    }
+
+    /**
+     * @return the login
+     */
+    public Login getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+    /**
+     * @return the listaApuestas
+     */
+    public List<Apuesta> getListaApuestas() {
+        return listaApuestas;
+    }
+
+    /**
+     * @param listaApuestas the listaApuestas to set
+     */
+    public void setListaApuestas(List<Apuesta> listaApuestas) {
+        this.listaApuestas = listaApuestas;
+    }
+
+    /**
+     * @return the grupoBean
+     */
+    public GrupoBean getGrupoBean() {
+        return grupoBean;
+    }
+
+    /**
+     * @param grupoBean the grupoBean to set
+     */
+    public void setGrupoBean(GrupoBean grupoBean) {
+        this.grupoBean = grupoBean;
     }
 
 }
