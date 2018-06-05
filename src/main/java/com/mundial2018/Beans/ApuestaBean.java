@@ -28,6 +28,7 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -168,11 +169,18 @@ public class ApuestaBean {
     }
 
     public void CrearApuestaPorGrupo() {
+        
+        try{
         for (Apuesta apuestaAux : listaApuestas) {
             if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
                 CrearActualizarApuesta(apuestaAux);
             }
         }
+        }
+        catch(Exception e){
+        
+        }
+        
     }
 
     public void CrearApuestaIndividual() {
@@ -180,8 +188,17 @@ public class ApuestaBean {
     }
 
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
+        
+        
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
       
+            if (Objects.isNull(existeApuesta)) {
+                              FacesContext fc = FacesContext.getCurrentInstance();
+
+         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+        }
+        
+        
         DateTimeZone zoneUTC = DateTimeZone.UTC;
         
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));

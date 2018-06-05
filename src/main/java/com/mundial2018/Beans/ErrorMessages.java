@@ -35,6 +35,13 @@ public class ErrorMessages  implements Serializable  {
     }
     
     
+    public void throwError(String Errormessage){
+             FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            
+         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, Errormessage, null));
+                ec.getSessionMap().remove("message");
+    }
     
         public void filterCheck(ComponentSystemEvent event) {
         try {
