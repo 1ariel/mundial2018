@@ -58,7 +58,8 @@ public class PartidoBean implements Serializable {
     private final ResultadoJpaController resultadojc;
     private final ResultadoHistJpaController resultadoHistjc;
     private List<Ronda> listaRondas;
-
+    private List<Apuesta> listaApuestas;
+    private Login login;
     private Partido partido;
     private GrupoBean grupoBean;
 
