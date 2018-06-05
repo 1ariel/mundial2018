@@ -8,7 +8,10 @@ package com.mundial2018.Beans;
 import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
+import com.mundial2018.Controller.PartidoJpaController;
+import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
+import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +54,8 @@ public class ApuestaBean {
     private final RondaJpaController rjc;
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
+    private final ResultadoJpaController rejc;
+    
     
     public ApuestaBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
@@ -57,6 +63,7 @@ public class ApuestaBean {
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
+        rejc = new ResultadoJpaController(emf);
     }
 
     @PostConstruct
@@ -66,6 +73,7 @@ public class ApuestaBean {
         login = (Login) ec.getSessionMap().get("login");
         empleado = login.getEmpleado();
         listaRondas = rjc.findRondaEntities();
+        
     }
 
     public String formatearFecha(Date fecha) {
@@ -77,12 +85,35 @@ public class ApuestaBean {
 
     public String buscarBandera(Integer equipoId) {
         ImageHelper img = new ImageHelper();
-        return img.findLocationOfFlag(ejc.findEquipo(equipoId).getNombre());
+         String Nombre = null;
+        try{
+        Nombre  = ejc.findEquipo(equipoId).getNombre();
+            if (Objects.isNull(Nombre)) {
+                 Nombre = "default";
+            }
+        }
+        catch(Exception e){
+      return  img.findLocationOfFlag("default");
+        }
+        
+        return img.findLocationOfFlag(Nombre);
 
     }
 
     public String buscarEquipo(Integer equipoId) {
-        return (String) ejc.findEquipo(equipoId).getNombre();
+        
+        String nombre;
+        try{
+                nombre = (String) ejc.findEquipo(equipoId).getNombre();
+            if (Objects.isNull(nombre)) {
+                return "";
+            }
+    
+        }
+        catch(Exception e){
+        return "";
+        }    
+        return nombre;
     }
 
     public void onTabChange() {
@@ -174,6 +205,31 @@ public class ApuestaBean {
                 }
             }
         }
+    }
+    
+    public String EncontrarGolesPorPartidoYEmpleado(Partido p,String Equipo){
+          Apuesta existeApuesta ;
+        try{
+        existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, p);
+        }
+        catch(Exception e){return "";}
+        if (existeApuesta !=null) {
+                if (Equipo.matches("1")) {
+                return Integer.toString(existeApuesta.getGolesEquipo1());
+            }
+                else{
+                   return Integer.toString(existeApuesta.getGolesEquipo2());
+                
+                }
+            
+            
+        }
+        else{
+        return "";
+        }
+        
+        
+        
     }
     
     /**
