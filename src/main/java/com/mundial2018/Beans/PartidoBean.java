@@ -117,6 +117,7 @@ public class PartidoBean implements Serializable {
             } else {
                 calcularPuntosDeEmpleado(partidos);
                 grupoBean.calcularPuntos(partidos);
+                partido.setEditado(Boolean.TRUE);
             }
 
             partidojc.edit(partido);
@@ -160,23 +161,17 @@ public class PartidoBean implements Serializable {
     
     public void calcularPuntosDeEmpleado(List<Partido> partidos) {
         for(Partido partidoActual: partidos) {
-            
             List<Apuesta> apuestas = apuestajc.findApuestasById(partidoActual.getId());
             
-            
             for(Apuesta apuestaActual : apuestas) {
-             Resultado resultado;
+                Resultado resultado;
                 
-             
-                    if(Objects.isNull(apuestaActual.getEmpleadoid().getResultado())) {
+                if(Objects.isNull(apuestaActual.getEmpleadoid().getResultado())) {
                     resultado = new Resultado(0, 0, 0, 0);
+                } else {
+                    resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
                 }
-                    else{
-                        resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
-                    }
-                
-            
-                
+
                 resultado.setEmpleadoId(apuestaActual.getEmpleadoid());
                 
                 try {

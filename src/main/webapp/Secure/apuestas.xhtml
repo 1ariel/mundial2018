@@ -315,7 +315,7 @@
                     <p:row>
                         <p:column colspan="5">
                             <center>
-                                <p:commandButton value="Crear predicción" actionListener="#{apuestaBean.CrearApuestaIndividual}" oncomplete="PF('apuestaPartidoDialog').hide();"/>
+                                <p:commandButton value="Crear predicción" update="formPartidos" actionListener="#{apuestaBean.CrearApuestaIndividual}" oncomplete="PF('apuestaPartidoDialog').hide();"/>
                             </center>
                         </p:column>
                     </p:row>
