@@ -8,9 +8,7 @@ package com.mundial2018.Beans;
 import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
-import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
-import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
@@ -52,7 +50,6 @@ public class ApuestaBean {
     private final RondaJpaController rjc;
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
-    private final ResultadoJpaController rejc;
     
     public ApuestaBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
@@ -60,7 +57,6 @@ public class ApuestaBean {
         rjc = new RondaJpaController(emf);
         ejc = new EquipoJpaController(emf);
         ajc = new ApuestaJpaController(emf);
-        rejc = new ResultadoJpaController(emf);
     }
 
     @PostConstruct
@@ -179,48 +175,6 @@ public class ApuestaBean {
             }
         }
     }
-
-    public void calcularPuntosDeEmpleado(List<Partido> partidos) {
-        for(Partido partido: partidos) {
-            List<Apuesta> apuestas = ajc.findApuestasById(partido.getId());
-            
-            for(Apuesta apuestaActual : apuestas) {
-                try {
-                    // Adivinar marcador exacto
-                    if(apuestaActual.getGolesEquipo1().equals(partido.getGolesEquipo1()) &&
-                        apuestaActual.getGolesEquipo2().equals(partido.getGolesEquipo2())) {
-                        apuestaActual.getEmpleadoid().getResultado().setPartidosExactos(+1);
-                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+3);
-                    }
-                    // Adivinar que el equipo 1 gana
-                    if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() &&
-                            partido.getGolesEquipo1() > partido.getGolesEquipo2()) {
-                        apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
-                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                        // Adivinar que el equipo 2 gana
-                    } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() &&
-                            partido.getGolesEquipo1() < partido.getGolesEquipo2()){
-                        apuestaActual.getEmpleadoid().getResultado().setPartidosGanados(+1);
-                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                    }
-                    // Adivinar empate
-                    if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) &&
-                            partido.getGolesEquipo1().equals(partido.getGolesEquipo2())) {
-                        apuestaActual.getEmpleadoid().getResultado().setPartidosEmpatados(+1);
-                        apuestaActual.getEmpleadoid().getResultado().setPuntos(+1);
-                    }
-                    
-                    rejc.edit(apuestaActual.getEmpleadoid().getResultado());
-                } catch (NonexistentEntityException ex) {
-                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-    
-    public void recalcularPuntosDeEmpleado() {}
     
     /**
      * @return the ronda

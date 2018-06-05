@@ -17,6 +17,7 @@ import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Partido;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -233,6 +234,23 @@ public class PartidoJpaController implements Serializable {
         return partidos;
     }
 
+    public List<Partido> findPartidosByDateRange(Date fechaInicial) {
+        EntityManager em = getEntityManager();
+        List<Partido> partidos = new ArrayList<>();
+        
+        try {
+            Query query = em.createQuery("select p from Partido p where p.fecha between :fechaInicial and :now and p.editado = :editado order by p.id asc, p.fecha asc");
+            query.setParameter("fechaInicial", fechaInicial);
+            query.setParameter("now", new Date());
+            query.setParameter("editado", true);
+            partidos = (List<Partido>)query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            
+        return partidos;
+    }
+    
     public int getPartidoCount() {
         EntityManager em = getEntityManager();
         try {
