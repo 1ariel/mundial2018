@@ -17,6 +17,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -132,13 +133,13 @@ public class EquipoHistJpaController implements Serializable {
     public EquipoHist findEquipoHist(Date fechaPartido, Integer equipoId) {
         EntityManager em = getEntityManager();
         EquipoHist resultadoHist = new EquipoHist();
+        fechaPartido = new DateTime(fechaPartido).minusDays(1).toDate();
         
         try {
-            Query query = em.createQuery("select e from EquipoHist e where e.equipoId = 1 and cast(e.fechaModificacion as date) <= :fechaPartido - interval 1 day order by e.fechaModificacion desc limit 1");
+            Query query = em.createQuery("select e from EquipoHist e where e.equipoId = :equipoId and cast(e.fechaModificacion as date) <= :fechaPartido order by e.fechaModificacion desc");
             query.setParameter("equipoId", equipoId);
             query.setParameter("fechaPartido", fechaPartido);
-            query.setParameter(2, fechaPartido);
-            resultadoHist = (EquipoHist)query.getSingleResult();
+            resultadoHist = (EquipoHist)query.setMaxResults(1).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }

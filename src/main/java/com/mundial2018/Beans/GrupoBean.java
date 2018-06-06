@@ -17,6 +17,7 @@ import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -159,7 +160,7 @@ public class GrupoBean {
         String fecha = formato.format(fechaPartido);
         
         if (Objects.nonNull(fecha) && (rol.equals("admin") || rol.equals("superuser"))) {
-            List<Partido> partidos = null;
+            List<Partido> partidos = new ArrayList<>();
             
             if(fecha.equals("28-06-2018")) {
                 partidos = crearOctavosDeFinal();

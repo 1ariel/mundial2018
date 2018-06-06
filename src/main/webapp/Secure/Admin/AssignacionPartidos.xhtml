@@ -15,10 +15,11 @@ and open the template in the editor.
     <ui:define name="content">
 
         <h:form id="formAssignacionResultados">
+            <p:growl autoUpdate="true"/>
+            
             <p:tabView>
-
                 <p:tab title="Fase de grupos"> 
-                    <p:dataList id="fasegrupo" value="#{partidoBean.listaRondas}" var="ronda" rows="15" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda" rows="15" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -74,7 +75,7 @@ and open the template in the editor.
                 </p:tab>
                 
                 <p:tab title="Octavos de Final"> 
-                    <p:dataList id="octavoFinal" value="#{partidoBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -142,7 +143,7 @@ and open the template in the editor.
                 </p:tab>
                 
                 <p:tab title="Cuartos de final"> 
-                    <p:dataList id="cuartosFinal" value="#{partidoBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -210,7 +211,7 @@ and open the template in the editor.
                 </p:tab>
                 
                 <p:tab title="Semifinales"> 
-                    <p:dataList id="semifinales" value="#{partidoBean.listaRondas}" var="ronda"  first="21" rows="2" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda"  first="21" rows="2" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -278,7 +279,7 @@ and open the template in the editor.
                 </p:tab>
                 
                 <p:tab title="Tercer lugar"> 
-                    <p:dataList id="Tercerlugar" value="#{partidoBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -346,7 +347,7 @@ and open the template in the editor.
                 </p:tab>
                 
                <p:tab title="Final"> 
-                    <p:dataList id="final" value="#{partidoBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
+                    <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
@@ -461,7 +462,9 @@ and open the template in the editor.
                     <p:row>
                         <p:column colspan="5">
                             <center>
-                                <p:commandButton value="Crear apuesta" actionListener="#{partidoBean.assignacionDeGoles()}" update="formAssignacionResultados" oncomplete="PF('assignacionPartidoDialog').hide();"/>
+                                <p:commandButton value="Crear apuesta" actionListener="#{partidoBean.assignacionDeGoles}">
+                                    <p:ajax update=":formAssignacionResultados"/>
+                                </p:commandButton>
                             </center>
                         </p:column>
                     </p:row>

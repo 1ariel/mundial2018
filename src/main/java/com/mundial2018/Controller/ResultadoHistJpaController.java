@@ -9,14 +9,21 @@ import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Controller.exceptions.PreexistingEntityException;
 import com.mundial2018.Database.Entities.ResultadoHist;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 /**
  *
@@ -129,16 +136,16 @@ public class ResultadoHistJpaController implements Serializable {
         }
     }
     
-    public ResultadoHist findResultadoHist(Date fechaPartido, Integer empleadoId) {
+    public ResultadoHist findResultadoHist(Date fechaPartido, Integer empleadoId) throws ParseException {
         EntityManager em = getEntityManager();
         ResultadoHist resultadoHist = new ResultadoHist();
+        fechaPartido = new DateTime(fechaPartido).minusDays(1).toDate();
         
         try {
-            Query query = em.createQuery("select r from ResultadoHist r where r.empleadoId = :empleadoId and cast(r.fechaModificacion as date) <= :fechaPartido - interval 1 day order by r.fechaModificacion desc limit 1");
+            Query query = em.createQuery("select r from ResultadoHist r where r.empleadoId = :empleadoId and cast(r.fechaModificacion as date) <= :fechaPartido order by r.fechaModificacion desc");
             query.setParameter("empleadoId", empleadoId);
             query.setParameter("fechaPartido", fechaPartido);
-            query.setParameter(2, fechaPartido);
-            resultadoHist = (ResultadoHist)query.getSingleResult();
+            resultadoHist = (ResultadoHist)query.setMaxResults(1).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
         }

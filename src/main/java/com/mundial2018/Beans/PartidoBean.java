@@ -99,7 +99,6 @@ public class PartidoBean implements Serializable {
         } catch (Exception e) {
             return "banderas/logo.png";
         }
-
     }
 
     public void assignacionDeGoles() {
@@ -119,7 +118,8 @@ public class PartidoBean implements Serializable {
                 grupoBean.calcularPuntos(partidos);
                 partido.setEditado(Boolean.TRUE);
             }
-
+            
+            grupoBean.crearFaseDeEliminatorias(partido.getFecha());
             partidojc.edit(partido);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +129,8 @@ public class PartidoBean implements Serializable {
         
         partido = new Partido();
         listaRondas = rondajc.findRondaEntities();
-        PrimeFaces.current().executeScript("PF('fasegrupo').update();");
+        //PrimeFaces.current().executeScript("PF('fasegrupo').update();");
+        PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').hide();");
         FacesContext fc = FacesContext.getCurrentInstance();
         fc.addMessage("msg", new FacesMessage("Partidos guardados exitosamente"));
     }
@@ -200,10 +201,10 @@ public class PartidoBean implements Serializable {
                     }
                     
                     // Actualizar o insertar resultado
-                    if(partidoActual.getEditado()) {
-                        resultadojc.edit(resultado);
-                    } else {
+                    if(Objects.isNull(resultado.getId())) {
                         resultadojc.create(resultado);
+                    } else {
+                        resultadojc.edit(resultado);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
