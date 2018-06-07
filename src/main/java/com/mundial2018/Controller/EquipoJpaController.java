@@ -149,7 +149,7 @@ public class EquipoJpaController implements Serializable {
         List<Equipo> equipos = new ArrayList<>();
         
         try {
-            Query query = em.createQuery("select e from Equipo e where e.grupoid.id = :grupoId order by e.puntos desc, e.golesFavor desc, e.golesContra desc");
+            Query query = em.createQuery("select e from Equipo e where e.grupoid.id = :grupoId order by e.puntos desc, e.golesFavor desc, e.golesContra asc");
             query.setParameter("grupoId", grupoId);
             equipos = (List<Equipo>)query.getResultList();
         } catch (Exception e) {

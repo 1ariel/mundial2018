@@ -177,25 +177,25 @@ public class PartidoBean implements Serializable {
                     // Adivinar marcador exacto
                     if(apuestaActual.getGolesEquipo1().equals(partidoActual.getGolesEquipo1()) &&
                         apuestaActual.getGolesEquipo2().equals(partidoActual.getGolesEquipo2())) {
-                        resultado.setPartidosExactos(+1);
-                        resultado.setPuntos(+3);
+                        resultado.setPartidosExactos(resultado.getPartidosExactos()+1);
+                        resultado.setPuntos(resultado.getPuntos()+3);
                     }
                     // Adivinar que el equipo 1 gana
                     if(apuestaActual.getGolesEquipo1() > apuestaActual.getGolesEquipo2() &&
                             partidoActual.getGolesEquipo1() > partidoActual.getGolesEquipo2()) {
-                        resultado.setPartidosGanados(+1);
-                        resultado.setPuntos(+1);
+                        resultado.setPartidosGanados(resultado.getPartidosGanados()+1);
+                        resultado.setPuntos(resultado.getPuntos()+1);
                         // Adivinar que el equipo 2 gana
                     } else if (apuestaActual.getGolesEquipo1() < apuestaActual.getGolesEquipo2() &&
                             partidoActual.getGolesEquipo1() < partidoActual.getGolesEquipo2()){
-                        resultado.setPartidosGanados(+1);
-                        resultado.setPuntos(+1);
+                        resultado.setPartidosGanados(resultado.getPartidosGanados()+1);
+                        resultado.setPuntos(resultado.getPuntos()+1);
                     }
                     // Adivinar empate
                     if(apuestaActual.getGolesEquipo1().equals(apuestaActual.getGolesEquipo2()) &&
                             partidoActual.getGolesEquipo1().equals(partidoActual.getGolesEquipo2())) {
-                        resultado.setPartidosEmpatados(+1);
-                        resultado.setPuntos(+1);
+                        resultado.setPartidosEmpatados(resultado.getPartidosEmpatados()+1);
+                        resultado.setPuntos(resultado.getPuntos()+1);
                     }
                     
                     // Actualizar o insertar resultado

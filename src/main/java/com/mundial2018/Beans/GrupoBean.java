@@ -116,30 +116,30 @@ public class GrupoBean {
                     Equipo equipo2 = equipojc.findEquipo(partido.getEquipo2());
 
                     // Partidos jugados
-                    equipo1.setJugados(+1);
-                    equipo2.setJugados(+1);
+                    equipo1.setJugados(equipo1.getJugados()+1);
+                    equipo2.setJugados(equipo2.getJugados()+1);
                     // Goles a favor
-                    equipo1.setGolesFavor(+golesEquipo1);
-                    equipo2.setGolesFavor(+golesEquipo2);
+                    equipo1.setGolesFavor(equipo1.getGolesFavor()+golesEquipo1);
+                    equipo2.setGolesFavor(equipo2.getGolesFavor()+golesEquipo2);
                     // Goles en contra
-                    equipo1.setGolesContra(+golesEquipo2);
-                    equipo2.setGolesContra(+golesEquipo1);
+                    equipo1.setGolesContra(equipo1.getGolesContra()+golesEquipo2);
+                    equipo2.setGolesContra(equipo2.getGolesContra()+golesEquipo1);
                     // Equipo 1 gana
                     if(golesEquipo1 > golesEquipo2) {
-                        equipo1.setGanados(+1);
-                        equipo2.setPerdidos(+1);
-                        equipo1.setPuntos(+3);
+                        equipo1.setGanados(equipo1.getGanados()+1);
+                        equipo2.setPerdidos(equipo2.getPerdidos()+1);
+                        equipo1.setPuntos(equipo1.getPuntos()+3);
                     // Equipo 2 gana
                     } else if(golesEquipo1 < golesEquipo2) {
-                        equipo1.setPerdidos(+1);
-                        equipo2.setGanados(+1);
-                        equipo2.setPuntos(+3);
+                        equipo1.setPerdidos(equipo1.getPerdidos()+1);
+                        equipo2.setGanados(equipo2.getGanados()+1);
+                        equipo2.setPuntos(equipo2.getPuntos()+3);
                     // Empate
                     } else {
-                        equipo1.setEmpatados(+1);
-                        equipo2.setEmpatados(+1);
-                        equipo1.setPuntos(+1);
-                        equipo2.setPuntos(+1);
+                        equipo1.setEmpatados(equipo1.getEmpatados()+1);
+                        equipo2.setEmpatados(equipo2.getEmpatados()+1);
+                        equipo1.setPuntos(equipo1.getPuntos()+1);
+                        equipo2.setPuntos(equipo2.getPuntos()+1);
                     }
 
                     try {
