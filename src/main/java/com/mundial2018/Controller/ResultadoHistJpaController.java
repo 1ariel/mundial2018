@@ -10,12 +10,8 @@ import com.mundial2018.Controller.exceptions.PreexistingEntityException;
 import com.mundial2018.Database.Entities.ResultadoHist;
 import java.io.Serializable;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -139,7 +135,8 @@ public class ResultadoHistJpaController implements Serializable {
     public ResultadoHist findResultadoHist(Date fechaPartido, Integer empleadoId) throws ParseException {
         EntityManager em = getEntityManager();
         ResultadoHist resultadoHist = new ResultadoHist();
-        fechaPartido = new DateTime(fechaPartido).minusDays(1).toDate();
+        DateTime dt = new DateTime(fechaPartido).minusDays(1).toDateTime(DateTimeZone.UTC);
+        fechaPartido = dt.toDate();
         
         try {
             Query query = em.createQuery("select r from ResultadoHist r where r.empleadoId = :empleadoId and cast(r.fechaModificacion as date) <= :fechaPartido order by r.fechaModificacion desc");

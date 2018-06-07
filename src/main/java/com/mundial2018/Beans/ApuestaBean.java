@@ -8,10 +8,8 @@ package com.mundial2018.Beans;
 import com.mundial2018.Classes.ImageHelper;
 import com.mundial2018.Controller.ApuestaJpaController;
 import com.mundial2018.Controller.EquipoJpaController;
-import com.mundial2018.Controller.PartidoJpaController;
 import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
-import com.mundial2018.Controller.exceptions.NonexistentEntityException;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
 import com.mundial2018.Database.Entities.Login;
@@ -36,6 +34,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -169,18 +168,21 @@ public class ApuestaBean {
     }
 
     public void CrearApuestaPorGrupo() {
+        DateTime fechaPartido = new DateTime(listaApuestas.get(0).getPartidoId().getFecha());
+        fechaPartido = fechaPartido.toDateTime(DateTimeZone.UTC);
+        LocalDate now = new LocalDate();
         
-        try{
-        for (Apuesta apuestaAux : listaApuestas) {
-            if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
-                CrearActualizarApuesta(apuestaAux);
+        if(fechaPartido.toLocalDate().isBefore(now)) {
+            try{
+                for (Apuesta apuestaAux : listaApuestas) {
+                    if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
+                        CrearActualizarApuesta(apuestaAux);
+                    }
+                }
+            } catch(Exception e){
+                e.printStackTrace();
             }
         }
-        }
-        catch(Exception e){
-        
-        }
-        
     }
 
     public void CrearApuestaIndividual() {
@@ -188,25 +190,18 @@ public class ApuestaBean {
     }
 
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
-        
-        
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
       
-            if (Objects.isNull(existeApuesta)) {
-                              FacesContext fc = FacesContext.getCurrentInstance();
-
-         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+        if (Objects.isNull(existeApuesta)) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
         }
         
-        
         DateTimeZone zoneUTC = DateTimeZone.UTC;
-        
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
-        
         DateTime dateTime = new DateTime(DateTime.now());
         boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
-        
         
         if (test) {
             if (existeApuesta == null) {//exist do an update
@@ -225,28 +220,22 @@ public class ApuestaBean {
     }
     
     public String EncontrarGolesPorPartidoYEmpleado(Partido p,String Equipo){
-          Apuesta existeApuesta ;
+        Apuesta existeApuesta;
         try{
-        existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, p);
+            existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, p);
+        } catch(Exception e){
+            return "";
         }
-        catch(Exception e){return "";}
+        
         if (existeApuesta !=null) {
-                if (Equipo.matches("1")) {
+            if (Equipo.matches("1")) {
                 return Integer.toString(existeApuesta.getGolesEquipo1());
+            } else {
+               return Integer.toString(existeApuesta.getGolesEquipo2());
             }
-                else{
-                   return Integer.toString(existeApuesta.getGolesEquipo2());
-                
-                }
-            
-            
+        } else {
+            return "";
         }
-        else{
-        return "";
-        }
-        
-        
-        
     }
     
     /**

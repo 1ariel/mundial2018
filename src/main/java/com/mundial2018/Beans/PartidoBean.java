@@ -165,11 +165,9 @@ public class PartidoBean implements Serializable {
             List<Apuesta> apuestas = apuestajc.findApuestasById(partidoActual.getId());
             
             for(Apuesta apuestaActual : apuestas) {
-                Resultado resultado;
+                Resultado resultado = new Resultado(0, 0, 0, 0);
                 
-                if(Objects.isNull(apuestaActual.getEmpleadoid().getResultado())) {
-                    resultado = new Resultado(0, 0, 0, 0);
-                } else {
+                if(Objects.nonNull(apuestaActual.getEmpleadoid().getResultado())) {
                     resultado = resultadojc.findResultado(apuestaActual.getEmpleadoid().getResultado().getId());
                 }
 
