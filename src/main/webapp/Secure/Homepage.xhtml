@@ -7,16 +7,53 @@
                  xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">               
-            <div class="ui-g-12  " >  
-                <p:outputLabel style="color: aliceblue" value="Tabla de posiciones" />
-                <p:dataTable rows="20" var="result"  value="#{resultadosBean.listResultados}" >
-                    <p:column headerText="Nombre" sortBy="#{result.empleadoId.nombre}">
-                        <h:outputText value="#{result.empleadoId.nombre}" />
+            <div class="ui-g-12">
+                <p:dataTable var="result"  value="#{resultadosBean.listResultados}" paginator="true" 
+                        pageLinks="50" paginatorPosition="bottom" paginatorAlwaysVisible="false" rows="25">
+                    <f:facet name="header">
+                        <div style="padding: 1em; text-transform: uppercase;">
+                            <h:outputText value="Tabla de posiciones"/>
+                        </div>
+                    </f:facet>
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="Nombre"/>
+                            <p:column colspan="3" headerText="Partidos"/>
+                            <p:column rowspan="2" headerText="Puntos"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="Exactos"/>
+                            <p:column headerText="Ganados"/>
+                            <p:column headerText="Empates"/>
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{result.empleadoId.nombre}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{result.partidosExactos}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{result.partidosGanados}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{result.partidosEmpatados}"/>
+                    </p:column>
+                        
+                    <p:column headerText="Puntos">
+                        <h:outputText value="#{result.puntos}"/>
                     </p:column>
                     
-                    <p:column headerText="Puntos" sortBy="#{result.puntos}">
-                        <h:outputText value="#{result.puntos}" />
-                    </p:column>
+                    <f:facet name="footer">
+                        <div style="padding: .2em;">
+                            <h:outputText value="Su puntaje es: #{resultadosBean.resultado.puntos} puntos"/>
+                        </div>
+                    </f:facet>
                 </p:dataTable>
             </div>
     </ui:define>

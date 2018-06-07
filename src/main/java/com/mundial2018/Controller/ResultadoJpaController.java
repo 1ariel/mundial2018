@@ -181,6 +181,24 @@ public class ResultadoJpaController implements Serializable {
         }
     }
 
+    public Resultado findResultadoByEmpleadoId(Integer empleadoId) {
+        EntityManager em = null;
+        Resultado resultado = new Resultado();
+        
+        try {
+            em = getEntityManager();
+            Query query = em.createNamedQuery("Resultado.findByEmpleadoId");
+            query.setParameter("empleadoId", empleadoId);
+            resultado = (Resultado)query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+            
+        return resultado;
+    }
+
     public int getResultadoCount() {
         EntityManager em = getEntityManager();
         try {

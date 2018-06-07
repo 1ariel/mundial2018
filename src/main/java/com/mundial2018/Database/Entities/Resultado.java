@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Resultado.findByPartidosExactos", query = "SELECT r FROM Resultado r WHERE r.partidosExactos = :partidosExactos"),
     @NamedQuery(name = "Resultado.findByPartidosGanados", query = "SELECT r FROM Resultado r WHERE r.partidosGanados = :partidosGanados"),
     @NamedQuery(name = "Resultado.findByPartidosEmpatados", query = "SELECT r FROM Resultado r WHERE r.partidosEmpatados = :partidosEmpatados"),
+    @NamedQuery(name = "Resultado.findByEmpleadoId", query = "SELECT r FROM Resultado r WHERE r.empleadoId.id = :empleadoId"),
     @NamedQuery(name = "Resultado.findAllByPuntosSort", query = "SELECT r FROM Resultado r  order by r.puntos desc"),
     @NamedQuery(name = "Resultado.findByPuntos", query = "SELECT r FROM Resultado r WHERE r.puntos = :puntos")})
 public class Resultado implements Serializable {
