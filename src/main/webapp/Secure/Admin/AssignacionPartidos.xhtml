@@ -11,9 +11,7 @@ and open the template in the editor.
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
     <ui:define name="content">
-
         <h:form id="formAssignacionResultados">
             <p:growl autoUpdate="true"/>
             
@@ -63,7 +61,7 @@ and open the template in the editor.
                                         <p:column colspan="5">
                                             <center>
                                                 <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -74,7 +72,7 @@ and open the template in the editor.
                     </p:dataList>
                 </p:tab>
                 
-                <p:tab title="Octavos de Final"> 
+                <p:tab title="Octavos de Final" disabled="#{!now.before(partidoBean.listaRondas.get(15).getFecha())}"> 
                     <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
@@ -130,8 +128,8 @@ and open the template in the editor.
                                     <p:row>
                                         <p:column colspan="5">
                                             <center>
-                                                <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido">
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -142,7 +140,7 @@ and open the template in the editor.
                     </p:dataList>
                 </p:tab>
                 
-                <p:tab title="Cuartos de final"> 
+                <p:tab title="Cuartos de final" disabled="#{!now.before(partidoBean.listaRondas.get(19).getFecha())}"> 
                     <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
@@ -199,7 +197,7 @@ and open the template in the editor.
                                         <p:column colspan="5">
                                             <center>
                                                 <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -210,7 +208,7 @@ and open the template in the editor.
                     </p:dataList>
                 </p:tab>
                 
-                <p:tab title="Semifinales"> 
+                <p:tab title="Semifinales" disabled="#{!now.before(partidoBean.listaRondas.get(21).getFecha())}"> 
                     <p:dataList value="#{partidoBean.listaRondas}" var="ronda"  first="21" rows="2" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
@@ -267,7 +265,7 @@ and open the template in the editor.
                                         <p:column colspan="5">
                                             <center>
                                                 <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -278,7 +276,7 @@ and open the template in the editor.
                     </p:dataList>
                 </p:tab>
                 
-                <p:tab title="Tercer lugar"> 
+                <p:tab title="Tercer lugar" disabled="#{!now.before(partidoBean.listaRondas.get(23).getFecha())}"> 
                     <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
@@ -335,7 +333,7 @@ and open the template in the editor.
                                         <p:column colspan="5">
                                             <center>
                                                 <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -346,7 +344,7 @@ and open the template in the editor.
                     </p:dataList>
                 </p:tab>
                 
-               <p:tab title="Final"> 
+               <p:tab title="Final" disabled="#{!now.before(partidoBean.listaRondas.get(24).getFecha())}"> 
                     <p:dataList value="#{partidoBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
                         <p:panel header="#{partidoBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
@@ -403,7 +401,7 @@ and open the template in the editor.
                                         <p:column colspan="5">
                                             <center>
                                                 <p:commandButton value="Agregar Resultado" update=":formAssignacionPartido" >
-                                                    <p:ajax update="formAssignacionResultados" listener="#{partidoBean.findPartido(partido)}"/>
+                                                    <p:ajax listener="#{partidoBean.findPartido(partido)}"/>
                                                 </p:commandButton>
                                             </center>
                                         </p:column>
@@ -430,10 +428,10 @@ and open the template in the editor.
                                     <p:inputNumber value="#{partidoBean.partido.golesEquipo1}" decimalPlaces="0" size="2"/>
                                 </div>
                             </div>
-                              <div class="ui-g">
+                            <div class="ui-g">
                                 <div> 
-                                    <p:outputLabel value="Penales:" />
-                                    <p:inputNumber value="#{partidoBean.partido.penalesEquipo1}" decimalPlaces="0" size="2"/>
+                                    <p:outputLabel value="Penales:" rendered="#{partidoBean.partido.id gt 48}"/>
+                                    <p:inputNumber value="#{partidoBean.partido.penalesEquipo1}" decimalPlaces="0" size="2" rendered="#{partidoBean.partido.id gt 48}"/>
                                 </div>
                             </div>
                         </p:column>
@@ -449,8 +447,8 @@ and open the template in the editor.
                             </div>
                               <div class="ui-g">
                                 <div> 
-                                    <p:outputLabel value="Penales:" />
-                                    <p:inputNumber value="#{partidoBean.partido.penalesEquipo2}" decimalPlaces="0" size="2"/>
+                                    <p:outputLabel value="Penales:" rendered="#{partidoBean.partido.id gt 48}"/>
+                                    <p:inputNumber value="#{partidoBean.partido.penalesEquipo2}" decimalPlaces="0" size="2" rendered="#{partidoBean.partido.id gt 48}"/>
                                 </div>
                             </div>
                         </p:column>
@@ -462,9 +460,7 @@ and open the template in the editor.
                     <p:row>
                         <p:column colspan="5">
                             <center>
-                                <p:commandButton value="Crear apuesta" actionListener="#{partidoBean.assignacionDeGoles}">
-                                    <p:ajax update=":formAssignacionResultados"/>
-                                </p:commandButton>
+                                <p:commandButton value="Crear apuesta" action="#{partidoBean.assignacionDeGoles}" update=":formAssignacionResultados"/>
                             </center>
                         </p:column>
                     </p:row>

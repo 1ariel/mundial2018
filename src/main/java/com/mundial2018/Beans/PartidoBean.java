@@ -119,7 +119,7 @@ public class PartidoBean implements Serializable {
                 partido.setEditado(Boolean.TRUE);
             }
             
-            grupoBean.crearFaseDeEliminatorias(partido.getFecha());
+            grupoBean.crearFaseDeEliminatorias(partido.getId());
             partidojc.edit(partido);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);

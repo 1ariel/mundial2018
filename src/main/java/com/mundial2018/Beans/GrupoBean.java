@@ -153,22 +153,19 @@ public class GrupoBean {
         }
     }
     
-    public void crearFaseDeEliminatorias(Date fechaPartido) {
+    public void crearFaseDeEliminatorias(Integer partidoId) {
         String rol = login.getRol();
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));
-        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String fecha = formato.format(fechaPartido);
-        
-        if (Objects.nonNull(fecha) && (rol.equals("admin") || rol.equals("superuser"))) {
+
+        if (Objects.nonNull(partidoId) && (rol.equals("admin") || rol.equals("superuser"))) {
             List<Partido> partidos = new ArrayList<>();
             
-            if(fecha.equals("28-06-2018")) {
+            if(partidoId.equals(48)) {
                 partidos = crearOctavosDeFinal();
-            } else if (fecha.equals("03-07-2018")) {
+            } else if (partidoId.equals(56)) {
                 partidos = crearCuartosDeFinal();
-            } else if (fecha.equals("07-07-2018")) {
+            } else if (partidoId.equals(60)) {
                 partidos = crearSemifinales();
-            } else if (fecha.equals("11-07-2018")) {
+            } else if (partidoId.equals(62)) {
                 partidos = crearFinal();
             }
             
@@ -188,6 +185,7 @@ public class GrupoBean {
     public List<Partido> crearOctavosDeFinal () {
         List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
         List<Partido> octavos = partidojc.findPartidoByRondaId(octavosRondaIds);
+        listaGrupos = ordenarEquiposPorPosicion();
         
         // 1C - 2D      30 Junio
         octavos.get(0).setEquipo1(listaGrupos.get(2).getEquipoList().get(0).getId());
