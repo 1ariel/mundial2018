@@ -44,6 +44,7 @@ import org.primefaces.PrimeFaces;
 @ManagedBean
 @ViewScoped
 public class ApuestaBean {
+
     private Login login;
     private Ronda ronda;
     private Apuesta apuesta;
@@ -55,8 +56,7 @@ public class ApuestaBean {
     private final EquipoJpaController ejc;
     private final ApuestaJpaController ajc;
     private final ResultadoJpaController rejc;
-    
-    
+
     public ApuestaBean() {
         EntityManagerFactoria aux = new EntityManagerFactoria();
         EntityManagerFactory emf = aux.getEMF();
@@ -73,7 +73,7 @@ public class ApuestaBean {
         login = (Login) ec.getSessionMap().get("login");
         empleado = login.getEmpleado();
         listaRondas = rjc.findRondaEntities();
-        
+
     }
 
     public String formatearFecha(Date fecha) {
@@ -85,34 +85,32 @@ public class ApuestaBean {
 
     public String buscarBandera(Integer equipoId) {
         ImageHelper img = new ImageHelper();
-         String Nombre = null;
-        try{
-        Nombre  = ejc.findEquipo(equipoId).getNombre();
+        String Nombre = null;
+        try {
+            Nombre = ejc.findEquipo(equipoId).getNombre();
             if (Objects.isNull(Nombre)) {
-                 Nombre = "default";
+                Nombre = "default";
             }
+        } catch (Exception e) {
+            return img.findLocationOfFlag("default");
         }
-        catch(Exception e){
-      return  img.findLocationOfFlag("default");
-        }
-        
+
         return img.findLocationOfFlag(Nombre);
 
     }
 
     public String buscarEquipo(Integer equipoId) {
-        
+
         String nombre;
-        try{
-                nombre = (String) ejc.findEquipo(equipoId).getNombre();
+        try {
+            nombre = (String) ejc.findEquipo(equipoId).getNombre();
             if (Objects.isNull(nombre)) {
                 return "";
             }
-    
+
+        } catch (Exception e) {
+            return "";
         }
-        catch(Exception e){
-        return "";
-        }    
         return nombre;
     }
 
@@ -169,20 +167,17 @@ public class ApuestaBean {
 
     public void CrearApuestaPorGrupo() {
         DateTime fechaPartido = new DateTime(listaApuestas.get(0).getPartidoId().getFecha());
-        fechaPartido = fechaPartido.toDateTime(DateTimeZone.UTC);
-        LocalDate now = new LocalDate();
-        
-        if(fechaPartido.toLocalDate().isBefore(now)) {
-            try{
-                for (Apuesta apuestaAux : listaApuestas) {
-                    if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
-                        CrearActualizarApuesta(apuestaAux);
-                    }
+
+        try {
+            for (Apuesta apuestaAux : listaApuestas) {
+                if (apuestaAux.getGolesEquipo1() >= 0 && apuestaAux.getGolesEquipo2() >= 0) {
+                    CrearActualizarApuesta(apuestaAux);
                 }
-            } catch(Exception e){
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     public void CrearApuestaIndividual() {
@@ -191,18 +186,22 @@ public class ApuestaBean {
 
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
-      
-        if (Objects.isNull(existeApuesta)) {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", null));
+
+        if (existeApuesta != null) {
+            Partido partido = existeApuesta.getPartidoId();
+            if (!(partido.getGolesEquipo1() == null || partido.getGolesEquipo2() == null)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El partido ya contiene un marcador, por lo tanto no se puede agregar apuestas. contacte al administrador", null));
+                return;
+            }
         }
-        
+
         DateTimeZone zoneUTC = DateTimeZone.UTC;
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
         DateTime dateTime = new DateTime(DateTime.now());
         boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
-        
+
         if (test) {
             if (existeApuesta == null) {//exist do an update
                 ajc.create(apuestaSeleccionada);
@@ -218,26 +217,26 @@ public class ApuestaBean {
             }
         }
     }
-    
-    public String EncontrarGolesPorPartidoYEmpleado(Partido p,String Equipo){
+
+    public String EncontrarGolesPorPartidoYEmpleado(Partido p, String Equipo) {
         Apuesta existeApuesta;
-        try{
+        try {
             existeApuesta = ajc.findViaEmpleadoAndPartido(empleado, p);
-        } catch(Exception e){
+        } catch (Exception e) {
             return "";
         }
-        
-        if (existeApuesta !=null) {
+
+        if (existeApuesta != null) {
             if (Equipo.matches("1")) {
                 return Integer.toString(existeApuesta.getGolesEquipo1());
             } else {
-               return Integer.toString(existeApuesta.getGolesEquipo2());
+                return Integer.toString(existeApuesta.getGolesEquipo2());
             }
         } else {
             return "";
         }
     }
-    
+
     /**
      * @return the ronda
      */
