@@ -13,8 +13,8 @@
                           <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
@@ -22,19 +22,19 @@
 
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                            #{apuestaBean.buscarEquipo(partido.equipo1)}
+                                        </p:column>
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
-
+                                        
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -55,34 +55,31 @@
                     </p:dataList>
                 </p:tab>
 
-                <p:tab title="Octavos de final">
-                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">
-                
-                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
+                <p:tab title="Octavos de final" disabled="#{!now.before(apuestaBean.listaRondas.get(15).getFecha())}">
+                    <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="15" rows="4" itemType="none">                        <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
                                     <p:row>
-
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                            #{apuestaBean.buscarEquipo(partido.equipo1)}
+                                        </p:column>
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
-
+                                        
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -100,37 +97,35 @@
                                 <p:ajax listener="#{apuestaBean.asignarEquiposPorRonda(ronda)}"/>
                             </p:commandButton>
                         </p:panel>
-                        
                     </p:dataList>
                 </p:tab>
 
-                <p:tab title="Cuartos de final">
+                <p:tab title="Cuartos de final" disabled="#{!now.before(apuestaBean.listaRondas.get(19).getFecha())}">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="19" rows="2" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
                                     <p:row>
-
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                            #{apuestaBean.buscarEquipo(partido.equipo1)}
+                                        </p:column>
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
 
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -151,33 +146,31 @@
                     </p:dataList>
                 </p:tab>
 
-                <p:tab title="Semifinales">
+                <p:tab title="Semifinales" disabled="#{!now.before(apuestaBean.listaRondas.get(21).getFecha())}">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="21" rows="2" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
                                     <p:row>
-
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
                                             #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
 
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -198,33 +191,32 @@
                     </p:dataList>
                 </p:tab>
 
-                <p:tab title="Tercer lugar">
+                <p:tab title="Tercer lugar" disabled="#{!now.before(apuestaBean.listaRondas.get(23).getFecha())}">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="23" rows="1" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
                                     <p:row>
-
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                            #{apuestaBean.buscarEquipo(partido.equipo1)}
+                                        </p:column>
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
 
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -245,33 +237,32 @@
                     </p:dataList>
                 </p:tab>
 
-                <p:tab title="Final">
+                <p:tab title="Final" disabled="#{!now.before(apuestaBean.listaRondas.get(24).getFecha())}">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" first="24" rows="1" itemType="none">
                         <p:panel header="#{apuestaBean.formatearFecha(ronda.fecha)}">
                             <p:dataList value="#{ronda.partidoCollection}" var="partido" itemType="none">
                                 <p:panelGrid style="margin: 25px;">
-                                    <p:row >
-                                        <p:column  colspan="7">
+                                    <p:row>
+                                        <p:column colspan="7">
                                             <center>Estadio: #{partido.lugar}</center>
                                         </p:column>
                                     </p:row>
                                     <p:row>
-
                                         <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo1)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo1)}</p:column>
-                                        <p:column>Goles:  #{partido.golesEquipo1}</p:column>
-
+                                            #{apuestaBean.buscarEquipo(partido.equipo1)}
+                                        </p:column>
+                                        <p:column>Goles: #{partido.golesEquipo1}</p:column>
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"1")}</p:column>
 
                                         <p:column><center> - </center></p:column>
-                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
 
                                         <p:column>Predicción: #{apuestaBean.EncontrarGolesPorPartidoYEmpleado(partido,"2")}</p:column>
-
-                                        <p:column >
+                                        <p:column>Goles: #{partido.golesEquipo2}</p:column>
+                                        <p:column>
                                             <h:graphicImage library="default" name="#{apuestaBean.buscarBandera(partido.equipo2)}" style=" width:20%; " />
-                                            #{apuestaBean.buscarEquipo(partido.equipo2)}</p:column>
+                                            #{apuestaBean.buscarEquipo(partido.equipo2)}
+                                        </p:column>
                                     </p:row>
                                     <p:row>
                                         <p:column colspan="7">
@@ -353,4 +344,3 @@
         </p:dialog>
     </ui:define>
 </ui:composition>
-
