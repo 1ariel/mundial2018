@@ -28,18 +28,18 @@
             <h:form id="formMenu">
                 <nav style="margin: 1em 0;">
                     <p:menubar class="menu">
-                        <p:menuitem class="ui-g-1" style=" margin:10px; border: 2px solid grey; border-radius: 5px;" value="Inicio" outcome="/Secure/Homepage.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem class="ui-g-1" style=" margin:10px;" value="Inicio" outcome="/Secure/Homepage.xhtml" icon="ui-icon-home"/>
                        
                         
-                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" disabled="#{!loginBean.isThisAdmin()}" value="Empleados" url="/Secure/Admin/empleadoMaintenance.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" disabled="#{!loginBean.isThisAdmin()}"  value="Asignación" url="/Secure/Admin/AssignacionPartidos.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;" rendered="#{loginBean.isThisAdmin()}" value="Empleados" url="/Secure/Admin/empleadoMaintenance.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;" rendered="#{loginBean.isThisAdmin()}"  value="Asignación" url="/Secure/Admin/AssignacionPartidos.xhtml"/>
                         
-                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" value="Partidos" url="/Secure/apuestas.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Grupos" url="/Secure/grupos.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Cambiar Contraseña" url="/Secure/ResetPassword.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;" value="Partidos" url="/Secure/apuestas.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;" value="Grupos" url="/Secure/grupos.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;" value="Cambiar Contraseña" url="/Secure/ResetPassword.xhtml"/>
                         
                         <f:facet name="options">
-                            <p:commandButton  style="border: 2px solid grey; border-radius: 5px;"  value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
+                            <p:commandButton  style="margin: 5px;"  value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
                         </f:facet>
                     </p:menubar>
                 </nav>
