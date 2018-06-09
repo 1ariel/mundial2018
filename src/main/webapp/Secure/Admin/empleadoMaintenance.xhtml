@@ -29,11 +29,11 @@
             <p:fileUpload fileUploadListener="#{empleadosController.subirArchivo}" mode="advanced" dragDropSupport="false"
                           update="messages listEmployees" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
 
-            <p:growl id="messages" showDetail="true" />
+            <p:growl id="messages"  />
         </h:form>
 
         <h:form id="AgregacionManual">  
-              <p:growl id="messagesManual" showDetail="true" />
+              <p:growl id="messagesManual" />
             <p:panel id="toggleable" header="Agregar Empleados Manual" collapsed="true" toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
 
 
