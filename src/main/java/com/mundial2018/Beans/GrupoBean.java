@@ -260,11 +260,11 @@ public class GrupoBean {
         List<Partido> finales = partidojc.findPartidoByRondaId(finalRondaIds);
         
         // L61 (W57 - W58) - L62 (W59 - W60)    14 Julio
-        finales.get(0).setEquipo1(encontrarGanador(semifinales.get(0)));
-        finales.get(0).setEquipo2(encontrarGanador(semifinales.get(1)));
+        finales.get(0).setEquipo1(encontrarPerdedor(semifinales.get(0)));
+        finales.get(0).setEquipo2(encontrarPerdedor(semifinales.get(1)));
         // W61 (W57 - W58) - W62 (W59 - 60)   15 Julio
-        finales.get(1).setEquipo1(encontrarPerdedor(semifinales.get(0)));
-        finales.get(1).setEquipo2(encontrarPerdedor(semifinales.get(1)));
+        finales.get(1).setEquipo1(encontrarGanador(semifinales.get(0)));
+        finales.get(1).setEquipo2(encontrarGanador(semifinales.get(1)));
         
         return finales;
     }

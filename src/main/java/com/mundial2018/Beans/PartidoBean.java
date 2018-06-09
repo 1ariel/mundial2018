@@ -119,7 +119,6 @@ public class PartidoBean implements Serializable {
                 partido.setEditado(Boolean.TRUE);
             }
             
-            grupoBean.crearFaseDeEliminatorias(partido.getId());
             partidojc.edit(partido);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,8 +126,9 @@ public class PartidoBean implements Serializable {
             Logger.getLogger(PartidoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        partido = new Partido();
         listaRondas = rondajc.findRondaEntities();
+        grupoBean.crearFaseDeEliminatorias(partido.getId());
+        partido = new Partido();
         //PrimeFaces.current().executeScript("PF('fasegrupo').update();");
         PrimeFaces.current().executeScript("PF('assignacionPartidoDialog').hide();");
         FacesContext fc = FacesContext.getCurrentInstance();
