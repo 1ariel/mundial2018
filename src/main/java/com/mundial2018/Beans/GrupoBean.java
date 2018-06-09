@@ -17,6 +17,7 @@ import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -115,31 +116,30 @@ public class GrupoBean {
                     Equipo equipo2 = equipojc.findEquipo(partido.getEquipo2());
 
                     // Partidos jugados
-                equipo1.setJugados(+1);
-                equipo2.setJugados(+1);
+                    equipo1.setJugados(equipo1.getJugados()+1);
+                    equipo2.setJugados(equipo2.getJugados()+1);
                     // Goles a favor
-                equipo1.setGolesFavor(+golesEquipo1);
-                equipo2.setGolesFavor(+golesEquipo2);
+                    equipo1.setGolesFavor(equipo1.getGolesFavor()+golesEquipo1);
+                    equipo2.setGolesFavor(equipo2.getGolesFavor()+golesEquipo2);
                     // Goles en contra
-                equipo1.setGolesContra(+golesEquipo2);
-                equipo2.setGolesContra(+golesEquipo1);
-
+                    equipo1.setGolesContra(equipo1.getGolesContra()+golesEquipo2);
+                    equipo2.setGolesContra(equipo2.getGolesContra()+golesEquipo1);
                     // Equipo 1 gana
                     if(golesEquipo1 > golesEquipo2) {
-                    equipo1.setGanados(+1);
-                    equipo2.setPerdidos(+1);
-                    equipo1.setPuntos(+3);
+                        equipo1.setGanados(equipo1.getGanados()+1);
+                        equipo2.setPerdidos(equipo2.getPerdidos()+1);
+                        equipo1.setPuntos(equipo1.getPuntos()+3);
                     // Equipo 2 gana
                     } else if(golesEquipo1 < golesEquipo2) {
-                    equipo1.setPerdidos(+1);
-                    equipo2.setGanados(+1);
-                    equipo2.setPuntos(+3);
+                        equipo1.setPerdidos(equipo1.getPerdidos()+1);
+                        equipo2.setGanados(equipo2.getGanados()+1);
+                        equipo2.setPuntos(equipo2.getPuntos()+3);
                     // Empate
                     } else {
-                    equipo1.setEmpatados(+1);
-                    equipo2.setEmpatados(+1);
-                    equipo1.setPuntos(+1);
-                    equipo2.setPuntos(+1);
+                        equipo1.setEmpatados(equipo1.getEmpatados()+1);
+                        equipo2.setEmpatados(equipo2.getEmpatados()+1);
+                        equipo1.setPuntos(equipo1.getPuntos()+1);
+                        equipo2.setPuntos(equipo2.getPuntos()+1);
                     }
 
                     try {
@@ -153,22 +153,19 @@ public class GrupoBean {
         }
     }
     
-    public void crearFaseDeEliminatorias(Date fechaPartido) {
+    public void crearFaseDeEliminatorias(Integer partidoId) {
         String rol = login.getRol();
-        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "ES"));
-        formato.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String fecha = formato.format(fechaPartido);
-        
-        if (Objects.nonNull(fecha) && (rol.equals("admin") || rol.equals("superuser"))) {
-            List<Partido> partidos = null;
+
+        if (Objects.nonNull(partidoId) && (rol.equals("admin") || rol.equals("superuser"))) {
+            List<Partido> partidos = new ArrayList<>();
             
-            if(fecha.equals("28-06-2018")) {
+            if(partidoId.equals(48)) {
                 partidos = crearOctavosDeFinal();
-            } else if (fecha.equals("03-07-2018")) {
+            } else if (partidoId.equals(56)) {
                 partidos = crearCuartosDeFinal();
-            } else if (fecha.equals("07-07-2018")) {
+            } else if (partidoId.equals(60)) {
                 partidos = crearSemifinales();
-            } else if (fecha.equals("11-07-2018")) {
+            } else if (partidoId.equals(62)) {
                 partidos = crearFinal();
             }
             
@@ -188,6 +185,7 @@ public class GrupoBean {
     public List<Partido> crearOctavosDeFinal () {
         List<String> octavosRondaIds = Arrays.asList("16", "17", "18", "19");
         List<Partido> octavos = partidojc.findPartidoByRondaId(octavosRondaIds);
+        listaGrupos = ordenarEquiposPorPosicion();
         
         // 1C - 2D      30 Junio
         octavos.get(0).setEquipo1(listaGrupos.get(2).getEquipoList().get(0).getId());
@@ -262,11 +260,11 @@ public class GrupoBean {
         List<Partido> finales = partidojc.findPartidoByRondaId(finalRondaIds);
         
         // L61 (W57 - W58) - L62 (W59 - W60)    14 Julio
-        finales.get(0).setEquipo1(encontrarGanador(semifinales.get(0)));
-        finales.get(0).setEquipo2(encontrarGanador(semifinales.get(1)));
+        finales.get(0).setEquipo1(encontrarPerdedor(semifinales.get(0)));
+        finales.get(0).setEquipo2(encontrarPerdedor(semifinales.get(1)));
         // W61 (W57 - W58) - W62 (W59 - 60)   15 Julio
-        finales.get(1).setEquipo1(encontrarPerdedor(semifinales.get(0)));
-        finales.get(1).setEquipo2(encontrarPerdedor(semifinales.get(1)));
+        finales.get(1).setEquipo1(encontrarGanador(semifinales.get(0)));
+        finales.get(1).setEquipo2(encontrarGanador(semifinales.get(1)));
         
         return finales;
     }

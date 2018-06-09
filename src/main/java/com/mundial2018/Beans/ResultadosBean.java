@@ -12,6 +12,7 @@ import com.mundial2018.Database.Persistance.EntityManagerFactoria;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -26,24 +27,29 @@ import javax.persistence.EntityManagerFactory;
 @ManagedBean
 @RequestScoped
 public class ResultadosBean implements Serializable {
-
+    private Login login;
+    private Resultado resultado;
     private List<Resultado> listResultados;
-    private ResultadoJpaController rjc;
+    private final ResultadoJpaController rjc;
 
     public ResultadosBean() {
+        resultado = new Resultado();
         listResultados = new ArrayList<>();
         EntityManagerFactoria aux = new EntityManagerFactoria();
-
         EntityManagerFactory emf = aux.getEMF();
-
         rjc = new ResultadoJpaController(emf);
     }
 
     @PostConstruct
     public void init() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        login = (Login) ec.getSessionMap().get("login");
+        
+        if(Objects.nonNull(login)) {
+            resultado = rjc.findResultadoByEmpleadoId(login.getEmpleado().getId());
+        }
+        
         listResultados = rjc.getEntityManager().createNamedQuery("Resultado.findAllByPuntosSort").getResultList();
-        
-        
     }
 
     public Resultado getResultForUser(){
@@ -71,6 +77,20 @@ public class ResultadosBean implements Serializable {
 
     public void setListResultados(List<Resultado> listResultados) {
         this.listResultados = listResultados;
+    }
+
+    /**
+     * @return the resultado
+     */
+    public Resultado getResultado() {
+        return resultado;
+    }
+
+    /**
+     * @param resultado the resultado to set
+     */
+    public void setResultado(Resultado resultado) {
+        this.resultado = resultado;
     }
 
 }

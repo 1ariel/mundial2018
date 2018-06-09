@@ -14,12 +14,12 @@
   
     </h:head>
     
-    <h:body style="width: 100%; height: 100%">
+    <h:body style="width: auto; height: 100%;">
             <f:event listener="#{errorMessages.filterCheck(event)}" type="preRenderView" />
-          <p:growl id="growl" showDetail="true" sticky="true" />  
+          <p:growl id="growl" sticky="true" />  
           
          <ui:insert name="header">
-                <header style="margin: 1em; background: beige;">
+                <header style="margin: 1em 0;">
                     <h:graphicImage library="default" name="images/logo.png" style="width: 6%; position: relative; left: 85%;"/>
                 </header>
         </ui:insert>
@@ -32,12 +32,11 @@
                        
                         
                         <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" disabled="#{!loginBean.isThisAdmin()}" value="Empleados" url="/Secure/Admin/empleadoMaintenance.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" disabled="#{!loginBean.isThisAdmin()}"  value="Assignacion" url="/Secure/Admin/AssignacionPartidos.xhtml"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" disabled="#{!loginBean.isThisAdmin()}"  value="Asignación" url="/Secure/Admin/AssignacionPartidos.xhtml"/>
                         
                         <p:menuitem class="ui-g-1" style="margin:10px; border: 2px solid grey; border-radius: 5px;" value="Partidos" url="/Secure/apuestas.xhtml"/>
                         <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Grupos" url="/Secure/grupos.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Reset Contraseña" url="/Secure/ResetPassword.xhtml"/>
-                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Ayuda"/>
+                        <p:menuitem class="ui-g-1" style="margin:10px;border: 2px solid grey; border-radius: 5px;" value="Cambiar Contraseña" url="/Secure/ResetPassword.xhtml"/>
                         
                         <f:facet name="options">
                             <p:commandButton  style="border: 2px solid grey; border-radius: 5px;"  value="Salir" action="#{loginBean.cerrarSesion}" icon="ui-icon-power"/>
@@ -54,9 +53,9 @@
         </ui:insert>
 
         <ui:insert class="ui-g-12"  name="footer">
-            <footer style="relative: fixed; width:100%;  bottom:0%; padding: 2em;">
+            <footer style="relative: fixed; width:100%;  bottom:0%; padding: 2em 0;">
                 <span>
-                    <center>Mundial 2018</center>
+                    <center>Footer</center>
                 </span>
             </footer>
         </ui:insert>
