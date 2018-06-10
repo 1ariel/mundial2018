@@ -64,36 +64,26 @@ public class LoginBean implements Serializable {
 
     public void filterCheck(ComponentSystemEvent event) {
         try {
-
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
             String message = (String) ec.getSessionMap().get("message");
 
             if (message != null) {
-
                 fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
                 ec.getSessionMap().remove("message");
-
             }
-
         } catch (Exception e) {
             String ee = e.getMessage();
         }
-
     }
 
     public String iniciarSesion() {
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
-        
-       /* login.setPassword("admin");
-        login.setUsername("admin");
-            */
         Login nuevo = ljc.checkLogin(login);
 
         if (Objects.nonNull(nuevo.getLoginPK())) {
             login = nuevo;
-            //login.setAutenticado(true);
 
             if (Objects.nonNull(login.getEmpleado())) {
                 ec.getFlash().setKeepMessages(true);

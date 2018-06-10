@@ -104,23 +104,19 @@ public class SecurityFilterLogin implements Filter {
             if (login == null) {
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
                 httpResponse.sendRedirect("../Login.xhtml");
-                session.setAttribute("message", "Necesita una session para ingresar.");
-                
-                
+                session.setAttribute("message", "Debe iniciar sesión para ingresar");
 
                 //http://localhost:8084/Mundial2018/Secure/Homepage.xhtml             
                 return;
             }
 
             String p = "pp";
-
         } catch (Exception e) {
-
             String ee = e.getMessage();
-
         }
 
         Throwable problem = null;
+        
         try {
             chain.doFilter(request, response);
         } catch (Throwable t) {

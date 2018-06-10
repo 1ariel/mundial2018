@@ -11,16 +11,22 @@
         <title>Copa Mundial FIFA Rusia 2018</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="shortcut icon" href="#{request.contextPath}/images/logo.png"/>
-  
+        <style>
+            body {
+                background-image: url("#{resource['default/images/background-internal.png']}"); 
+                background-size:100% 100%;
+            }
+        </style>
     </h:head>
     
     <h:body style="width: auto; height: 100%;">
-            <f:event listener="#{errorMessages.filterCheck(event)}" type="preRenderView" />
+        <f:event listener="#{errorMessages.filterCheck(event)}" type="preRenderView"/>
           <p:growl id="growl" sticky="true" />  
           
          <ui:insert name="header">
                 <header style="margin: 1em 0;">
-                    <h:graphicImage library="default" name="images/logo.png" style="width: 6%; position: relative; left: 85%;"/>
+                    <h:graphicImage library="default" name="images/logo.png" style="width: 8%; position: relative; left: 85%;"/>
+                    <h:graphicImage library="default" name="images/logo-proquinal.png" style="width: 8%; position: relative;"/>
                 </header>
         </ui:insert>
 
@@ -45,13 +51,14 @@
                 </nav>
             </h:form>
         </ui:insert>
-
-        <ui:insert class="ui-g-12"   name="content">
-            <section>
-
-            </section>
-        </ui:insert>
-
+        
+        <div style="width: 100%; min-height: 400px;">
+            <ui:insert class="ui-g-12" name="content">
+                <section>
+                    
+                </section>
+            </ui:insert>
+        </div>
         <ui:insert class="ui-g-12"  name="footer">
             <footer style="relative: fixed; width:100%;  bottom:0%; padding: 2em 0;">
                 <span>

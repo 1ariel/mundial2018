@@ -7,56 +7,53 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+        <p:growl id="messages" autoUpdate="true"/>
+        
         <h:form id="addEmpleado"> 
-
-
         </h:form>  
 
         <h:form id="listEmployees" > 
-
-            <p:dataList id="employerIDData" value="#{empleadosController.allEmpleados}" var="emp" type="unordered" itemType="none" paginator="true" rows="10" styleClass="paginated">
+            <p:dataList id="employerIDData" value="#{empleadosController.allEmpleados}" var="emp" type="unordered" 
+                itemType="none" paginator="true" rows="10" styleClass="paginated" paginatorAlwaysVisible="false"
+                paginatorPosition="bottom">
+                
                 <f:facet name="header">
                     Empleados
-                </f:facet>                
+                </f:facet>
                 <h:outputText value="#{emp.nombre}" style="display:inline-block"/>
             </p:dataList>
-
-
-
         </h:form> 
 
         <h:form enctype="multipart/form-data">
             <p:fileUpload fileUploadListener="#{empleadosController.subirArchivo}" mode="advanced" dragDropSupport="false"
-                          update="messages listEmployees" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
-
-            <p:growl id="messages"  />
+                update="messages listEmployees" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" 
+                cancelLabel="Cancelar" label="Examinar" uploadLabel="Subir"/>
+            
         </h:form>
 
+        <p:spacer width="100%" height="25"/>
+        
         <h:form id="AgregacionManual">  
-              <p:growl id="messagesManual" />
-            <p:panel id="toggleable" header="Agregar Empleados Manual" collapsed="true" toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
-
-
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Nombre De empleado"/>
+            <p:panel id="toggleable" header="Agregar Empleado Manualmente" collapsed="false" toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="2" cellspacing="5">
+                    <p:outputLabel value="Nombre de empleado: "/>
                     <p:inputText  label="Nombre" value="#{empleadosController.login.empleado.nombre}"/>
 
-                    <p:outputLabel value="Código de empleado"/>
+                    <p:outputLabel value="Código de empleado: "/>
                     <p:inputText  label="Código" value="#{empleadosController.login.password}"/> 
 
-                    <p:outputLabel value="Email"/>
+                    <p:outputLabel value="Correo electrónico: "/>
                     <p:inputText  label="Email" value="#{empleadosController.login.empleado.email}"></p:inputText> 
 
-                    <p:outputLabel value="Rol"/>
-                    <p:selectOneListbox id="basic"  value="#{empleadosController.login.rol}">
+                    <p:outputLabel value="Rol: "/>
+                    <p:selectOneListbox id="basic" value="#{empleadosController.login.rol}">
                         <f:selectItem itemLabel="Empleado"  itemValue="empleado" />
                         <f:selectItem itemLabel="Admin" itemValue="admin" />
                     </p:selectOneListbox>
-
-                    <p:outputLabel value=""/>
                     
+                    <p:outputLabel/>
                     <p:commandButton value="Agregar"  update="listEmployees" action="#{empleadosController.agregarManualEmpleado()}"/>
-                </p:panelGrid>
+                </h:panelGrid>
 
                 <f:facet name="options">
                     <p:menu>
