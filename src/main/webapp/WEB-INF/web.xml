@@ -14,6 +14,10 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>humanity</param-value>
     </context-param>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
     <servlet>
         <servlet-name>SecurityFilter</servlet-name>
         <servlet-class>com.mundial2018.Servlets.Filters.SecurityFilter</servlet-class>
