@@ -200,6 +200,8 @@ public class ApuestaJpaController implements Serializable {
             apuestas = (List<Apuesta>)query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            em.close();
         }
         
         return apuestas;
@@ -232,5 +234,4 @@ public class ApuestaJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

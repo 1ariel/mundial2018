@@ -154,6 +154,8 @@ public class EquipoJpaController implements Serializable {
             equipos = (List<Equipo>)query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            em.close();
         }
         
         return equipos;

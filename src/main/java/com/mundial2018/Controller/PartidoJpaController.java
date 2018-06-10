@@ -229,6 +229,8 @@ public class PartidoJpaController implements Serializable {
             partidos = (List<Partido>)query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            em.close();
         }
             
         return partidos;
@@ -246,6 +248,8 @@ public class PartidoJpaController implements Serializable {
             partidos = (List<Partido>)query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            em.close();
         }
             
         return partidos;

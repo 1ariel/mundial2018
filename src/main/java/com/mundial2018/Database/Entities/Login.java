@@ -26,16 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l") ,
-    @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.loginPK.id = :id")
-    ,
-    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :username")
-    ,
-    @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password")
-    ,
-    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.user = :user")
-    ,
-    @NamedQuery(name = "Login.findByRol", query = "SELECT l FROM Login l WHERE l.rol = :rol")
-    ,
+    @NamedQuery(name = "Login.findById", query = "SELECT l FROM Login l WHERE l.loginPK.id = :id"),
+    @NamedQuery(name = "Login.findByUser", query = "SELECT l FROM Login l WHERE l.user = :user"),
+    @NamedQuery(name = "Login.findByPassword", query = "SELECT l FROM Login l WHERE l.password = :password"),
+    @NamedQuery(name = "Login.CheckLogin", query = "SELECT l FROM Login l WHERE l.password = :password AND l.user = :user"),
+    @NamedQuery(name = "Login.findByRol", query = "SELECT l FROM Login l WHERE l.rol = :rol"),
     @NamedQuery(name = "Login.findByEmpleadoid", query = "SELECT l FROM Login l WHERE l.loginPK.empleadoid = :empleadoid")})
 public class Login implements Serializable {
 

@@ -284,6 +284,24 @@ public class EmpleadoJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Empleado findEmpleadoByNombre(String nombre) {
+        EntityManager em = null;
+        Empleado empleado = new Empleado();
+        
+        try {
+            em = getEntityManager();
+            Query query = em.createNamedQuery("Empleado.findByNombre");
+            query.setParameter("nombre", nombre);
+            empleado = (Empleado)query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+            
+        return empleado;
+    }
 
     public int getEmpleadoCount() {
         EntityManager em = getEntityManager();

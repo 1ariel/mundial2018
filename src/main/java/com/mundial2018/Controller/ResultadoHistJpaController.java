@@ -145,6 +145,8 @@ public class ResultadoHistJpaController implements Serializable {
             resultadoHist = (ResultadoHist)query.setMaxResults(1).getSingleResult();
         } catch (Exception e) {
             e.printStackTrace();
+        }  finally {
+            em.close();
         }
             
         return resultadoHist;
