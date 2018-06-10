@@ -183,7 +183,7 @@ public class empleadosController implements Serializable {
             } catch (Exception ex) {
 
                 Logger.getLogger(empleadosController.class.getName()).log(Level.SEVERE, null, ex);
-                FacesMessage message = new FacesMessage("Succesful", "ya existe un empleado con ese Nombre");
+                FacesMessage message = new FacesMessage("Error, ya existe un empleado con ese Nombre", "ya existe un empleado con ese Nombre");
                 FacesContext.getCurrentInstance().addMessage(null, message);
                 return;
             }

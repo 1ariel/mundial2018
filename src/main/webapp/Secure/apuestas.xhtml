@@ -7,6 +7,7 @@
 
     <ui:define name="content">
         <h:form id="formPartidos">
+             <p:growl id="messages" />
             <p:tabView>
                 <p:tab title="Fase de grupos">
                     <p:dataList value="#{apuestaBean.listaRondas}" var="ronda" rows="15" itemType="none">
@@ -287,6 +288,7 @@
 
         <p:dialog header="Predicción" widgetVar="apuestaPartidoDialog" closable="true" closeOnEscape="true" draggable="true" resizable="false" showEffect="fade" hideEffect="fade">
             <h:form id="formApuestaPartido">
+           <p:growl id="messages" />
                 <p:panelGrid style="margin: 25px;">
                     <p:row>
                         <p:column>

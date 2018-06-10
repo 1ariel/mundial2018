@@ -12,6 +12,7 @@ import com.mundial2018.Controller.ResultadoJpaController;
 import com.mundial2018.Controller.RondaJpaController;
 import com.mundial2018.Database.Entities.Apuesta;
 import com.mundial2018.Database.Entities.Empleado;
+import com.mundial2018.Database.Entities.Equipo;
 import com.mundial2018.Database.Entities.Login;
 import com.mundial2018.Database.Entities.Partido;
 import com.mundial2018.Database.Entities.Ronda;
@@ -190,8 +191,11 @@ public class ApuestaBean {
         if (existeApuesta != null) {
             Partido partido = existeApuesta.getPartidoId();
             if (!(partido.getGolesEquipo1() == null || partido.getGolesEquipo2() == null)) {
-                FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "El partido ya contiene un marcador, por lo tanto no se puede agregar apuestas. contacte al administrador", null));
+                Equipo Numero1 = ejc.findEquipo(partido.getEquipo1() );
+                 Equipo Numero2 = ejc.findEquipo(partido.getEquipo2() );
+
+                FacesMessage message = new FacesMessage("El partido:"+ Numero1.getNombre() +" vs "+Numero2.getNombre() +" ya contiene un marcador, por lo tanto no se puede agregar apuestas. contacte al administrador", " Empleado agregado.");
+                FacesContext.getCurrentInstance().addMessage(null, message);
                 return;
             }
         }
@@ -213,9 +217,13 @@ public class ApuestaBean {
                     ajc.edit(existeApuesta);
                 } catch (Exception ex) {
                     Logger.getLogger(ApuestaBean.class.getName()).log(Level.SEVERE, null, ex);
+                    return;
                 }
             }
         }
+        FacesMessage message = new FacesMessage("Predicción agregada", " Apuesta.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+
     }
 
     public String EncontrarGolesPorPartidoYEmpleado(Partido p, String Equipo) {
