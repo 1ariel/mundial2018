@@ -1,26 +1,3 @@
 codigo,email,nombre,usuario,cedula,rol
 1003,user3@gmail.com,User 3,user3,1234503,user
 1004,user4@gmail.com,User 4,user4,1234504,user
-1005,user5@gmail.com,User 5,user5,1234505,user
-1006,user6@gmail.com,User 6,user6,1234506,user
-1007,user7@gmail.com,User 7,user7,1234507,user
-1008,user8@gmail.com,User 8,user8,1234508,user
-1009,user9@gmail.com,User 9,user9,1234509,user
-1010,user10@gmail.com,User 10,user10,1234510,user
-1011,user11@gmail.com,User 11,user11,1234511,user
-1012,user12@gmail.com,User 12,user12,1234512,user
-1013,user13@gmail.com,User 13,user13,1234513,user
-1014,user14@gmail.com,User 14,user14,1234514,user
-1015,user15@gmail.com,User 15,user15,1234515,user
-1016,user16@gmail.com,User 16,user16,1234516,user
-1017,user17@gmail.com,User 17,user17,1234517,user
-1018,user18@gmail.com,User 18,user18,1234518,user
-1019,user19@gmail.com,User 19,user19,1234519,user
-1020,user20@gmail.com,User 20,user20,1234520,user
-1021,user21@gmail.com,User 21,user21,1234521,user
-1022,user22@gmail.com,User 22,user22,1234522,user
-1023,user23@gmail.com,User 23,user23,1234523,user
-1024,user24@gmail.com,User 24,user24,1234524,user
-1025,user25@gmail.com,User 25,user25,1234525,user
-1026,user26@gmail.com,User 26,user26,1234526,user
-1027,user27@gmail.com,User 27,user27,1234527,user
