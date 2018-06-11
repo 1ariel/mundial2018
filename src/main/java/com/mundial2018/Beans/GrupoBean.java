@@ -155,7 +155,7 @@ public class GrupoBean {
         if (Objects.nonNull(partidoId) && (rol.equals("admin") || rol.equals("superuser"))) {
             List<Partido> partidos = new ArrayList<>();
             
-            if(partidoId.equals(48)) {
+            if(partidoId.equals(49)) {
                 partidos = crearOctavosDeFinal();
             } else if (partidoId.equals(56)) {
                 partidos = crearCuartosDeFinal();
