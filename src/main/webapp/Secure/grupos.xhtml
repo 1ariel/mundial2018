@@ -15,6 +15,9 @@
                             <p:outputLabel value="Análisis del grupo"/>
                         </f:facet>
                         
+                        <p:column style="width: 32px;">
+                            <p:graphicImage library="default" name="#{apuestaBean.buscarBandera(equipo.id)}" width="32"/>
+                        </p:column>
                         <p:column headerText="Equipo">
                             <p:outputLabel value="#{equipo.nombre}"/>
                         </p:column>

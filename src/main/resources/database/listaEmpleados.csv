@@ -1,0 +1,391 @@
+codigo,email,nombre,usuario,cedula,rol
+2001,user01@email.com,Jaime Baquero Herrera,2001,8095903,empleado
+3015,user02@email.com,Raúl Elizondo Rodríguez,3015,2477492,empleado
+3022,user03@email.com,Elizabeth Campos Murillo,3022,2517135,empleado
+3024,user04@email.com,Álvaro Montero Ayub,3024,1948971,empleado
+3025,user05@email.com,Warner Rodríguez Barrantes,3025,11009625,empleado
+3028,user06@email.com,Álvaro Solano Villalta,3028,3354114,empleado
+4040,user07@email.com,Karina Alfaro Arrieta,4040,2511323,empleado
+4048,user08@email.com,Arturo Moscoso Chinchilla,4048,117000509131,empleado
+4049,user09@email.com,Ricardo Cadena Cubides,4049,117000490533,empleado
+4050,user10@email.com,Mario Ballestero Alfaro,4050,1873922,empleado
+4053,user11@email.com,Fanny Serrano Blanco,4053,2426733,empleado
+4078,user12@email.com,Jonathan David Delgado Morales,4078,1123275,empleado
+4092,user13@email.com,Jesús Eduardo Aguilar Guzmán,4092,2594481,empleado
+4099,user14@email.com,Minor Soto Umaña ,4099,4157678,empleado
+4108,user15@email.com,Jonathan Lobo González,4108,2593224,empleado
+4115,user16@email.com,Carolina Solano Navarrete,4115,5271534,empleado
+4122,user17@email.com,Rafael Ángel Figueroa Guerrero,4122,3334162,empleado
+4126,user18@email.com,Alberto Esquivel Mejías,4126,6296750,empleado
+5146,user19@email.com,José René Somarriba Fonseca,5146,8089613,empleado
+5156,user20@email.com,Alfonso Gerardo Jiménez Villalobos,5156,2548541,empleado
+5173,user21@email.com,Juan Diego Chacón Miranda,5173,2555790,empleado
+5179,user22@email.com,Eduard Cambronero Mesén,5179,2551104,empleado
+5184,user23@email.com,José Francisco Calderón Espinoza ,5184,2573655,empleado
+5188,user24@email.com,Deymer Ávila Barquero,5188,5350954,empleado
+5199,user25@email.com,Erlin Alberto Monjarret López,5199,5344379,empleado
+5212,user26@email.com,Rusbin Carvajal Vásquez,5212,11127621,empleado
+5222,user27@email.com,Francisco Lionel Castillo Marín,5222,11267913,empleado
+5226,user28@email.com,Víctor Manuel Villafuerte Salazar,5226,6246251,empleado
+5235,user29@email.com,Pablo Vásquez Campos,5235,2612534,empleado
+5248,user30@email.com,Octavio Antonio González Ulate,5248,2533117,empleado
+5251,user31@email.com,Hader  Cabrera Marenco ,5251,155808444308,empleado
+5255,user32@email.com,Luis Guillermo Jiménez Sáurez,5255,2577757,empleado
+5257,user33@email.com,Failan Gerardo Mejías Varela,5257,2422388,empleado
+5261,user34@email.com,Carlos Daniel Ramos Monge,5261,2629689,empleado
+5278,user35@email.com,Mauricio Rojas Chaves,5278,2514266,empleado
+5285,user36@email.com,Luis Ángel Arce Briceño,5285,2602359,empleado
+5300,user37@email.com,Overt Arrieta Zárate,5300,1621691,empleado
+6301,user38@email.com,Armando Miguel Chavarría Sánchez,6301,3362102,empleado
+6302,user39@email.com,Alexis Giovanni Meneses Espinoza,6302,1824380,empleado
+6316,user40@email.com,Juan Carlos Arrieta Alfaro,6316,2560542,empleado
+6317,user41@email.com,Francisco Gaitán Alaniz,6317,6328337,empleado
+6323,user42@email.com,Henry Alberto Hernández González,6323,2596463,empleado
+6330,user43@email.com,Gustavo Adolfo Hernández Obando,6330,2533796,empleado
+6338,user44@email.com,Willy Alonso Madrigal Acosta,6338,2560312,empleado
+6344,user45@email.com,Miguel Ángel Rivera Guzmán,6344,2587518,empleado
+6346,user46@email.com,Víctor Hugo Rivas Campos,6346,2423646,empleado
+6362,user47@email.com,Paúl José Castillo Murillo,6362,2609365,empleado
+6390,user48@email.com,Oscar Esteban Molina Delgado,6390,2563518,empleado
+6399,user49@email.com,Juan José Rojas Rojas,6399,6330399,empleado
+6401,user50@email.com,Wverney Alonso Sánchez Restrepo,6401,8092816,empleado
+6410,user51@email.com,Moisés de Jesús Hernández Méndez,6410,1902435,empleado
+6411,user52@email.com,Hellen Méndez Venegas,6411,2541037,empleado
+6419,user53@email.com,German Domingo Sánchez Velásquez,6419,155809172509,empleado
+6433,user54@email.com,Jimmy José Arroyo Zeledón,6433,2639838,empleado
+6472,user55@email.com,Roberto Esquivel Mejías,6472,6296751,empleado
+7484,user56@email.com,Alejandra Mata Angulo,7484,2566321,empleado
+7496,user57@email.com,Luz Marina Bermúdez Cascante,7496,6197517,empleado
+7511,user58@email.com,Daniel José Carazo Sanabria,7511,11305586,empleado
+7525,user59@email.com,Keylor Morales López,7525,5354927,empleado
+7534,user60@email.com,Kattia Prendas Jiménez,7534,2463349,empleado
+70345,user61@email.com,Melvin Elizondo Rodríguez,70345,2448294,empleado
+70365,user62@email.com,Elías Moisés Goussen Reyes,70365,155802618525,empleado
+70372,user63@email.com,Alexander Emilio González Venegas,70372,2645969,empleado
+70387,user64@email.com,Allan Martínez Céspedes,70387,2627141,empleado
+70388,user65@email.com,Alexánder Francisco Ramírez González,70388,2571977,empleado
+70389,user66@email.com,Luis Miguel Araya Naranjo,70389,2601890,empleado
+70406,user67@email.com,Juan Luis Álvarez Mora,70406,2577862,empleado
+80001,user68@email.com,Rosaura Rubí Espinoza,80001,11031699,empleado
+80002,user69@email.com,Javier Rodríguez González,80002,2625157,empleado
+80067,user70@email.com,Kenneth Rodolfo Rivera Alpízar,80067,2642812,empleado
+80071,user71@email.com,Juan Martín Céspedes Barrantes,80071,2397830,empleado
+80075,user72@email.com,Denry Enrique Brack Vásquez,80075,8100454,empleado
+80102,user73@email.com,Orlando Alfaro Bolívar,80102,6242557,empleado
+80103,user74@email.com,Luis Andrés Castro Conejo,80103,2633318,empleado
+80126,user75@email.com,José Fernando González Zumbado,80126,1817288,empleado
+90495,user76@email.com,Greivin Soto Castro,90495,2652114,empleado
+90513,user77@email.com,Carlos Alberto Poveda Miranda,90513,6291858,empleado
+90516,user78@email.com,Reinaldo Alvarado Araya,90516,2634304,empleado
+100007,user79@email.com,Ricardo Mendoza Gutiérrez,100007,5371664,empleado
+100051,user80@email.com,Brayan Jesús Víquez Alvarado,100051,2660262,empleado
+100083,user81@email.com,Rodolfo Rojas Rivera ,100083,2452138,empleado
+100084,user82@email.com,Marco Antonio Ramírez López,100084,11287933,empleado
+100085,user83@email.com,Julio Cesar Silva,100085,155800000116,empleado
+100086,user84@email.com,Luis Alberto Silva ,100086,155812102307,empleado
+100088,user85@email.com,Bernardo Gamboa Arroyo,100088,2638554,empleado
+100089,user86@email.com,Pedro Alonso Arroyo Ramos ,100089,2664078,empleado
+100105,user87@email.com,Danny Andres Pereira Carmona ,100105,2599784,empleado
+100123,user88@email.com,Jorshua Calvo Madrigal ,100123,11362423,empleado
+100147,user89@email.com,Dixon Enrique Reyes Velez,100147,155813558320,empleado
+100177,user90@email.com,Freddy Acevedo Traña ,100177,2589418,empleado
+110007,user91@email.com,Jehudy Ávila Barquero ,110007,5361281,empleado
+110039,user92@email.com,Greivin Brenes Ruíz,110039,6359731,empleado
+110052,user93@email.com,Miguel Pérez Solera ,110052,2446305,empleado
+110054,user94@email.com,Isaac Emmanuel Cedeño Portillo,110054,155805243504,empleado
+110074,user95@email.com,Jorge Alexis Barrantes Montiel,110074,5292641,empleado
+110075,user96@email.com,Yeikol Rosales Alvarez ,110075,6390367,empleado
+110076,user97@email.com,Braulio Alvarado Solís,110076,2694483,empleado
+110081,user98@email.com,Ramón Wilbeth López López,110081,1789646,empleado
+110090,user99@email.com,Yerlin Avila Salazar ,110090,2587819,empleado
+110091,user100@email.com,Daniel Fallas Fernández ,110091,6279210,empleado
+110092,user101@email.com,Evans Obando Badilla ,110092,7204954,empleado
+110135,user102@email.com,Marcos Guzmán Jiménez,110135,1667168,empleado
+110136,user103@email.com,Milton Segura Segura ,110136,4126580,empleado
+110143,user104@email.com,Eduardo José Perez,110143,155807627211,empleado
+110151,user105@email.com,José Gabriel Herrera Alpízar ,110151,2645792,empleado
+110162,user106@email.com,Diego Alberto Ruiz Brenes ,110162,11308858,empleado
+110169,user107@email.com,Michael Picado Steller ,110169,5252864,empleado
+110181,user108@email.com,Yadir Antonio Morales López ,110181,5300038,empleado
+110213,user109@email.com,José Fernando Ovares Chaves ,110213,2624433,empleado
+110222,user110@email.com,Maycol José Quesada Arroyo,110222,2606410,empleado
+110236,user111@email.com,Gerardo Alfaro Avila ,110236,2549254,empleado
+110260,user112@email.com,Wilbert Francisco Morales Carvajal,110260,2548492,empleado
+110263,user113@email.com,Jairo Espinoza Villegas,110263,2530328,empleado
+110264,user114@email.com,Braulio Piña Obando,110264,11323756,empleado
+110298,user115@email.com,Adrian Gerardo Rodríguez Solano ,110298,2510465,empleado
+110306,user116@email.com,Eliecer Gerardo Sandí Aguilar,110306,2509172,empleado
+110316,user117@email.com,Nidia María Gamboa Ramírez,110316,1665954,empleado
+110327,user118@email.com,Lester Antonio Rodríguez Trujillo ,110327,155811229931,empleado
+120013,user119@email.com,Elpidio Rodríguez Miranda ,120013,2511773,empleado
+120015,user120@email.com,Javier Martín Caracas Maliaño,120015,155813189730,empleado
+120029,user121@email.com,Alexander Espinoza Vega,120029,4135469,empleado
+120032,user122@email.com,Geiner David Medina Martínez ,120032,2598723,empleado
+120037,user123@email.com,Fred Raúl Chaves Rojas ,120037,11431596,empleado
+120055,user124@email.com,Vinicio Emilio Castro Arias ,120055,7134335,empleado
+120061,user125@email.com,Hetnán Vargas Chaves ,120061,2583822,empleado
+120063,user126@email.com,José Alberto Alfaro Quirós,120063,2590587,empleado
+120071,user127@email.com,Randy José Sánchez Herrera ,120071,2531509,empleado
+120072,user128@email.com,Lubín Guillermo Quesada Román ,120072,2572119,empleado
+120076,user129@email.com,Daniel Chaves Rojas ,120076,11304014,empleado
+120097,user130@email.com,Jeison Odir Vivas Quirós,120097,6301680,empleado
+120098,user131@email.com,Berny Aguilar Vásquez,120098,11093120,empleado
+120101,user132@email.com,Brayan Salguero López,120101,2602842,empleado
+120117,user133@email.com,Martín Siles Sibaja,120117,6211010,empleado
+120119,user134@email.com,Henry Gerardo Baltodano Arias ,120119,2610917,empleado
+120128,user135@email.com,Henry Murillo Rojas ,120128,2468733,empleado
+120139,user136@email.com,Cristian David Salazar López,120139,2596847,empleado
+120162,user137@email.com,Irwing David Gamboa Rodríguez ,120162,2655863,empleado
+120176,user138@email.com,José Angel Sánchez Morales ,120176,11107088,empleado
+120205,user139@email.com,Cinthia Navarro Murillo,120205,2582810,empleado
+120224,user140@email.com,Denis Antonio Mendoza Miranda ,120224,2644220,empleado
+130007,user141@email.com,Yadir Gerardo Valverde Ortíz,130007,7207179,empleado
+130008,user142@email.com,Juan Gabriel Siles Hidalgo,130008,6340761,empleado
+130023,user143@email.com,Luis Omar Ardila Medina,130023,8092026,empleado
+130036,user144@email.com,Rodolfo Rodríguez Meléndez ,130036,1816440,empleado
+130037,user145@email.com,Franklin Vargas Beita,130037,6171873,empleado
+130047,user146@email.com,Yeudin Pérez Rojas ,130047,2670733,empleado
+130055,user147@email.com,Carlos Rodolfo Solano Ugalde ,130055,2542641,empleado
+130056,user148@email.com,Walter José Munguía Artola ,130056,8103358,empleado
+130058,user149@email.com,Alfonso García Vargas ,130058,2587199,empleado
+130059,user150@email.com,José Alexander García Loría,130059,6277367,empleado
+130062,user151@email.com,Greivin Morera Badilla ,130062,2494322,empleado
+130065,user152@email.com,Carlos Bustos García,130065,5235595,empleado
+130066,user153@email.com,Ronald Salazar López,130066,2495844,empleado
+130068,user154@email.com,Pedro Asdrúbal Espinoza Núñez,130068,2473736,empleado
+130070,user155@email.com,Carlos Andrés Rodríguez Ruiz,130070,2554205,empleado
+130093,user156@email.com,Cristian Alberto Víquez Murillo,130093,2550846,empleado
+130098,user157@email.com,Marcos Mauricio Chaves Suarez,130098,2552937,empleado
+130118,user158@email.com,Giovanni Ruíz Fonseca,130118,1953182,empleado
+130135,user159@email.com,Juan Carlos Vásquez Avalos ,130135,2357470,empleado
+130136,user160@email.com,Christiam Perez Rojas ,130136,2654114,empleado
+130137,user161@email.com,Juan Gabriel Herrera Quesada,130137,2633962,empleado
+130139,user162@email.com,Ramón Arroyo Jiménez,130139,2461331,empleado
+130151,user163@email.com,Jackeline Ramírez Madrigal,130151,2547797,empleado
+130152,user164@email.com,Eduardo Alfonso Delgado López,130152,2400480,empleado
+130162,user165@email.com,Juan Francisco Sequeira Zamora,130162,2502317,empleado
+130168,user166@email.com,Adelso Rodríguez Gómez,130168,6341024,empleado
+130187,user167@email.com,Francisco Miranda Cruz,130187,11271228,empleado
+130197,user168@email.com,Rodnie Jovel Quesada Quirós ,130197,2483259,empleado
+140013,user169@email.com,Jhonny Soto Salas,140013,2694387,empleado
+140014,user170@email.com,Oldemar Fallas Cruz ,140014,6346472,empleado
+140015,user171@email.com,Luis Angel Jiménez Porras,140015,2583164,empleado
+140016,user172@email.com,Johnny Madrigal Castro ,140016,6285364,empleado
+140069,user173@email.com,Gerson David Núñez Bogantes ,140069,2517629,empleado
+140079,user174@email.com,Guillermo Andrés Hernández Villalobos ,140079,2705437,empleado
+140081,user175@email.com,Pablo Jiménez Sibaja ,140081,6370786,empleado
+140082,user176@email.com,Yasdany Díaz Alfaro,140082,7180844,empleado
+140090,user177@email.com,Alberto Arrieta Campos ,140090,1898483,empleado
+140099,user178@email.com,Dennis Espinoza Espinoza,140099,4172096,empleado
+140114,user179@email.com,Jorge Jesús Valverde Garita ,140114,11034927,empleado
+140150,user180@email.com,Yefry Gustavo Araya Amador ,140150,2549106,empleado
+140178,user181@email.com,Luis Diego Matamoros Rojas,140178,2581554,empleado
+150016,user182@email.com,Oscar Eduardo Jiménez Porras,150016,2603751,empleado
+150018,user183@email.com,Cristian Mauricio Hernández Quesada,150018,2546070,empleado
+150020,user184@email.com,Eduardo Villalobos Alfaro,150020,2604979,empleado
+150060,user185@email.com,Esteban de Jesús Chavarría Víquez,150060,2674450,empleado
+150077,user186@email.com,Gesler Martín Molina Ramírez,150077,155817437631,empleado
+150080,user187@email.com,Freddy Rodríguez Orozco ,150080,4166810,empleado
+150081,user188@email.com,Jorge Zumbado Murillo ,150081,2441480,empleado
+150083,user189@email.com,Gerson Danis Vargas Lezama,150083,155813270832,empleado
+150097,user190@email.com,Evalinda Jazmín Jiménez López ,150097,11403859,empleado
+150102,user191@email.com,Jorge Obando Rodríguez,150102,11173870,empleado
+150126,user192@email.com,Jeremy Bonilla Jiménez,150126,6367146,empleado
+150138,user193@email.com,Ronald Eduardo Acevedo Hernández,150138,1824990,empleado
+150139,user194@email.com,Olger Alfonso Espinoza Espinoza,150139,2613233,empleado
+150140,user195@email.com,Gerald Alberto Rodríguez Zamora ,150140,2622274,empleado
+150141,user196@email.com,Oldemar Alexánder Espinoza Espinoza,150141,2575685,empleado
+150142,user197@email.com,Alexis Warner Arce Benavides,150142,7089136,empleado
+150143,user198@email.com,Johelber Elías Ramírez Quesada,150143,2525459,empleado
+150144,user199@email.com,Diego Armando Soto Jiménez,150144,2588702,empleado
+150145,user200@email.com,John David Morales Morales,150145,3432960,empleado
+150155,user201@email.com,Jhon Miranda Mora,150155,2659420,empleado
+150175,user202@email.com,Kendall Alfonso Campos Ramírez,150175,5407373,empleado
+150186,user203@email.com,Wenceslao Cháves Arias,150186,2472281,empleado
+150187,user204@email.com,Mainor Gerardo Solís Núñez,150187,2529904,empleado
+150188,user205@email.com,César Gerardo Blanco Solano,150188,11367608,empleado
+150314,user206@email.com,Yonthy Jordan Madrigal Mata,150314,2703457,empleado
+150321,user207@email.com,Luis Andrés Arias Salas,150321,6249558,empleado
+160001,user208@email.com,Franklin Franco Ortíz,160001,5382414,empleado
+160003,user209@email.com,Susana María Villalobos González,160003,2596064,empleado
+160004,user210@email.com,Paula Inés Herrera Jiménez,160004,11407309,empleado
+160016,user211@email.com,Mayson Antonio Jiménez Núñez,160016,155814359806,empleado
+160031,user212@email.com,Jéssica Vannesa Badilla Gutiérrez,160031,2736779,empleado
+160033,user213@email.com,Kevin Alberto Espinoza Castro,160033,2715408,empleado
+160035,user214@email.com,Carlos Alberto Cose Toruño,160035,5360142,empleado
+160036,user215@email.com,Javier Stanley Lara Espinoza,160036,6279389,empleado
+160053,user216@email.com,Róger José Cerdas Pereira,160053,2767167,empleado
+160055,user217@email.com,Roberto Flores Jiménez,160055,6329574,empleado
+160056,user218@email.com,Michael Esteban Gómez Arias,160056,2750968,empleado
+160067,user219@email.com,Carlos Eduardo Angulo Áviles,160067,5360978,empleado
+160068,user220@email.com,Luis Alonso González Pérez,160068,1962286,empleado
+160069,user221@email.com,Jean Carlo Miranda Mora,160069,11329967,empleado
+160071,user222@email.com,David Ortiz Gutiérrez,160071,2702373,empleado
+160072,user223@email.com,Eddy Ramírez Quirós,160072,2631419,empleado
+160073,user224@email.com,Eugenio Jesús Hernández Quirós,160073,2642766,empleado
+160074,user225@email.com,Greivin Gerardo Araya Alfaro,160074,2705441,empleado
+160077,user226@email.com,Jeremy Josué Lara Sánchez,160077,2696446,empleado
+160080,user227@email.com,Luis Alberto Cascante Murillo,160080,11445132,empleado
+160091,user228@email.com,Mauro Campos Rodríguez,160091,2541971,empleado
+160095,user229@email.com,Elier Antonio Valverde Alvarado,160095,5372872,empleado
+160096,user230@email.com,Hugo Gerardo Salas Arce,160096,2723370,empleado
+160099,user231@email.com,Fabio  Porras Sequeira,160099,6283593,empleado
+160115,user232@email.com,Cristopher Gerardo Campos Cruz ,160115,2708890,empleado
+160116,user233@email.com,Anthony Molinari Alfaro,160116,2755755,empleado
+160118,user234@email.com,Alexis Mora Rodríguez,160118,11476975,empleado
+160121,user235@email.com,Jeffry Antonio Delgado Arguedas,160121,11267795,empleado
+160127,user236@email.com,Jeffry Alvarez Zúñiga,160127,2541260,empleado
+160129,user237@email.com,Edwin Josué Vásquez Rodríguez,160129,4230168,empleado
+160131,user238@email.com,Robert Alejandro Chacón Zumbado,160131,2766394,empleado
+160132,user239@email.com,Jexon Martin Sanabria Montero,160132,11337306,empleado
+160160,user240@email.com,Marlon Ariel Rojas Agüero,160160,2719897,empleado
+160176,user241@email.com,Francinia Chavaría Lobo,160176,2547586,empleado
+160183,user242@email.com,Oscar Alonso Chaves Villalobos,160183,2567795,empleado
+160193,user243@email.com,Juan José Sánchez Rosales,160193,5346344,empleado
+160194,user244@email.com,Edvin Potoy López,160194,2615790,empleado
+160198,user245@email.com,Leonardo Cortes Cambronero ,160198,2821525,empleado
+160199,user246@email.com,Silvestre Camareno Eras,160199,5252008,empleado
+160202,user247@email.com,Adrián Saenz Montero,160202,1829018,empleado
+160206,user248@email.com,Greilyn Ariel Urbina Padilla ,160206,2724152,empleado
+160207,user249@email.com,Luis Diego Ramírez Quesada,160207,2705362,empleado
+160208,user250@email.com,Martin Francisco Sánchez Córdoba,160208,4187806,empleado
+160209,user251@email.com,Milton Andrés Valeciano Luna,160209,2537873,empleado
+160210,user252@email.com,Giovanni Francisco Ledezma Jiménez,160210,2530960,empleado
+160214,user253@email.com,Luis Diego Calero López,160214,4203455,empleado
+160215,user254@email.com,Jeffry Alexis Mora Zuñiga,160215,11523056,empleado
+160217,user255@email.com,Yeison Andrés Chaves Vega,160217,2671529,empleado
+160218,user256@email.com,Fray Guillermo Madrigal Rodríguez,160218,11270656,empleado
+160226,user257@email.com,Michael Araya Amador,160226,2606059,empleado
+160237,user258@email.com,Yeiron Gabriel Ramírez Saavedra,160237,116520699,empleado
+160238,user259@email.com,Yustin Alberto Garro Solorzano,160238,115100904,empleado
+160239,user260@email.com,Melvin Gerardo Saborio Guillén,160239,2633972,empleado
+160240,user261@email.com,Rolando Stiven Alfaro Morales,160240,4230917,empleado
+160247,user262@email.com,Brayan Steven Solis Monjarret,160247,5410706,empleado
+160248,user263@email.com,Adrián Salmerón Arroyo,160248,4218821,empleado
+160252,user264@email.com,Pablo José Chaves Acevedo,160252,2550598,empleado
+170003,user265@email.com,Danny Blanco Barquero,170003,2508442,empleado
+170012,user266@email.com,Bryan José Méndez Padilla,170012,3454649,empleado
+170013,user267@email.com,Jean Carlo Cháves Alfaro ,170013,2721075,empleado
+170017,user268@email.com,Jeison Blas Narváez ,170017,2690215,empleado
+170019,user269@email.com,Yohan Ramírez Saavedra,170019,6353051,empleado
+170020,user270@email.com,Juan Luis Alvarez Chamorro ,170020,8086108,empleado
+170022,user271@email.com,Maikel Sibaja Castro ,170022,2630730,empleado
+170023,user272@email.com,Elinson Lozano Cerdas ,170023,7265455,empleado
+170025,user273@email.com,Israel Rodríguez Rodríguez ,170025,155815041100,empleado
+170026,user274@email.com,José Jerónimo Ugarte Zapata ,170026,155803654320,empleado
+170028,user275@email.com,Ulises Javier Flores Castillo,170028,2752897,empleado
+170029,user276@email.com,Marco Vinicio Villalobos Vargas,170029,4202922,empleado
+170036,user277@email.com,Hersan Rodríguez Salazar,170036,2721659,empleado
+170037,user278@email.com,Lucio Jarquín Díaz ,170037,155806101307,empleado
+170038,user279@email.com,Ronny Rodríguez Pérez ,170038,2678774,empleado
+170039,user280@email.com,Luis Diego Terán Arzón,170039,2737305,empleado
+170041,user281@email.com,Junior Gerardo Chango Rojas,170041,2723335,empleado
+170054,user282@email.com,Yendri María Blanco Barquero,170054,2628493,empleado
+170055,user283@email.com,Oscar Mario Cruz Ugalde,170055,2696550,empleado
+170057,user284@email.com,José Carlo Gonzalez Arburola,170057,2679556,empleado
+170059,user285@email.com,Pablo César Monge Paniagua,170059,2624712,empleado
+170061,user286@email.com,Kevin Mora Vega,170061,11618916,empleado
+170064,user287@email.com,Leonidas Aguilar Flores,170064,11645931,empleado
+170065,user288@email.com,Marvin Morales Esquivel ,170065,7190535,empleado
+170075,user289@email.com,Arturo Cordero Badilla,170075,1971547,empleado
+170076,user290@email.com,José Ovares Leitón,170076,2635294,empleado
+170079,user291@email.com,Brayan Gerardo Umaña Castro,170079,2756882,empleado
+170081,user292@email.com,Marco Vinicio Cascante Agüero,170081,2531504,empleado
+170086,user293@email.com,Víctor Manuel Rojas Castillo,170086,2718389,empleado
+170087,user294@email.com,Raúl de Jesús Eras Obando ,170087,2695001,empleado
+170095,user295@email.com,Alexis Villalobos Morales ,170095,6310067,empleado
+170096,user296@email.com,Felix Valdivia Leyva,170096,8115976,empleado
+170097,user297@email.com,Edwin Mauricio Vargas Monge,170097,11349128,empleado
+170098,user298@email.com,Fernando Rivera Alpizar,170098,20720987,empleado
+170106,user299@email.com,Freddy Stiven Arrieta Retana,170106,4207962,empleado
+170107,user300@email.com,Gustavo Barrantes Moraga ,170107,2576032,empleado
+170114,user301@email.com,Jason Guillermo Méndez Castellón,170114,2545938,empleado
+170115,user302@email.com,Douglas Gerardo Arroyo García,170115,11684274,empleado
+170119,user303@email.com,Hanzell Espinoza Bonilla,170119,11166935,empleado
+170122,user304@email.com,Daniel Steven Bolaños Blandon ,170122,2745997,empleado
+170133,user305@email.com,Edgar Giovanny Benítez Cardoza,170133,155813975635,empleado
+170134,user306@email.com,Luis Adrián Morales,170134,155823310610,empleado
+170135,user307@email.com,Rafael Arroyo Jiménez,170135,2576593,empleado
+170137,user308@email.com,Carlos Jiménez Ramírez,170137,2789724,empleado
+170138,user309@email.com,Germán Evaristo Riquelme Ramírez,170138,6355255,empleado
+170139,user310@email.com,Jeffry José Cordero Guzmán,170139,2759547,empleado
+170140,user311@email.com,Julio César Chamorro López,170140,155812605308,empleado
+170142,user312@email.com,Freddy Moraga Porras,170142,6300790,empleado
+170143,user313@email.com,Donald Francisco Cruz Quirós,170143,2533480,empleado
+170148,user314@email.com,Jose Alberto Mayorga Jiménez,170148,2631666,empleado
+170151,user315@email.com,Roy Antonio Matarrita Benavides,170151,11625982,empleado
+170152,user316@email.com,Osvaldo Espinoza González,170152,4159077,empleado
+170153,user317@email.com,Esteban Martín Quirós Mora,170153,11532799,empleado
+170162,user318@email.com,Jordan Ávila Solera ,170162,2744920,empleado
+170163,user319@email.com,Yanina Paola Gómez Murillo,170163,2598857,empleado
+170164,user320@email.com,Emanuel Francisco Ortega Guzmán,170164,2754348,empleado
+170165,user321@email.com,Jairo Mora Jiménez,170165,3524616,empleado
+170166,user322@email.com,Steven Sibaja Solano,170166,11321459,empleado
+170174,user323@email.com,Daniel de Jesús Calvo Salas,170174,2725361,empleado
+170173,user324@email.com,José Aguirre Jiménez,170173,6673602,empleado
+170181,user325@email.com,Carlos Andrés Gutiérrez Olivas,170181,2603880,empleado
+170182,user326@email.com,Urias Antonio Ampié Aguirre,170182,155818374918,empleado
+170183,user327@email.com,Josué Carmona Ponce ,170183,5333263,empleado
+170184,user328@email.com,José David Sevilla Estrada,170184,2672602,empleado
+170185,user329@email.com,Romario Rodríguez Centeno ,170185,2736039,empleado
+170186,user330@email.com,Denis Osvaldo Arrieta Ledezma,170186,2510289,empleado
+170187,user331@email.com,Marianela Sibaja Ugalde,170187,2766730,empleado
+170193,user332@email.com,Greivin Rodriguez Chacón,170193,1882087,empleado
+170202,user333@email.com,José Daniel Sánchez González,170202,5415848,empleado
+170203,user334@email.com,Erick Espinoza Alvarez ,170203,5415849,empleado
+170210,user335@email.com,Manuel Jesús Esquivel Arguedas,170210,2710282,empleado
+170212,user336@email.com,Jhonny Fonseca Miranda,170212,2535362,empleado
+170214,user337@email.com,Jose Daniel Sevilla Miranda,170214,155813428518,empleado
+170220,user338@email.com,Luis Antonio Gutiérrez López ,170220,5223748,empleado
+170221,user339@email.com,Diego Ivan Murillo Alfaro ,170221,2537410,empleado
+170223,user340@email.com,Luis Alberto Hernández Ramírez ,170223,2758074,empleado
+170224,user341@email.com,Miguel de Jesús Pineda Martínez ,170224,2599360,empleado
+170235,user342@email.com,Leonar Steve Mata Víquez,170235,2511320,empleado
+170236,user343@email.com,Albin Vásquez Fonseca,170236,6342834,empleado
+170237,user344@email.com,Bernardo Chaves Vega,170237,2566366,empleado
+170238,user345@email.com,Yostin Gabriel Rojas Monge,170238,2707203,empleado
+170239,user346@email.com,Juan José Herrera Quirós,170239,2692238,empleado
+170249,user347@email.com,Jairo Zúñiga Robles,170249,2631575,empleado
+170254,user348@email.com,Ricardo Camacho Camacho ,170254,2570831,empleado
+170255,user349@email.com,José Rodolfo González Arrieta,170255,2669250,empleado
+170256,user350@email.com,Natalia Hernández Retana,170256,11375223,empleado
+180002,user351@email.com,Dixon Mata Picado,180002,6359086,empleado
+180003,user352@email.com,Steve Hernández Salas,180003,11045023,empleado
+180020,user353@email.com,Luis Fernandez Quintero,180020,6342302,empleado
+180021,user354@email.com,Fabricio Lopéz Boza,180021,2735232,empleado
+180022,user355@email.com,Manuel Antonio Camacho Obando ,180022,155812584217,empleado
+180026,user356@email.com,Juan Alcides Bermúdez Carballo,180026,2515686,empleado
+180027,user357@email.com,Lidier Quesada Silva ,180027,5352284,empleado
+180028,user358@email.com,Francisco Javier Alvarez González,180028,155808900718,empleado
+180029,user359@email.com,Miguel David Montero Angulo,180029,110260935,empleado
+180030,user360@email.com,Michael Gerardo Calvo Rivera,180030,11232815,empleado
+180031,user361@email.com,Luis Angel Rodríguez Elizondo,180031,6453787,empleado
+180032,user362@email.com,Edgardo Gudiel Rojas,180032,6334609,empleado
+180033,user363@email.com,Diego Oporta Cruz,180033,7250054,empleado
+180035,user364@email.com,Michael Manuel Jiménez Núñez,180035,115814354410,empleado
+180037,user365@email.com,Josué Felipe Bejarano González,180037,11343563,empleado
+180038,user366@email.com,Freyzer Steve Mazariegos Céspedes ,180038,2596814,empleado
+180040,user367@email.com,Denis Andrey Espinoza Céspedes,180040,2762479,empleado
+180048,user368@email.com,Montoya Portuguez Yasdany,180048,6323657,empleado
+180049,user369@email.com,Pedro Chavarría Chavarría,180049,155814035635,empleado
+180050,user370@email.com,Yean Carlos Paniagua Bogantes,180050,2596401,empleado
+180051,user371@email.com,Bryan Alcides Rodríguez Núñez,180051,3478860,empleado
+180052,user372@email.com,Deivys Quesada López,180052,2502422,empleado
+180053,user373@email.com,Diego Armando Valverde Alvarado,180053,2582435,empleado
+180054,user374@email.com,Alexander Medina Reyes,180054,11135536,empleado
+180057,user375@email.com,Jorge Dávila Murillo,180057,2622255,empleado
+180058,user376@email.com,José Manuel Ortega Conejo,180058,2547858,empleado
+180059,user377@email.com,Wilfrido Bolaños Villalobos ,180059,2733321,empleado
+180060,user378@email.com,Alexánder Matamoros Núñez,180060,8088054,empleado
+180061,user379@email.com,Aunner Antonio Rivera González,180061,155818240828,empleado
+180062,user380@email.com,Luis René Guido Acevedo,180062,155813195408,empleado
+180063,user381@email.com,Olber José Rojas Villegas ,180063,5297167,empleado
+180064,user382@email.com,Juan Francisco Calero Vásquez,180064,2725481,empleado
+180065,user383@email.com,Luis Angel Baltodano Galarza,180065,2727994,empleado
+180066,user384@email.com,Kevin Ramses Calderón Parra ,180066,2787417,empleado
+180070,user385@email.com,Fabián Alejandro Calero López,180070,4229136,empleado
+180071,user386@email.com,Miguel Antonio Ramírez Qurós,180071,2588110,empleado
+180072,user387@email.com,Wilberth Rafael Garay Aragón ,180072,155808761011,empleado
+180073,user388@email.com,Jose Reinier Calvo Angulo,180073,2735985,empleado
+180080,user389@email.com,Dylan Méndez Alvarado,180080,2749866,empleado
+180081,user390@email.com,Marlon Josué Eras García,180081,2776272,empleado
