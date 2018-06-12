@@ -117,7 +117,7 @@ public class LoginBean implements Serializable {
 
         //Comprobar que la password que ingreso es la misma
         if (!this.getPassword().matches(this.getSecondPassword())) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Las contraseñas no son iguales."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null));
             return;
         }
 
@@ -131,7 +131,7 @@ public class LoginBean implements Serializable {
 
         try {
             ljc.edit(loginAux);
-             fc.addMessage(null, new FacesMessage("Contraseña cambiada"));
+             fc.addMessage(null, new FacesMessage("Contraseña actualizada exitosamente"));
 
         } catch (Exception ex) {
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
