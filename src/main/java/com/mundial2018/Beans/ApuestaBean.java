@@ -74,7 +74,16 @@ public class ApuestaBean {
         login = (Login) ec.getSessionMap().get("login");
         empleado = login.getEmpleado();
         listaRondas = rjc.findRondaEntities();
-
+    }
+    
+    public boolean validarFecha(Date fechaPartido) {
+        DateTime fecha = new DateTime(new Date(fechaPartido.getTime()));
+        fecha = fecha.toDateTime(DateTimeZone.UTC);
+        LocalDate now = new LocalDate();
+        
+        boolean deshabilitar = now.equals(fecha.toLocalDate()) || now.isAfter(fecha.toLocalDate());
+        
+        return deshabilitar;
     }
 
     public String formatearFecha(Date fecha) {
@@ -188,17 +197,17 @@ public class ApuestaBean {
     private void CrearActualizarApuesta(Apuesta apuestaSeleccionada) {
         Apuesta existeApuesta = ajc.findViaEmpleadoAndPartido(apuestaSeleccionada.getEmpleadoid(), apuestaSeleccionada.getPartidoId());
 
-        if (existeApuesta != null) {
-            Partido partido = existeApuesta.getPartidoId();
-            if (!(partido.getGolesEquipo1() == null || partido.getGolesEquipo2() == null)) {
-                Equipo Numero1 = ejc.findEquipo(partido.getEquipo1() );
-                 Equipo Numero2 = ejc.findEquipo(partido.getEquipo2() );
-
-                FacesMessage message = new FacesMessage("El partido:"+ Numero1.getNombre() +" vs "+Numero2.getNombre() +" ya contiene un marcador, por lo tanto no se puede agregar apuestas. contacte al administrador", " Empleado agregado.");
-                FacesContext.getCurrentInstance().addMessage(null, message);
-                return;
-            }
-        }
+//        if (existeApuesta != null) {
+//            Partido partido = existeApuesta.getPartidoId();
+//            if (!(partido.getGolesEquipo1() == null || partido.getGolesEquipo2() == null)) {
+//                Equipo Numero1 = ejc.findEquipo(partido.getEquipo1() );
+//                 Equipo Numero2 = ejc.findEquipo(partido.getEquipo2() );
+//
+//                FacesMessage message = new FacesMessage("El partido:"+ Numero1.getNombre() +" vs "+Numero2.getNombre() +" ya contiene un marcador, por lo tanto no se puede agregar apuestas. contacte al administrador", " Empleado agregado.");
+//                FacesContext.getCurrentInstance().addMessage(null, message);
+//                return;
+//            }
+//        }
 
         DateTimeZone zoneUTC = DateTimeZone.UTC;
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
