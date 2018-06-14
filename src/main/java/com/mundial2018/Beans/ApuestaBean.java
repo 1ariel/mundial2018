@@ -78,13 +78,15 @@ public class ApuestaBean {
 
     public boolean validarFecha(Date fechaPartido) {
         DateTime fecha = new DateTime(new Date(fechaPartido.getTime()));
-        fecha = fecha.toDateTime(DateTimeZone.UTC);
-        LocalDate now = new LocalDate();
+        fecha = fecha.toDateTime(DateTimeZone.UTC);       
 
-        boolean deshabilitar = now.equals(fecha.toLocalDate()) || now.isAfter(fecha.toLocalDate());
+        DateTime hoy = new DateTime();
+        String dia= hoy.toString("YYYY-MM-dd");
+        DateTime hoy2 = new DateTime(dia);       
+        
+        boolean deshabilitar = hoy2.toDate().before(fecha.toDate());
 
-        deshabilitar = false;
-        return deshabilitar;
+        return !deshabilitar;
     }
 
     public String formatearFecha(Date fecha) {
@@ -209,24 +211,15 @@ public class ApuestaBean {
 //                return;
 //            }
 //        }
+DateTimeZone zoneUTC = DateTimeZone.UTC;
 
+    DateTime hoy = new DateTime();
+    String dia= hoy.toString("YYYY-MM-dd");
+    DateTime hoy2 = new DateTime(dia);
+    DateTime dbdt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
+    DateTime actualDateOnDB2 = dbdt.toDateTime(zoneUTC);
+  boolean test = hoy2.toDate().before(actualDateOnDB2.toDate());
 
-     DateTimeZone zoneUTC = DateTimeZone.UTC;
-        DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
-        DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
-        DateTime dateTime = new DateTime(DateTime.now());
-        
-         Date dt2 = new Date();
-         
-         Date dt4 = actualDateOnDB.toDate();
-    if(dateTime.getMillis()<=actualDateOnDB.getMillis()){
-    boolean test3 = true;
-    
-    }
-         
-      //    boolean test2 =  dt2.before(actualDateOnDB.toDate());
-        
-        boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
 
         if (test) {
                     if (apuestaSeleccionada.getGolesEquipo1()==null) {
