@@ -75,14 +75,15 @@ public class ApuestaBean {
         empleado = login.getEmpleado();
         listaRondas = rjc.findRondaEntities();
     }
-    
+
     public boolean validarFecha(Date fechaPartido) {
         DateTime fecha = new DateTime(new Date(fechaPartido.getTime()));
         fecha = fecha.toDateTime(DateTimeZone.UTC);
         LocalDate now = new LocalDate();
-        
+
         boolean deshabilitar = now.equals(fecha.toLocalDate()) || now.isAfter(fecha.toLocalDate());
-        
+
+        deshabilitar = false;
         return deshabilitar;
     }
 
@@ -209,17 +210,35 @@ public class ApuestaBean {
 //            }
 //        }
 
-        DateTimeZone zoneUTC = DateTimeZone.UTC;
+
+     DateTimeZone zoneUTC = DateTimeZone.UTC;
         DateTime dt = new DateTime(new Date(apuestaSeleccionada.getPartidoId().getFecha().getTime()));
         DateTime actualDateOnDB = dt.toDateTime(zoneUTC);
         DateTime dateTime = new DateTime(DateTime.now());
+        
+         Date dt2 = new Date();
+         
+         Date dt4 = actualDateOnDB.toDate();
+    if(dateTime.getMillis()<=actualDateOnDB.getMillis()){
+    boolean test3 = true;
+    
+    }
+         
+      //    boolean test2 =  dt2.before(actualDateOnDB.toDate());
+        
         boolean test = dateTime.toDate().before(actualDateOnDB.toDate());
 
         if (test) {
-            if (existeApuesta == null) {//exist do an update
+                    if (apuestaSeleccionada.getGolesEquipo1()==null) {
+                    apuestaSeleccionada.setGolesEquipo1(0);
+                }
+                  if (apuestaSeleccionada.getGolesEquipo2()==null) {
+                    apuestaSeleccionada.setGolesEquipo2(0);
+                }
+            if (existeApuesta == null) {//exist do an update   
                 ajc.create(apuestaSeleccionada);
             } else {
-                //update
+                //update              
                 existeApuesta.setGolesEquipo1(apuestaSeleccionada.getGolesEquipo1());
                 existeApuesta.setGolesEquipo2(apuestaSeleccionada.getGolesEquipo2());
                 try {
@@ -229,10 +248,16 @@ public class ApuestaBean {
                     return;
                 }
             }
-        }
-        FacesMessage message = new FacesMessage("Predicción agregada", " Apuesta.");
+       FacesMessage message = new FacesMessage("Predicción agregada", " Apuesta.");
         FacesContext.getCurrentInstance().addMessage(null, message);
 
+        }
+        else{
+        FacesMessage message = new FacesMessage("No se puede agregar una predicción  debido a que la fecha del partido ha pasado, o es el dia siguiente. por favor contacte al administrador", " Apuesta.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+
+        }
+     
     }
 
     public String EncontrarGolesPorPartidoYEmpleado(Partido p, String Equipo) {
@@ -244,10 +269,17 @@ public class ApuestaBean {
         }
 
         if (existeApuesta != null) {
+            int golesEquipo = 0;
             if (Equipo.matches("1")) {
-                return Integer.toString(existeApuesta.getGolesEquipo1());
+                if (existeApuesta.getGolesEquipo1() != null) {
+                    golesEquipo = existeApuesta.getGolesEquipo1();
+                }
+                return Integer.toString(golesEquipo);
             } else {
-                return Integer.toString(existeApuesta.getGolesEquipo2());
+                if (existeApuesta.getGolesEquipo2() != null) {
+                    golesEquipo = existeApuesta.getGolesEquipo2();
+                }
+                return Integer.toString(golesEquipo);
             }
         } else {
             return "";
