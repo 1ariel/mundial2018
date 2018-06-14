@@ -246,7 +246,7 @@ DateTimeZone zoneUTC = DateTimeZone.UTC;
 
         }
         else{
-        FacesMessage message = new FacesMessage("No se puede agregar una predicción  debido a que la fecha del partido ha pasado, o es el dia siguiente. por favor contacte al administrador", " Apuesta.");
+        FacesMessage message = new FacesMessage("No se puede agregar una predicción debido a que la fecha del partido o algun partido en el grupo ha pasado, o es el dia siguiente. por favor contacte al administrador", " Apuesta.");
         FacesContext.getCurrentInstance().addMessage(null, message);
 
         }
